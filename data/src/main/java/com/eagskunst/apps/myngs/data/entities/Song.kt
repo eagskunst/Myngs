@@ -31,5 +31,5 @@ data class Song(
     @ColumnInfo(name = "creator_name") val creatorName: String,
     @ColumnInfo(name = "album_id") val albumId: Long,
     @ColumnInfo(name = "preview_url") val previewUrl: String,
-    @ColumnInfo(name = "search_id") val searchId: String
+    @ColumnInfo(name = "search_id") val searchId: Int
 )

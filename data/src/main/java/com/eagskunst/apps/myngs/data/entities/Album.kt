@@ -12,5 +12,5 @@ data class Album(
     @PrimaryKey val id: Long,
     @ColumnInfo val name: String,
     @ColumnInfo(name = "creator_name") val creatorName: String,
-    @ColumnInfo(name = "album_art_url") val albumArtUrl: String
+    @ColumnInfo(name = "album_art_url") val albumArtUrl: String?
 )

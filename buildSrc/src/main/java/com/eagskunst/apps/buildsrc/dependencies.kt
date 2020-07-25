@@ -28,4 +28,10 @@ object Libs {
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
     }
+
+    object Moshi {
+        private const val version = "1.9.2"
+        const val moshi = "com.squareup.moshi:moshi-kotlin:$version"
+        const val moshiCodeGen = "com.squareup.moshi:moshi-kotlin-codegen:$version"
+    }
 }
