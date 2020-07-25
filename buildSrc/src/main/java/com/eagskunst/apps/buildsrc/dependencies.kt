@@ -29,9 +29,19 @@ object Libs {
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
     }
 
-    object Moshi {
-        private const val version = "1.9.2"
-        const val moshi = "com.squareup.moshi:moshi-kotlin:$version"
-        const val moshiCodeGen = "com.squareup.moshi:moshi-kotlin-codegen:$version"
+    object Network {
+
+        object Retrofit {
+            private const val version = "2.7.1"
+            const val retrofit = "com.squareup.retrofit2:retrofit:$version"
+            const val retrofitMoshiConverter = "com.squareup.retrofit2:converter-moshi:$version"
+        }
+
+        object Moshi {
+            private const val version = "1.9.2"
+            const val moshi = "com.squareup.moshi:moshi-kotlin:$version"
+            const val moshiCodeGen = "com.squareup.moshi:moshi-kotlin-codegen:$version"
+        }
     }
+
 }

@@ -14,12 +14,12 @@ import com.eagskunst.apps.myngs.data.entities.Song
 interface SongDao {
 
     @Insert(onConflict = REPLACE)
-    fun addSong(song: Song)
+    suspend fun addSong(song: Song)
 
     @Delete
-    fun deleteSong(song: Song)
+    suspend fun deleteSong(song: Song)
 
     @Query("SELECT * FROM songs where album_id = :albumId")
-    fun getSongsByAlbumId(albumId: Long): List<Song>
+    suspend fun getSongsByAlbumId(albumId: Long): List<Song>
 
 }

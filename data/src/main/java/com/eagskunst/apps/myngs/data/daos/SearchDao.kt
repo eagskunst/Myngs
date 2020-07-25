@@ -12,22 +12,22 @@ import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
 interface SearchDao {
 
     @Insert(onConflict = REPLACE)
-    fun addSearch(search: Search)
+    suspend fun addSearch(search: Search)
 
     @Delete
-    fun deleteSearch(search: Search)
+    suspend fun deleteSearch(search: Search)
 
     @Query("DELETE FROM searches WHERE search_id = :id LIMIT 1")
-    fun deleteSearchById(id: Int)
+    suspend fun deleteSearchById(id: Int)
 
     @Query("UPDATE searches SET stopped_at = :lastPage WHERE search_id = :searchId")
-    fun updateStoppedAt(lastPage: Int, searchId: Int)
+    suspend fun updateStoppedAt(lastPage: Int, searchId: Int)
 
     @Query("DELETE FROM searches WHERE sentence = :sentence")
-    fun deleteSearchBySentence(sentence: String)
+    suspend fun deleteSearchBySentence(sentence: String)
 
     @Transaction
     @Query("SELECT * FROM searches WHERE sentence = :sentence LIMIT 1")
-    fun getSearchWithSongs(sentence: String): SearchWithSongs
+    suspend fun getSearchWithSongs(sentence: String): SearchWithSongs
 
 }

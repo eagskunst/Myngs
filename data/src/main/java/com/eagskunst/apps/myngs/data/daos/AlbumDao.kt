@@ -11,14 +11,14 @@ import com.eagskunst.apps.myngs.data.entities.Album
 interface AlbumDao {
 
     @Insert(onConflict = REPLACE)
-    fun addAlbum(album: Album)
+    suspend fun addAlbum(album: Album)
 
     @Delete
-    fun deleteAlbum(album: Album)
+    suspend fun deleteAlbum(album: Album)
 
     @Query("SELECT * FROM albums WHERE id = :id")
-    fun getAlbumById(id: Long): Album
+    suspend fun getAlbumById(id: Long): Album
 
     @Query("SELECT * FROM albums")
-    fun getAllAlbums(): List<Album>
+    suspend fun getAllAlbums(): List<Album>
 }
