@@ -64,7 +64,4 @@ dependencies {
     implementation Libs.Network.OkHttp.loggingInterceptor
 
     implementation Libs.Koin.android
-    implementation Libs.Koin.androidScope
-    implementation Libs.Koin.androidViewModel
-
 }

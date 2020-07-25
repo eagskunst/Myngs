@@ -2,6 +2,7 @@ package com.eagskunst.apps.myngs.data_android
 
 import com.eagskunst.apps.myngs.base.KoinModules
 import com.eagskunst.apps.myngs.data_android.modules.baseModule
+import com.eagskunst.apps.myngs.data_android.modules.daosModule
 import com.eagskunst.apps.myngs.data_android.modules.dataSourceModule
 import com.eagskunst.apps.myngs.data_android.modules.dbModule
 import com.eagskunst.apps.myngs.data_android.modules.interactorsModule
@@ -17,11 +18,11 @@ import org.koin.core.module.Module
 object KoinModulesImpl: KoinModules {
 
     override fun all(): List<Module> {
-        return dbModule + networkModule + servicesModule + allButServicesAndDb()
+        return baseModule + dbModule + networkModule + servicesModule + allButServicesDbAndBase()
     }
 
-    override fun allButServicesAndDb(): List<Module> {
-        return baseModule + dataSourceModule + storesModule +
+    override fun allButServicesDbAndBase(): List<Module> {
+        return daosModule + dataSourceModule + storesModule +
                 dataSourceModule + interactorsModule + repositoriesModule
     }
 }

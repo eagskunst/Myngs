@@ -7,5 +7,5 @@ import org.koin.core.module.Module
  */
 interface KoinModules {
     fun all(): List<Module>
-    fun allButServicesAndDb(): List<Module>
+    fun allButServicesDbAndBase(): List<Module>
 }

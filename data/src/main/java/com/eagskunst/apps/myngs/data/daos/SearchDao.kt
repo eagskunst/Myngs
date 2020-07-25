@@ -23,7 +23,7 @@ interface SearchDao {
     @Query("UPDATE searches SET stopped_at = :lastPage WHERE search_id = :searchId")
     suspend fun updateStoppedAt(lastPage: Int, searchId: Int)
 
-    @Query("DELETE FROM searches WHERE search_id = :id LIMIT 1")
+    @Query("DELETE FROM searches WHERE search_id = :id ")
     suspend fun deleteSearchById(id: Int)
 
     @Query("DELETE FROM searches WHERE sentence = :sentence")

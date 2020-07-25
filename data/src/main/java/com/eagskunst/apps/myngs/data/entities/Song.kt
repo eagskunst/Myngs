@@ -19,7 +19,7 @@ import androidx.room.PrimaryKey
     ),
     ForeignKey(
         entity = Search::class,
-        parentColumns = ["id"],
+        parentColumns = ["search_id"],
         childColumns = ["search_id"],
         onUpdate = CASCADE,
         onDelete = CASCADE
@@ -29,7 +29,7 @@ data class Song(
     @PrimaryKey val id: Long,
     @ColumnInfo val name: String,
     @ColumnInfo(name = "creator_name") val creatorName: String,
-    @ColumnInfo(name = "album_id") val albumId: Long,
+    @ColumnInfo(name = "album_id", index = true) val albumId: Long,
     @ColumnInfo(name = "preview_url") val previewUrl: String,
-    @ColumnInfo(name = "search_id") val searchId: Int
+    @ColumnInfo(name = "search_id", index = true) val searchId: Int
 )

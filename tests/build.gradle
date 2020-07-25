@@ -1,6 +1,13 @@
+import com.eagskunst.apps.buildsrc.Libs
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
+}
 
 android {
     compileSdkVersion 29
@@ -21,15 +28,53 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
+        exclude("META-INF/*.kotlin_module")
+    }
+
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation project(':base')
+    implementation project(':data')
+    implementation project(':domain')
+    implementation project(':data-android')
+    implementation project(':app')
+
+    implementation Libs.AndroidX.Room.runtime
+
+    testImplementation Libs.AndroidX.Room.testing
+    testImplementation Libs.Test.jUnit
+    testImplementation Libs.Test.hamcrest
+    testImplementation Libs.AndroidX.Test.core
+    testImplementation Libs.AndroidX.Test.ktx
+    testImplementation Libs.AndroidX.Test.rules
+    testImplementation Libs.Test.Mockk.test
+    testImplementation Libs.Koin.test
+
+    androidTestImplementation Libs.AndroidX.Test.Instrumentation.core
+    androidTestImplementation Libs.AndroidX.Test.Instrumentation.archCore
+    androidTestImplementation Libs.AndroidX.Test.Instrumentation.espressoContrib
+    androidTestImplementation Libs.AndroidX.Test.Instrumentation.junit
+    androidTestImplementation Libs.Test.Mockk.androidTest
+    androidTestImplementation Libs.Test.Kakao.core
+    debugImplementation Libs.Koin.test
+    debugImplementation Libs.Coroutines.test
 
 }

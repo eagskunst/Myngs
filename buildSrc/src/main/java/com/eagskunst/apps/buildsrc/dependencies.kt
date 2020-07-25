@@ -21,6 +21,35 @@ object Libs {
             const val ktx = "androidx.room:room-ktx:$version"
             const val testing = "androidx.room:room-testing:$version"
         }
+
+        object Test {
+            const val core = "androidx.arch.core:core-testing:2.1.0"
+            const val ktx = "androidx.test:core-ktx:1.2.0"
+            const val rules = "androidx.test:rules:1.2.0"
+
+            object Instrumentation {
+                private const val version = "3.2.0"
+                const val core = "androidx.test.espresso:espresso-core:$version"
+                const val archCore = "androidx.arch.core:core-testing:2.1.0"
+                const val espressoContrib = "androidx.test.espresso:espresso-contrib:$version"
+                const val junit = "androidx.test.ext:junit:1.1.1"
+            }
+        }
+    }
+
+    object Test {
+        const val jUnit = "junit:junit:4.13"
+        const val hamcrest = "org.hamcrest:hamcrest-all:1.3"
+
+        object Mockk {
+            private const val version = "1.10.0"
+            const val test = "io.mockk:mockk:$version"
+            const val androidTest = "io.mockk:mockk-android:$version"
+        }
+
+        object Kakao {
+            const val core = "com.agoda.kakao:kakao:2.3.3"
+        }
     }
 
 

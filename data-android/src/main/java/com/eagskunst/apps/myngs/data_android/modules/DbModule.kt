@@ -19,7 +19,4 @@ val dbModule = module {
             "MyngsDatabase"
         ).build()
     }
-    factory { get<MyngsDb>().albumDao() }
-    factory { get<MyngsDb>().searchDao() }
-    factory { get<MyngsDb>().songDao() }
 }

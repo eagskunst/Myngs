@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
+import androidx.room.Query
 import androidx.room.Update
 import com.eagskunst.apps.myngs.data.entities.Song
 
@@ -25,4 +26,6 @@ interface SongDao {
     @Delete
     suspend fun deleteSong(song: Song)
 
+    @Query("SELECT * FROM songs")
+    suspend fun getAllSongs(): List<Song>
 }
