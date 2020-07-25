@@ -2,6 +2,5 @@
 apply plugin: 'kotlin'
 
 dependencies {
-    api project(':base')
-    api project(':data')
+    implementation project(':data')
 }

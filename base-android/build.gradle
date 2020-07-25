@@ -1,34 +1,19 @@
 import com.eagskunst.apps.buildsrc.Libs
 
-plugins {
-    id 'com.android.application'
-
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'kotlin-android-extensions'
-}
-
-kapt {
-    correctErrorTypes = true
-    useBuildCache = true
-}
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 29
 
-    buildFeatures {
-        dataBinding = true
-        viewBinding = true
-    }
-
     defaultConfig {
-        applicationId "com.eagskunst.apps.myngs"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -43,17 +28,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 }
 
-
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':base')
-    implementation project(':base-android')
-    implementation Libs.AndroidX.coreKtx
-    implementation Libs.AndroidX.appcompat
-    implementation Libs.AndroidX.constraintlayout
+    implementation Libs.timber
 }

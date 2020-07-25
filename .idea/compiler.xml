@@ -8,6 +8,7 @@
       <module name="base" target="1.7" />
       <module name="commonSrc" target="1.7" />
       <module name="data" target="1.7" />
+      <module name="data-android" target="1.7" />
       <module name="domain" target="1.7" />
     </bytecodeTargetLevel>
   </component>

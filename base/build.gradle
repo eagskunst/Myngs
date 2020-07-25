@@ -4,6 +4,6 @@ apply plugin: 'kotlin'
 
 dependencies {
     api Libs.Kotlin.stdlib
-    api Libs.timber
     api Libs.Coroutines.core
+    implementation Libs.Koin.core
 }

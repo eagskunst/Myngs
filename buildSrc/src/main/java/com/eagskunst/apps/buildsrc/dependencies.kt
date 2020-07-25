@@ -51,4 +51,13 @@ object Libs {
         const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
     }
 
+    object Koin {
+        private const val version = "2.1.5"
+        const val core = "org.koin:koin-core:$version"
+        const val android = "org.koin:koin-android:$version"
+        const val androidScope = "org.koin:koin-android-scope:$version"
+        const val androidViewModel = "org.koin:koin-android-viewmodel:$version"
+        const val test = "org.koin:koin-test:$version"
+    }
+
 }

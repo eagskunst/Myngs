@@ -30,7 +30,7 @@ data class Success<T>(val data: T) : DataResult<T>() {
     override fun get(): T = data
 }
 
-suspend fun <T> Success<T>.mapToException(exception: Exception): ErrorResult<T> {
+fun <T> Success<T>.mapToException(exception: Exception): ErrorResult<T> {
     return ErrorResult(exception)
 }
 
