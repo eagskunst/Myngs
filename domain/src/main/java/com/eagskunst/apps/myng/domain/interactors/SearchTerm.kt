@@ -3,7 +3,9 @@ package com.eagskunst.apps.myng.domain.interactors
 import com.eagskunst.apps.myng.domain.BaseInteractor
 import com.eagskunst.apps.myngs.base.*
 import com.eagskunst.apps.myngs.base.errors.EmptySearchException
+import com.eagskunst.apps.myngs.data.entities.Search
 import com.eagskunst.apps.myngs.data.entities.Song
+import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
 import com.eagskunst.apps.myngs.data.repositories.searchterm.SearchTermRepository
 
 /**
@@ -27,11 +29,22 @@ class SearchTerm(
                 val errorResult =
                     searchResult.mapToException(EmptySearchException("Term returned empty list"))
 
-                return addErrorInformationAndReturn(errorResult)
+                return addErrorInformationToResult(errorResult)
             }
         }
 
         return searchResult
+    }
+
+    suspend fun getSavedSearches(): DataResult<List<Search>> {
+       return searchTermRepository.savedSearches()
+    }
+
+    suspend fun getSavedSearch(searchId: String): DataResult<SearchWithSongs> {
+        val searchWithSongs = searchTermRepository.retrieveSavedSearchWithSongs(searchId)
+        searchWithSongs?.let { return Success(it) }
+
+        return addErrorInformationToResult(ErrorResult(EmptySearchException("Term returned empty list")))
     }
 
 }

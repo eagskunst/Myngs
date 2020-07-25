@@ -33,4 +33,7 @@ interface SearchDao {
     @Query("SELECT * FROM searches WHERE sentence = :sentence LIMIT 1")
     suspend fun getSearchWithSongs(sentence: String): SearchWithSongs?
 
+    @Query("SELECT * FROM searches WHERE isEmptySearch = 0")
+    fun getNotEmptySearches(): List<Search>
+
 }

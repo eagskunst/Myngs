@@ -51,4 +51,10 @@ class SearchTermRepository(
         songsDataStore.addSongs(songs)
     }
 
+    suspend fun savedSearches(): DataResult<List<Search>> {
+        return Success(searchDataStore.getSearches())
+    }
+
+    suspend fun retrieveSavedSearchWithSongs(searchId: String) = searchDataStore.getSearchWithSongs(searchId)
+
 }

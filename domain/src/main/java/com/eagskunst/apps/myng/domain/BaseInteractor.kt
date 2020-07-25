@@ -49,7 +49,7 @@ abstract class BaseInteractor(protected val dispatchers: CoroutineDispatchers) :
     internal val `access$dispatchers`: CoroutineDispatchers
         get() = dispatchers
 
-    protected fun <T> addErrorInformationAndReturn(errorResult: ErrorResult<T>): DataResult<T> {
+    protected fun <T> addErrorInformationToResult(errorResult: ErrorResult<T>): DataResult<T> {
         val errorInfo = errorResult.errorInfo
         val newInfo = when(errorInfo.throwable) {
             is HttpException -> errorInfo.copy(message = ErrorMessage.Unknown) //TODO parse json message

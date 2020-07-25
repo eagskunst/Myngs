@@ -92,12 +92,13 @@ class SearchTermTest : KoinTest {
 
     @Test
     fun persistenceAndServiceVerificationForNotEmptyResult() {
-        searchSentence_ReturnSuccess_VerifySearchWasSavedWithNotEmpty()
-        searchRepeatedSentence_VerifyServiceIsNotCalledAgain()
+        val sentence = "dumb"
+        searchSentence_ReturnSuccess_VerifySearchWasSavedWithNotEmpty(sentence)
+        searchRepeatedSentence_VerifyServiceIsNotCalledAgain(sentence)
+        getSavedSearches_AssertSearchWithSentenceExist_AndSongsToo(sentence)
     }
 
-    private fun searchSentence_ReturnSuccess_VerifySearchWasSavedWithNotEmpty() {
-        val sentence = "dumb"
+    private fun searchSentence_ReturnSuccess_VerifySearchWasSavedWithNotEmpty(sentence: String) {
         coEvery {
             searchService.searchSentence(sentence = sentence, page = 0)
         } returns TunesQueryResponse(results = SampleData.sampleResponse(), resultCount = 20)
@@ -114,11 +115,21 @@ class SearchTermTest : KoinTest {
 
     }
 
-    private fun searchRepeatedSentence_VerifyServiceIsNotCalledAgain() {
-        val sentence = "dumb"
+    private fun searchRepeatedSentence_VerifyServiceIsNotCalledAgain(sentence: String) {
         runBlocking {
             searchTerms.searchSentenceForSongs(sentence)
             coVerify(exactly = 1) { searchService.searchSentence(sentence = sentence, page = 0) }
+        }
+    }
+
+    private fun getSavedSearches_AssertSearchWithSentenceExist_AndSongsToo(sentence: String) {
+        runBlocking {
+            val result = searchTerms.getSavedSearches()
+            val sentenceSearch = result.getOrThrow().firstOrNull { it.sentence == sentence }
+            assert(sentenceSearch != null)
+            val searchWithSongsRes = searchTerms.getSavedSearch(sentence).getOrThrow()
+            assertThat(sentenceSearch!!.id, `is`(searchWithSongsRes.search.id))
+            assert(searchWithSongsRes.songs.isNotEmpty())
         }
     }
 
