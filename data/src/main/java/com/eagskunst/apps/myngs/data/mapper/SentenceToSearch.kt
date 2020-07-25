@@ -10,7 +10,7 @@ class SentenceToSearch: Mapper<Pair<Int, String>, Search> {
     override suspend fun map(value: Pair<Int, String>): Search {
         return Search(
             sentence = value.second,
-            stopped_at = value.first
+            stoppedAt = value.first
         )
     }
 }

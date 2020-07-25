@@ -6,7 +6,9 @@ import com.eagskunst.apps.myngs.data.responses.TunesQueryResponse
 /**
  * Created by eagskunst in 24/7/2020.
  */
-class TunesQueryToSongsMapper(private val searchId: Int) : Mapper<TunesQueryResponse, List<Song>> {
+class TunesQueryToSongsMapper : Mapper<TunesQueryResponse, List<Song>> {
+
+    var searchId = -1
 
     override suspend fun map(value: TunesQueryResponse): List<Song> {
         return value.results

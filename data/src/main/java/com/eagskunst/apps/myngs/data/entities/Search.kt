@@ -11,5 +11,6 @@ import androidx.room.PrimaryKey
 data class Search(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "search_id") val id: Int = 0,
     @ColumnInfo val sentence: String,
-    @ColumnInfo val stopped_at: Int
+    @ColumnInfo(name = "stopped_at") val stoppedAt: Int,
+    @ColumnInfo val isEmptySearch: Boolean = false
 )
