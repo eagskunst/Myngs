@@ -7,7 +7,7 @@ import com.eagskunst.apps.myngs.data.responses.TunesQueryResponse
 /**
  * Created by eagskunst in 24/7/2020.
  */
-class TunesQueryToAlbumWithSongs(private val songsMapper: TunesQueryToSongsMapper) :
+class TunesQueryToAlbumWithSongsMapper(private val songsMapper: TunesQueryToSongsMapper) :
     Mapper<TunesQueryResponse, AlbumWithSongs> {
 
     override suspend fun map(value: TunesQueryResponse): AlbumWithSongs {

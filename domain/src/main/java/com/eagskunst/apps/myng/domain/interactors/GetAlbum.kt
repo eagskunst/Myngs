@@ -15,7 +15,7 @@ class GetAlbum(
     dispatchers: CoroutineDispatchers
 ) : BaseInteractor(dispatchers) {
 
-    suspend fun getAlbumWithSongs(albumId: Long): DataResult<AlbumWithSongs> {
+    suspend operator fun invoke(albumId: Long): DataResult<AlbumWithSongs> {
         val result = albumRepository.getAlbumWithSongsById(albumId)
         if (result is Success) {
             switchToIo {

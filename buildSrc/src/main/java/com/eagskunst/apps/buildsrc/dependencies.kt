@@ -1,5 +1,7 @@
 package com.eagskunst.apps.buildsrc
 
+import org.gradle.api.artifacts.dsl.DependencyHandler
+
 object Libs {
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:4.0.1"
@@ -41,6 +43,11 @@ object Libs {
             private const val version = "1.9.2"
             const val moshi = "com.squareup.moshi:moshi-kotlin:$version"
             const val moshiCodeGen = "com.squareup.moshi:moshi-kotlin-codegen:$version"
+        }
+
+        object OkHttp {
+            private const val version = "4.2.2"
+            const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
         }
     }
 

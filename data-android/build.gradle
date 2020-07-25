@@ -55,6 +55,14 @@ dependencies {
     implementation Libs.AndroidX.Room.ktx
     kapt Libs.AndroidX.Room.compiler
 
+    implementation Libs.Network.Retrofit.retrofit
+    implementation Libs.Network.Retrofit.retrofitMoshiConverter
+
+    implementation Libs.Network.Moshi.moshi
+    implementation Libs.Network.Moshi.moshiCodeGen
+
+    implementation Libs.Network.OkHttp.loggingInterceptor
+
     implementation Libs.Koin.android
     implementation Libs.Koin.androidScope
     implementation Libs.Koin.androidViewModel
