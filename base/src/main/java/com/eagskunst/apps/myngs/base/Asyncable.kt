@@ -20,12 +20,12 @@ interface Asyncable {
         }
     }
 
-    suspend fun <T> runAndForget(block: suspend () -> T) = coroutineScope {
-        launch { runSafely(block) }
+    suspend fun runAndForget(block: suspend () -> Unit) = coroutineScope {
+        launch { block() }
     }
 
-    suspend fun <T> runDeferred(block: suspend () -> T) = coroutineScope {
-        async { runSafely(block) }
+    suspend fun runDeferred(block: suspend () -> Unit) = coroutineScope {
+        async { block }
     }
 
 }

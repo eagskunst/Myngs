@@ -11,13 +11,6 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "songs", foreignKeys = [
     ForeignKey(
-        entity = Album::class,
-        parentColumns = ["id"],
-        childColumns = ["album_id"],
-        onDelete = CASCADE,
-        onUpdate = CASCADE
-    ),
-    ForeignKey(
         entity = Search::class,
         parentColumns = ["search_id"],
         childColumns = ["search_id"],

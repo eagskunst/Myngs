@@ -19,8 +19,7 @@ class SearchTerm(
         val searchResult = searchTermRepository.searchSentence(sentence)
 
         if (searchResult is Success) {
-            switchToIo {
-                searchResult.data.forEach { searchTermRepository.saveAlbumBasedOnSong(it) }
+            runAndForget {
                 searchTermRepository.saveSongs(searchResult.data)
             }
 
