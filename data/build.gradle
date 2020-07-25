@@ -1,8 +1,10 @@
+import com.eagskunst.apps.buildsrc.Libs
 
 apply plugin: 'kotlin'
 
 dependencies {
     api project(':base')
+    api Libs.AndroidX.Room.common
 }
 compileKotlin {
     kotlinOptions {
