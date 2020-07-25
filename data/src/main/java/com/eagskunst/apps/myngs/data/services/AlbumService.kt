@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface AlbumService {
 
     @GET("lookup")
-    fun getAlbumById(
+    suspend fun getAlbumById(
         @Query("id") id: Long,
         @Query("entity") entity: String = "song"
     ): TunesQueryResponse

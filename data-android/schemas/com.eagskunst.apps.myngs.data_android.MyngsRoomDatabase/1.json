@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9cf310b117264fd1bf16ad04d51c0c5c",
+    "identityHash": "393c21ee7f8dcecbc66df4f168a4d41f",
     "entities": [
       {
         "tableName": "songs",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `creator_name` TEXT NOT NULL, `album_id` INTEGER NOT NULL, `preview_url` TEXT, `search_id` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`search_id`) REFERENCES `searches`(`search_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `creator_name` TEXT NOT NULL, `album_id` INTEGER NOT NULL, `preview_url` TEXT, `search_id` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -42,7 +42,7 @@
             "fieldPath": "searchId",
             "columnName": "search_id",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -69,19 +69,7 @@
             "createSql": "CREATE INDEX IF NOT EXISTS `index_songs_search_id` ON `${TABLE_NAME}` (`search_id`)"
           }
         ],
-        "foreignKeys": [
-          {
-            "table": "searches",
-            "onDelete": "CASCADE",
-            "onUpdate": "CASCADE",
-            "columns": [
-              "search_id"
-            ],
-            "referencedColumns": [
-              "search_id"
-            ]
-          }
-        ]
+        "foreignKeys": []
       },
       {
         "tableName": "albums",
@@ -169,7 +157,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9cf310b117264fd1bf16ad04d51c0c5c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '393c21ee7f8dcecbc66df4f168a4d41f')"
     ]
   }
 }

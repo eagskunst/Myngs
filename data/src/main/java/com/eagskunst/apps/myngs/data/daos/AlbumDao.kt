@@ -25,5 +25,5 @@ interface AlbumDao {
 
     @Transaction
     @Query("SELECT * FROM albums WHERE id = :albumId LIMIT 1")
-    suspend fun getAlbumWithSongs(albumId: Long): AlbumWithSongs
+    suspend fun getAlbumWithSongs(albumId: Long): AlbumWithSongs?
 }

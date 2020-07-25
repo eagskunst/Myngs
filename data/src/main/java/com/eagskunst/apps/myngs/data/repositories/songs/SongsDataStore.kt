@@ -10,6 +10,7 @@ class SongsDataStore(private val songsDao: SongDao) {
 
     suspend fun addSong(song: Song) = songsDao.addSong(song)
     suspend fun addSongs(songs: List<Song>) = songsDao.addSongs(songs)
+    suspend fun addSongsWithIgnore(songs: List<Song>) = songsDao.addSongs(songs)
     suspend fun updateSong(song: Song) = songsDao.updateSong(song)
     suspend fun deleteSong(song: Song) = songsDao.deleteSong(song)
 }

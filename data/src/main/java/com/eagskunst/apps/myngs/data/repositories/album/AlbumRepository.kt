@@ -17,7 +17,7 @@ class AlbumRepository(
     suspend fun getAlbumWithSongsById(id: Long): DataResult<AlbumWithSongs> {
         val localAlbum = albumDataStore.getAlbumById(id)
         if (localAlbum != null && localAlbum.hasSongs) {
-            return Success(albumDataStore.getAlbumWithSongs(id))
+            return Success(albumDataStore.getAlbumWithSongs(id)!!)
         }
 
         return albumSource.getAlbumById(id)
@@ -25,6 +25,6 @@ class AlbumRepository(
 
     suspend fun saveAlbumWithSongs(albumWithSongs: AlbumWithSongs) {
         albumDataStore.addAlbum(albumWithSongs.album)
-        songsDataStore.addSongs(albumWithSongs.songs)
+        songsDataStore.addSongsWithIgnore(albumWithSongs.songs)
     }
 }

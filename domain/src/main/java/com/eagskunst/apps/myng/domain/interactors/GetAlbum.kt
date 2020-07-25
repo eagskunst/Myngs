@@ -18,11 +18,9 @@ class GetAlbum(
     suspend operator fun invoke(albumId: Long): DataResult<AlbumWithSongs> {
         val result = albumRepository.getAlbumWithSongsById(albumId)
         if (result is Success) {
-            switchToIo {
-                //TODO: Just save if it does not exist
-                runAndForget {
-                    albumRepository.saveAlbumWithSongs(result.data)
-                }
+            //TODO: Just save if it does not exist
+            runAndForget {
+                albumRepository.saveAlbumWithSongs(result.data)
             }
         }
         return result

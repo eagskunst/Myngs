@@ -3,6 +3,7 @@ package com.eagskunst.apps.myngs.data.daos
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import androidx.room.Update
@@ -19,6 +20,9 @@ interface SongDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun addSongs(song: List<Song>)
+
+    @Insert(onConflict = IGNORE)
+    suspend fun addSongsWithIgnore(song: List<Song>)
 
     @Update
     suspend fun updateSong(song: Song)
