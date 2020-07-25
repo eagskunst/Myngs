@@ -10,14 +10,14 @@ import com.eagskunst.apps.myngs.data.responses.TunesQueryResult
 @VisibleForTesting(otherwise = VisibleForTesting.NONE)
 object SampleData {
 
-    fun sampleResponse() = (0 until 20).map {
+    fun sampleResponse(kind: String = "song") = (0 until 20).map {
         TunesQueryResult(
             trackId = it.toLong(),
             trackName = "song$it",
             artistName = "creator$it",
             collectionId = (it+1).toLong(),
             previewUrl = "",
-            kind = "song"
+            kind = kind
         )
     }
 }

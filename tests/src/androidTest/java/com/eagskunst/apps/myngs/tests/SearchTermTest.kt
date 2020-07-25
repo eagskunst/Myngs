@@ -30,6 +30,8 @@ import org.koin.core.inject
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
+import java.io.IOException
+import java.net.SocketTimeoutException
 
 /**
  * Created by eagskunst in 25/7/2020.
@@ -142,10 +144,10 @@ class SearchTermTest : KoinTest {
         runBlocking {
             val res = searchTerms.searchSentenceForSongs(sentence)
             val search = database.searchDao().getSearchBySentence(sentence)
-            assert(search != null) {
+            assert(search == null) {
                 "The search was not saved after being executed"
             }
-            assert(!search!!.isEmptySearch)
+            assert(search!!.isEmptySearch)
             assert(res is ErrorResult)
             assertThat( (res as ErrorResult).errorInfo.message, `is`(ErrorMessage.TermNotFound) )
         }
@@ -157,6 +159,39 @@ class SearchTermTest : KoinTest {
             val res = searchTerms.searchSentenceForSongs(sentence)
             coVerify(exactly = 1) { searchService.searchSentence(sentence = sentence, page = 0) }
             assert(res.getOrThrow().isEmpty())
+        }
+    }
+
+    @Test
+    fun searchSentence_ReturnsListWithoutSongs_AssertTheResultListIsEmpty() {
+        val sentence = "big bang theory"
+        coEvery { searchService.searchSentence(sentence, page = 0) } returns TunesQueryResponse(
+            resultCount = 20,
+            results = SampleData.sampleResponse(kind = "collection")
+        )
+
+        runBlocking {
+            val res = searchTerms.searchSentenceForSongs(sentence)
+            assert(res is ErrorResult) {
+                "The result was a success. The mapper let pass a query result of type 'collection'"
+            }
+        }
+    }
+
+    @Test
+    fun searchSentence_ThrowException_AssertSearchWasNotSaved() {
+        val sentence = "a long sentence that will need time"
+        coEvery { searchService.searchSentence(sentence, page = 0) } throws SocketTimeoutException("Timeout")
+
+        runBlocking {
+            val res = searchTerms.searchSentenceForSongs(sentence)
+            assert(res is ErrorResult) {
+                "The result was a success. Test was expecting an SocketTimeout"
+            }
+            val savedSearch = database.searchDao().getSearchBySentence(sentence)
+            assert(savedSearch == null) {
+                "The search must not be saved if the service throw an exception"
+            }
         }
     }
 
