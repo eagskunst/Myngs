@@ -8,6 +8,7 @@ dependencies {
     api Libs.Network.Retrofit.retrofit
     api Libs.Network.Moshi.moshi
 }
+
 compileKotlin {
     kotlinOptions {
         freeCompilerArgs = ["-XXLanguage:+InlineClasses"]

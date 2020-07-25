@@ -16,6 +16,9 @@ interface SongDao {
     @Insert(onConflict = REPLACE)
     suspend fun addSong(song: Song)
 
+    @Insert(onConflict = REPLACE)
+    suspend fun addSongs(song: List<Song>)
+
     @Update
     suspend fun updateSong(song: Song)
 

@@ -2,16 +2,16 @@ package com.eagskunst.apps.myngs.data.repositories.album
 
 import com.eagskunst.apps.myngs.base.DataResult
 import com.eagskunst.apps.myngs.base.Success
-import com.eagskunst.apps.myngs.base.thenMap
-import com.eagskunst.apps.myngs.data.entities.Album
 import com.eagskunst.apps.myngs.data.entities.relationships.AlbumWithSongs
+import com.eagskunst.apps.myngs.data.repositories.songs.SongsDataStore
 
 /**
  * Created by eagskunst in 25/7/2020.
  */
 class AlbumRepository(
     private val albumSource: AlbumDataSource,
-    private val albumDataStore: AlbumDataStore
+    private val albumDataStore: AlbumDataStore,
+    private val songsDataStore: SongsDataStore
 ) {
 
     suspend fun getAlbumById(id: Long): DataResult<AlbumWithSongs> {
@@ -25,5 +25,6 @@ class AlbumRepository(
 
     suspend fun saveAlbumWithSongs(albumWithSongs: AlbumWithSongs) {
         albumDataStore.addAlbum(albumWithSongs.album)
+        songsDataStore.addSongs(albumWithSongs.songs)
     }
 }
