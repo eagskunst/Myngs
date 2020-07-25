@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
-import androidx.room.Query
+import androidx.room.Update
 import com.eagskunst.apps.myngs.data.entities.Song
 
 /**
@@ -16,10 +16,10 @@ interface SongDao {
     @Insert(onConflict = REPLACE)
     suspend fun addSong(song: Song)
 
+    @Update
+    suspend fun updateSong(song: Song)
+
     @Delete
     suspend fun deleteSong(song: Song)
-
-    @Query("SELECT * FROM songs where album_id = :albumId")
-    suspend fun getSongsByAlbumId(albumId: Long): List<Song>
 
 }

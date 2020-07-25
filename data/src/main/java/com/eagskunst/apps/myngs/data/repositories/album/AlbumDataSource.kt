@@ -3,8 +3,8 @@ package com.eagskunst.apps.myngs.data.repositories.album
 import com.eagskunst.apps.myngs.base.Asyncable
 import com.eagskunst.apps.myngs.base.DataResult
 import com.eagskunst.apps.myngs.base.thenMap
-import com.eagskunst.apps.myngs.data.entities.Album
-import com.eagskunst.apps.myngs.data.mapper.TunesQueryToAlbum
+import com.eagskunst.apps.myngs.data.entities.relationships.AlbumWithSongs
+import com.eagskunst.apps.myngs.data.mapper.TunesQueryToAlbumWithSongs
 import com.eagskunst.apps.myngs.data.services.AlbumService
 
 /**
@@ -12,13 +12,14 @@ import com.eagskunst.apps.myngs.data.services.AlbumService
  */
 class AlbumDataSource(
     private val albumService: AlbumService,
-    private val albumMapper: TunesQueryToAlbum
+    private val albumMapper: TunesQueryToAlbumWithSongs
 ) : Asyncable {
-    suspend fun getAlbumById(id: Long): DataResult<Album> {
+
+    suspend fun getAlbumById(id: Long): DataResult<AlbumWithSongs> {
         return runSafely {
             albumService.getAlbumById(id = id)
         }.thenMap {
-            albumMapper.map(it.results.first())
+            albumMapper.map(it)
         }
     }
 }

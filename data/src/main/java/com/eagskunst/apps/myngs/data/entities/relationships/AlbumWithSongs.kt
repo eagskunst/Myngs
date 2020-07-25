@@ -2,17 +2,17 @@ package com.eagskunst.apps.myngs.data.entities.relationships
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.eagskunst.apps.myngs.data.entities.Search
+import com.eagskunst.apps.myngs.data.entities.Album
 import com.eagskunst.apps.myngs.data.entities.Song
 
 /**
- * Created by eagskunst in 24/7/2020.
+ * Created by eagskunst in 25/7/2020.
  */
-data class SearchWithSongs(
-    @Embedded val search: Search,
+data class AlbumWithSongs(
+    @Embedded val album: Album,
     @Relation(
-        parentColumn = "search_id",
-        entityColumn = "id"
+        parentColumn = "id",
+        entityColumn = "album_id"
     )
     val songs: List<Song>
 )

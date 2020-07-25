@@ -10,4 +10,6 @@ class AlbumDataStore(private val albumDao: AlbumDao) {
 
     suspend fun getAlbumById(id: Long) = albumDao.getAlbumById(id)
     suspend fun addAlbum(album: Album) = albumDao.addAlbum(album)
+
+    suspend fun getAlbumWithSongs(id: Long) = albumDao.getAlbumWithSongs(albumId = id)
 }
