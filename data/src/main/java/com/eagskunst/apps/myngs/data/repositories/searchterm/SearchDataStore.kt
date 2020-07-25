@@ -14,6 +14,6 @@ class SearchDataStore(private val searchDao: SearchDao) {
 
     suspend fun getSearchWithSongs(sentence: String) = searchDao.getSearchWithSongs(sentence)
 
-    suspend fun updateStoppedAt(searchId: Int, lastPage: Int) =
-        searchDao.updateStoppedAt(lastPage, searchId)
+    suspend fun updateStoppedAt(searchId: String, lastPage: Int) =
+        searchDao.updateStartedFrom(lastPage, searchId)
 }

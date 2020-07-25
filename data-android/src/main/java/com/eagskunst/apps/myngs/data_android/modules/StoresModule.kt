@@ -10,7 +10,7 @@ import org.koin.dsl.module
  */
 
 val storesModule = module {
-    factory { AlbumDataStore(get()) }
+    factory { AlbumDataStore(get(), get()) }
     factory { SongsDataStore(get()) }
     factory { SearchDataStore(get()) }
 }

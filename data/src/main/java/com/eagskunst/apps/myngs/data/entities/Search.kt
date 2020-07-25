@@ -3,14 +3,15 @@ package com.eagskunst.apps.myngs.data.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.UUID
 
 /**
  * Created by eagskunst in 24/7/2020.
  */
 @Entity(tableName = "searches")
 data class Search(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "search_id") val id: Int = 0,
+    @PrimaryKey @ColumnInfo(name = "search_id") val id: String = UUID.randomUUID().toString(),
     @ColumnInfo val sentence: String,
-    @ColumnInfo(name = "stopped_at") val stoppedAt: Int,
+    @ColumnInfo(name = "started_from") val startedFrom: Int,
     @ColumnInfo val isEmptySearch: Boolean = false
 )

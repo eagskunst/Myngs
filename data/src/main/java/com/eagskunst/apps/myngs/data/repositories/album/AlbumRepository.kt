@@ -16,7 +16,7 @@ class AlbumRepository(
 
     suspend fun getAlbumWithSongsById(id: Long): DataResult<AlbumWithSongs> {
         val localAlbum = albumDataStore.getAlbumById(id)
-        if (localAlbum != null) {
+        if (localAlbum != null && localAlbum.hasSongs) {
             return Success(albumDataStore.getAlbumWithSongs(id))
         }
 

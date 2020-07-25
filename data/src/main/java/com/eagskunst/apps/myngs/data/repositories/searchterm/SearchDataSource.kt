@@ -19,7 +19,7 @@ class SearchDataSource(
     suspend fun querySentenceForSongs(search: Search): DataResult<List<Song>> {
         mapper.searchId = search.id
         return runSafely {
-            searchService.searchSentence(sentence = search.sentence, page = search.stoppedAt)
+            searchService.searchSentence(sentence = search.sentence, page = search.startedFrom)
         }.thenMap(mapper::map)
     }
 

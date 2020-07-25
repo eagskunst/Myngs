@@ -5,75 +5,75 @@ import com.squareup.moshi.Json
 
 data class TunesQueryResult(
     @Json(name = "artistId")
-    val artistId: Int?,
+    val artistId: Int? = null,
     @Json(name = "artistName")
-    val artistName: String?,
+    val artistName: String? = null,
     @Json(name = "artistViewUrl")
-    val artistViewUrl: String?,
+    val artistViewUrl: String? = null,
     @Json(name = "artworkUrl100")
-    val artworkUrl100: String?,
+    val artworkUrl100: String? = null,
     @Json(name = "artworkUrl30")
-    val artworkUrl30: String?,
+    val artworkUrl30: String? = null,
     @Json(name = "artworkUrl60")
-    val artworkUrl60: String?,
+    val artworkUrl60: String? = null,
     @Json(name = "collectionCensoredName")
-    val collectionCensoredName: String?,
+    val collectionCensoredName: String? = null,
     @Json(name = "collectionExplicitness")
-    val collectionExplicitness: String?,
+    val collectionExplicitness: String? = null,
     @Json(name = "collectionHdPrice")
-    val collectionHdPrice: Double?,
+    val collectionHdPrice: Double? = null,
     @Json(name = "collectionId")
-    val collectionId: Long?,
+    val collectionId: Long? = null,
     @Json(name = "collectionName")
-    val collectionName: String?,
+    val collectionName: String? = null,
     @Json(name = "collectionPrice")
-    val collectionPrice: Double?,
+    val collectionPrice: Double? = null,
     @Json(name = "collectionViewUrl")
-    val collectionViewUrl: String?,
+    val collectionViewUrl: String? = null,
     @Json(name = "contentAdvisoryRating")
-    val contentAdvisoryRating: String?,
+    val contentAdvisoryRating: String? = null,
     @Json(name = "country")
-    val country: String?,
+    val country: String? = null,
     @Json(name = "currency")
-    val currency: String?,
+    val currency: String? = null,
     @Json(name = "discCount")
-    val discCount: Int?,
+    val discCount: Int? = null,
     @Json(name = "discNumber")
-    val discNumber: Int?,
+    val discNumber: Int? = null,
     @Json(name = "isStreamable")
-    val isStreamable: Boolean?,
+    val isStreamable: Boolean? = null,
     @Json(name = "kind")
-    val kind: String?,
+    val kind: String? = null,
     @Json(name = "longDescription")
-    val longDescription: String?,
+    val longDescription: String? = null,
     @Json(name = "previewUrl")
-    val previewUrl: String?,
+    val previewUrl: String? = null,
     @Json(name = "primaryGenreName")
-    val primaryGenreName: String?,
+    val primaryGenreName: String? = null,
     @Json(name = "releaseDate")
-    val releaseDate: String?,
+    val releaseDate: String? = null,
     @Json(name = "shortDescription")
-    val shortDescription: String?,
+    val shortDescription: String? = null,
     @Json(name = "trackCensoredName")
-    val trackCensoredName: String?,
+    val trackCensoredName: String? = null,
     @Json(name = "trackCount")
-    val trackCount: Int?,
+    val trackCount: Int? = null,
     @Json(name = "trackExplicitness")
-    val trackExplicitness: String?,
+    val trackExplicitness: String? = null,
     @Json(name = "trackHdPrice")
-    val trackHdPrice: Double?,
+    val trackHdPrice: Double? = null,
     @Json(name = "trackId")
-    val trackId: Long?,
+    val trackId: Long? = null,
     @Json(name = "trackName")
-    val trackName: String?,
+    val trackName: String? = null,
     @Json(name = "trackNumber")
-    val trackNumber: Int?,
+    val trackNumber: Int? = null,
     @Json(name = "trackPrice")
-    val trackPrice: Double?,
+    val trackPrice: Double? = null,
     @Json(name = "trackTimeMillis")
-    val trackTimeMillis: Int?,
+    val trackTimeMillis: Int? = null,
     @Json(name = "trackViewUrl")
-    val trackViewUrl: String?,
+    val trackViewUrl: String? = null,
     @Json(name = "wrapperType")
-    val wrapperType: String?
+    val wrapperType: String? = null
 )

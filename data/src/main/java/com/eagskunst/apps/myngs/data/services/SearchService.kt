@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface SearchService {
 
     @GET("/search")
-    fun searchSentence(
+    suspend fun searchSentence(
         @Query("term") sentence: String,
         @Query("mediaType") mediaType: String = "music",
         @Query("offset") page: Int,

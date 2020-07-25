@@ -8,7 +8,7 @@ import com.eagskunst.apps.myngs.data.responses.TunesQueryResponse
  */
 class TunesQueryToSongsMapper : Mapper<TunesQueryResponse, List<Song>> {
 
-    var searchId = -1
+    var searchId = ""
 
     override suspend fun map(value: TunesQueryResponse): List<Song> {
         return value.results
@@ -19,7 +19,7 @@ class TunesQueryToSongsMapper : Mapper<TunesQueryResponse, List<Song>> {
                     name = it.trackName!!,
                     creatorName = it.artistName!!,
                     albumId = it.collectionId!!,
-                    previewUrl = it.previewUrl!!,
+                    previewUrl = it.previewUrl,
                     searchId = searchId
                 )
             }

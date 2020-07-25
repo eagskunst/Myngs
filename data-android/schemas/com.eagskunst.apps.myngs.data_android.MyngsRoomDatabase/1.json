@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d01799212df4de68e021a0178c379dd9",
+    "identityHash": "3b997490f4faa47b8a0c8a9f86915107",
     "entities": [
       {
         "tableName": "songs",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `creator_name` TEXT NOT NULL, `album_id` INTEGER NOT NULL, `preview_url` TEXT NOT NULL, `search_id` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`album_id`) REFERENCES `albums`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`search_id`) REFERENCES `searches`(`search_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `creator_name` TEXT NOT NULL, `album_id` INTEGER NOT NULL, `preview_url` TEXT, `search_id` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`album_id`) REFERENCES `albums`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`search_id`) REFERENCES `searches`(`search_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -36,12 +36,12 @@
             "fieldPath": "previewUrl",
             "columnName": "preview_url",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "searchId",
             "columnName": "search_id",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           }
         ],
@@ -96,7 +96,7 @@
       },
       {
         "tableName": "albums",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `creator_name` TEXT NOT NULL, `album_art_url` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `creator_name` TEXT NOT NULL, `album_art_url` TEXT, `has_songs` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -121,6 +121,12 @@
             "columnName": "album_art_url",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "hasSongs",
+            "columnName": "has_songs",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -134,12 +140,12 @@
       },
       {
         "tableName": "searches",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`search_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sentence` TEXT NOT NULL, `stopped_at` INTEGER NOT NULL, `isEmptySearch` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`search_id` TEXT NOT NULL, `sentence` TEXT NOT NULL, `started_from` INTEGER NOT NULL, `isEmptySearch` INTEGER NOT NULL, PRIMARY KEY(`search_id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "search_id",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -149,8 +155,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "stoppedAt",
-            "columnName": "stopped_at",
+            "fieldPath": "startedFrom",
+            "columnName": "started_from",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -165,7 +171,7 @@
           "columnNames": [
             "search_id"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
@@ -174,7 +180,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd01799212df4de68e021a0178c379dd9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3b997490f4faa47b8a0c8a9f86915107')"
     ]
   }
 }

@@ -20,8 +20,8 @@ class SearchTerm(
 
         if (searchResult is Success) {
             switchToIo {
-                //TODO just save if they don't exist
-                runAndForget { searchTermRepository.saveSongs(searchResult.data) }
+                searchResult.data.forEach { searchTermRepository.saveAlbumBasedOnSong(it) }
+                searchTermRepository.saveSongs(searchResult.data)
             }
 
             if (searchResult.data.isEmpty()) {

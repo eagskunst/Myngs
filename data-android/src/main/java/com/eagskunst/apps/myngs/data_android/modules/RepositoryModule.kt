@@ -10,5 +10,5 @@ import org.koin.dsl.module
 
 val repositoriesModule = module {
     single { AlbumRepository(get(), get(), get()) }
-    single { SearchTermRepository(get(), get(), get()) }
+    single { SearchTermRepository(get(), get(), get(), get()) }
 }

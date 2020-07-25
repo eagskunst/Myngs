@@ -2,9 +2,10 @@ package com.eagskunst.apps.myngs.data.repositories.searchterm
 
 import com.eagskunst.apps.myngs.base.DataResult
 import com.eagskunst.apps.myngs.base.Success
+import com.eagskunst.apps.myngs.data.entities.Album
 import com.eagskunst.apps.myngs.data.entities.Search
 import com.eagskunst.apps.myngs.data.entities.Song
-import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
+import com.eagskunst.apps.myngs.data.repositories.album.AlbumDataStore
 import com.eagskunst.apps.myngs.data.repositories.songs.SongsDataStore
 
 /**
@@ -13,6 +14,7 @@ import com.eagskunst.apps.myngs.data.repositories.songs.SongsDataStore
 class SearchTermRepository(
     private val searchDataSource: SearchDataSource,
     private val searchDataStore: SearchDataStore,
+    private val albumDataStore: AlbumDataStore,
     private val songsDataStore: SongsDataStore
 ) {
 
@@ -30,7 +32,7 @@ class SearchTermRepository(
         }
 
         //If there is no search, create a new one
-        val newSearch = Search(sentence = sentence, stoppedAt = 20)
+        val newSearch = Search(sentence = sentence, startedFrom = 0)
         val result = searchDataSource.querySentenceForSongs(newSearch)
 
         if (result is Success) {
@@ -39,6 +41,10 @@ class SearchTermRepository(
         }
 
         return result
+    }
+
+    suspend fun saveAlbumBasedOnSong(song: Song){
+        albumDataStore.addAlbumOfSong(song)
     }
 
     suspend fun saveSongs(songs: List<Song>) {

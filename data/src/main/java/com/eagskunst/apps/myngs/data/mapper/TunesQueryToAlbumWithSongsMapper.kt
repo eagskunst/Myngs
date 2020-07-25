@@ -16,7 +16,8 @@ class TunesQueryToAlbumWithSongsMapper(private val songsMapper: TunesQueryToSong
                 id = collectionId!!,
                 creatorName = artistName!!,
                 name = collectionName!!,
-                albumArtUrl = artworkUrl100
+                albumArtUrl = artworkUrl100,
+                hasSongs = true
             )
         }
         val songs = songsMapper.map(value)
