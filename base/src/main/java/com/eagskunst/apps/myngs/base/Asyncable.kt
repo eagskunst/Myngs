@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
  */
 interface Asyncable {
 
-    suspend fun <T> runSafely(block: () -> T): DataResult<T> {
+    suspend fun <T> runSafely(block: suspend () -> T): DataResult<T> {
         return try {
             val res = block()
             Success(res)
@@ -18,11 +18,11 @@ interface Asyncable {
         }
     }
 
-    suspend fun <T> runAndForget(block: () -> T) = coroutineScope {
+    suspend fun <T> runAndForget(block: suspend () -> T) = coroutineScope {
         launch { runSafely(block) }
     }
 
-    suspend fun <T> runDeferred(block: () -> T) = coroutineScope {
+    suspend fun <T> runDeferred(block: suspend () -> T) = coroutineScope {
         async { runSafely(block) }
     }
 

@@ -8,37 +8,40 @@ import kotlinx.coroutines.withContext
  * Created by eagskunst in 25/7/2020.
  */
 
-abstract class BaseInteractor : Asyncable {
-    abstract val dispatchers: CoroutineDispatchers
+abstract class BaseInteractor(protected val dispatchers: CoroutineDispatchers) : Asyncable {
 
     @JvmName("switchToMainOnly")
-    suspend inline fun switchToMain(crossinline block: () -> Unit) {
-        withContext(dispatchers.main) { block() }
+    protected suspend inline fun switchToMain(crossinline block: suspend () -> Unit) {
+        withContext(`access$dispatchers`.main) { block() }
     }
 
     @JvmName("switchToMainWithResult")
-    suspend inline fun <T> switchToMain(crossinline block: () -> T): T {
-        return withContext(dispatchers.main) { block() }
+    protected suspend inline fun <T> switchToMain(crossinline block: suspend () -> T): T {
+        return withContext(`access$dispatchers`.main) { block() }
     }
 
     @JvmName("switchToIoOnly")
-    suspend inline fun switchToIo(crossinline block: () -> Unit) {
-        withContext(dispatchers.io) { block() }
+    protected suspend inline fun switchToIo(crossinline block: suspend () -> Unit) {
+        withContext(`access$dispatchers`.io) { block() }
     }
 
     @JvmName("switchToIoWithResult")
-    suspend inline fun <T> switchToIo(crossinline block: () -> T): T {
-        return withContext(dispatchers.io) { block() }
+    protected suspend inline fun <T> switchToIo(crossinline block: suspend () -> T): T {
+        return withContext(`access$dispatchers`.io) { block() }
     }
 
     @JvmName("switchToDefaultOnly")
-    suspend inline fun switchToDefault(crossinline block: () -> Unit) {
-        withContext(dispatchers.computation) { block() }
+    protected suspend inline fun switchToDefault(crossinline block: suspend () -> Unit) {
+        withContext(`access$dispatchers`.computation) { block() }
     }
 
     @JvmName("switchToDefaultWithResult")
-    suspend inline fun <T> switchToDefault(crossinline block: () -> T): T {
-        return withContext(dispatchers.computation) { block() }
+    protected suspend inline fun <T> switchToDefault(crossinline block: suspend () -> T): T {
+        return withContext(this.`access$dispatchers`.computation) { block() }
     }
+
+    @PublishedApi
+    internal val `access$dispatchers`: CoroutineDispatchers
+        get() = dispatchers
 
 }
