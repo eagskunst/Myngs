@@ -32,4 +32,7 @@ interface SongDao {
 
     @Query("SELECT * FROM songs")
     suspend fun getAllSongs(): List<Song>
+
+    @Query("SELECT * FROM songs WHERE id = :id LIMIT 1")
+    suspend fun getSongById(id: Long): Song?
 }
