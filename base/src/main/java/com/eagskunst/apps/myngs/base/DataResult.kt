@@ -1,5 +1,7 @@
 package com.eagskunst.apps.myngs.base
 
+import java.lang.Exception
+
 /**
  * Created by eagskunst in 25/7/2020.
  * From Chris Banes's Tivi:
@@ -17,14 +19,32 @@ sealed class DataResult<T> {
 }
 
 suspend fun <T, R> DataResult<T>.thenMap(mapBlock: suspend (T) -> R): DataResult<R> {
-    return when(this) {
+    return when (this) {
         is Success -> Success(mapBlock(get()))
-        is ErrorResult ->ErrorResult(this.throwable)
+        is ErrorResult -> ErrorResult(this.throwable)
     }
 }
+
 
 data class Success<T>(val data: T) : DataResult<T>() {
     override fun get(): T = data
 }
 
-data class ErrorResult<T>(val throwable: Throwable) : DataResult<T>()
+suspend fun <T> Success<T>.mapToException(exception: Exception): ErrorResult<T> {
+    return ErrorResult(exception)
+}
+
+data class ErrorResult<T>(
+    val throwable: Throwable,
+    val errorInfo: ErrorInformation = ErrorInformation(throwable)
+) : DataResult<T>() {
+}
+
+enum class ErrorMessage {
+    Http, Connection, Timeout, Unknown, TermNotFound
+}
+
+data class ErrorInformation(
+    val throwable: Throwable,
+    val message: ErrorMessage = ErrorMessage.Unknown
+)

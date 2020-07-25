@@ -14,7 +14,7 @@ interface Asyncable {
             val res = block()
             Success(res)
         } catch (e: Exception) {
-            ErrorResult(e.cause!!)
+            ErrorResult(e.cause ?: Exception(""))
         }
     }
 
