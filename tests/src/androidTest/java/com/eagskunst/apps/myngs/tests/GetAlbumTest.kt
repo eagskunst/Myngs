@@ -160,4 +160,28 @@ class GetAlbumTest: KoinTest {
         }
     }
 
+    @Test
+    fun afterGetAlbumSuccessWithNoSong_AssertAlbumHasNoSongs_RepeatQuery_VerifyServiceIsCalledTwice() {
+        val albumId = 1234567L
+        coEvery { albumService.getAlbumById(id = albumId) } returns TunesQueryResponse(
+            results = listOf(SampleData.sampleResponseWithAlbumFirst(albumId).first()),
+            resultCount = 1
+        ) andThen TunesQueryResponse(
+            results = SampleData.sampleResponseWithAlbumFirst(albumId),
+            resultCount = 20
+        )
+
+        runBlocking {
+
+            var data = getAlbum(albumId).getOrThrow()
+            assertThat(data.songs.size, `is`(0))
+            assertThat(data.album.hasSongs, `is`(false))
+            data = getAlbum(albumId).getOrThrow()
+
+            val dataFromDb = awaitForInsertion(albumId)
+            assertThat(data.songs.size, `is`(dataFromDb.songs.size))
+            assertThat(data.album.hasSongs, `is`(true))
+            coVerify(exactly = 2) { albumService.getAlbumById(id = albumId) }
+        }
+    }
 }
