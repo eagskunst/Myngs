@@ -18,7 +18,6 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
@@ -30,13 +29,13 @@ import org.koin.core.inject
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
-import java.io.IOException
 import java.net.SocketTimeoutException
 
 /**
  * Created by eagskunst in 25/7/2020.
  */
 @RunWith(AndroidJUnit4ClassRunner::class)
+@ExperimentalCoroutinesApi
 class SearchTermTest : KoinTest {
 
     @get:Rule
@@ -66,7 +65,6 @@ class SearchTermTest : KoinTest {
     }
 
 
-    @ExperimentalCoroutinesApi
     @Test
     fun searchSentence_ReturnSuccess_AssertDbInsertions_AndResult() {
         val sentence = "in utero"
@@ -92,7 +90,6 @@ class SearchTermTest : KoinTest {
 
     }
 
-    @ExperimentalCoroutinesApi
     @Test
     fun persistenceAndServiceVerificationForNotEmptyResult() {
         searchSentence_ReturnSuccess_VerifySearchWasSavedWithNotEmpty()
@@ -125,7 +122,6 @@ class SearchTermTest : KoinTest {
         }
     }
 
-    @ExperimentalCoroutinesApi
     @Test
     fun persistenceAndServiceVerificationForEmptyResult() {
         searchSentence_ReturnError_VerifySearchWasSavedWithEmpty_AndErrorMessageIsTermNotFound()
