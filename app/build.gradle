@@ -51,11 +51,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation Libs.Kotlin.stdlib
+    api project(':base')
     implementation Libs.AndroidX.coreKtx
     implementation Libs.AndroidX.appcompat
     implementation Libs.AndroidX.constraintlayout
-
-    implementation Libs.timber
-
 }

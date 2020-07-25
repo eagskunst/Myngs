@@ -1,4 +1,5 @@
 package com.eagskunst.apps.myngs.lib
 
-class MyClass {
-}
+/**
+ * Created by eagskunst in 24/7/2020.
+ */
