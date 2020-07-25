@@ -16,6 +16,13 @@ sealed class DataResult<T> {
 
 }
 
+suspend fun <T, R> DataResult<T>.thenMap(mapBlock: suspend (T) -> R): DataResult<R> {
+    return when(this) {
+        is Success -> Success(mapBlock(get()))
+        is ErrorResult ->ErrorResult(this.throwable)
+    }
+}
+
 data class Success<T>(val data: T) : DataResult<T>() {
     override fun get(): T = data
 }

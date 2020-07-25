@@ -1,4 +1,4 @@
-package com.eagskunst.apps.myngs.data.repositories.sources
+package com.eagskunst.apps.myngs.data.repositories.searchterm
 
 import com.eagskunst.apps.myngs.base.DataResult
 import com.eagskunst.apps.myngs.data.entities.Song

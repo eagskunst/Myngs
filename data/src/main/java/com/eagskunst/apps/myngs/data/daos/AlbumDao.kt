@@ -17,7 +17,7 @@ interface AlbumDao {
     suspend fun deleteAlbum(album: Album)
 
     @Query("SELECT * FROM albums WHERE id = :id")
-    suspend fun getAlbumById(id: Long): Album
+    suspend fun getAlbumById(id: Long): Album?
 
     @Query("SELECT * FROM albums")
     suspend fun getAllAlbums(): List<Album>

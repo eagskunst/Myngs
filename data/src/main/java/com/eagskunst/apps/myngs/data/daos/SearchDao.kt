@@ -28,6 +28,6 @@ interface SearchDao {
 
     @Transaction
     @Query("SELECT * FROM searches WHERE sentence = :sentence LIMIT 1")
-    suspend fun getSearchWithSongs(sentence: String): SearchWithSongs
+    suspend fun getSearchWithSongs(sentence: String): SearchWithSongs?
 
 }

@@ -1,9 +1,7 @@
-package com.eagskunst.apps.myngs.data.repositories
+package com.eagskunst.apps.myngs.data.repositories.searchterm
 
-import com.eagskunst.apps.myngs.base.Asyncable
 import com.eagskunst.apps.myngs.base.DataResult
 import com.eagskunst.apps.myngs.data.entities.Song
-import com.eagskunst.apps.myngs.data.repositories.sources.SearchDataSource
 
 /**
  * Created by eagskunst in 25/7/2020.
