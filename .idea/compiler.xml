@@ -4,5 +4,8 @@
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="commonSrc" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
