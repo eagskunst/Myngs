@@ -20,6 +20,9 @@ interface SearchDao {
     @Query("DELETE FROM searches WHERE search_id = :id LIMIT 1")
     fun deleteSearchById(id: Int)
 
+    @Query("UPDATE searches SET stopped_at = :lastPage WHERE search_id = :searchId")
+    fun updateStoppedAt(lastPage: Int, searchId: Int)
+
     @Query("DELETE FROM searches WHERE sentence = :sentence")
     fun deleteSearchBySentence(sentence: String)
 
