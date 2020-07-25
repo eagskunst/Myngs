@@ -1,4 +1,4 @@
-package com.eagskunst.apps.myngs.lib.entities
+package com.eagskunst.apps.myngs.data.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
