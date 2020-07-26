@@ -6,16 +6,16 @@ import org.koin.core.inject
 /**
  * Created by eagskunst in 25/7/2020.
  */
-interface ILogger {
+interface MyngsLogger {
     fun d(message: String)
     fun e(message: String)
     fun e(throwable: Throwable, message: String)
     fun i(message: String)
 }
 
-object Timber: ILogger, KoinComponent {
+object Timber: MyngsLogger, KoinComponent {
 
-    private val logger: ILogger by inject()
+    private val logger: MyngsLogger by inject()
 
     override fun d(message: String) = logger.d(message)
     override fun e(message: String) = logger.e(message)
