@@ -15,18 +15,7 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
     }
 
     compileOptions {
@@ -46,6 +35,21 @@ android {
         exclude 'META-INF/AL2.0'
         exclude 'META-INF/LGPL2.1'
         exclude("META-INF/*.kotlin_module")
+        exclude 'win32-x86-64/attach_hotspot_windows.dll'
+        exclude 'win32-x86/attach_hotspot_windows.dll'
+        exclude 'META-INF/licenses/ASM'
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+
+    testOptions {
+        animationsDisabled = true
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 
 }
@@ -58,6 +62,7 @@ dependencies {
     implementation project(':app')
 
     implementation Libs.AndroidX.Room.runtime
+    implementation Libs.Koin.android
 
     testImplementation Libs.AndroidX.Room.testing
     testImplementation Libs.Test.jUnit
@@ -66,12 +71,12 @@ dependencies {
     testImplementation Libs.AndroidX.Test.ktx
     testImplementation Libs.AndroidX.Test.rules
     testImplementation Libs.Test.Mockk.test
-    testImplementation Libs.Koin.test
 
     androidTestImplementation Libs.AndroidX.Test.Instrumentation.core
     androidTestImplementation Libs.AndroidX.Test.Instrumentation.archCore
     androidTestImplementation Libs.AndroidX.Test.Instrumentation.espressoContrib
     androidTestImplementation Libs.AndroidX.Test.Instrumentation.junit
+    androidTestImplementation Libs.AndroidX.Test.Instrumentation.junit_ktx
     androidTestImplementation Libs.Test.Mockk.androidTest
     androidTestImplementation Libs.Test.Kakao.core
     debugImplementation Libs.Koin.test

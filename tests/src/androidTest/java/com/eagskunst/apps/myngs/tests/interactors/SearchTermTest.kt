@@ -1,4 +1,4 @@
-package com.eagskunst.apps.myngs.tests
+package com.eagskunst.apps.myngs.tests.interactors
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -13,6 +13,9 @@ import com.eagskunst.apps.myngs.data.MyngsDb
 import com.eagskunst.apps.myngs.data.responses.TunesQueryResponse
 import com.eagskunst.apps.myngs.data.services.SearchService
 import com.eagskunst.apps.myngs.data_android.KoinModulesImpl
+import com.eagskunst.apps.myngs.tests.DispatchersModule
+import com.eagskunst.apps.myngs.tests.SampleData
+import com.eagskunst.apps.myngs.tests.TestDatabaseModule
 import com.eagskunst.apps.myngs.tests.robots.ConditionRobot
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -174,7 +177,9 @@ class SearchTermTest : KoinTest {
         val sentence = "big bang theory"
         coEvery { searchService.searchSentence(sentence, page = 0) } returns TunesQueryResponse(
             resultCount = 20,
-            results = SampleData.sampleResponse(kind = "collection")
+            results = SampleData.sampleResponse(
+                kind = "collection"
+            )
         )
 
         runBlocking {

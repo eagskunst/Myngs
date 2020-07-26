@@ -1,4 +1,4 @@
-package com.eagskunst.apps.myngs.tests
+package com.eagskunst.apps.myngs.tests.interactors
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -14,6 +14,9 @@ import com.eagskunst.apps.myngs.data.entities.relationships.AlbumWithSongs
 import com.eagskunst.apps.myngs.data.responses.TunesQueryResponse
 import com.eagskunst.apps.myngs.data.services.AlbumService
 import com.eagskunst.apps.myngs.data_android.KoinModulesImpl
+import com.eagskunst.apps.myngs.tests.DispatchersModule
+import com.eagskunst.apps.myngs.tests.SampleData
+import com.eagskunst.apps.myngs.tests.TestDatabaseModule
 import com.eagskunst.apps.myngs.tests.robots.ConditionRobot
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -70,7 +73,9 @@ class GetAlbumTest: KoinTest {
     fun getAlbum_ReturnSuccess_AssertDbInsertions_VerifyServiceWasCalled() {
         val albumId = 64845L
         coEvery { albumService.getAlbumById(id = albumId) } returns TunesQueryResponse(
-            results = SampleData.sampleResponseWithAlbumFirst(albumId),
+            results = SampleData.sampleResponseWithAlbumFirst(
+                albumId
+            ),
             resultCount = 20
         )
 
@@ -98,7 +103,9 @@ class GetAlbumTest: KoinTest {
         val albumId = 55457L
         val searchId = addSongAndSearch(albumId)
         coEvery { albumService.getAlbumById(id = albumId) } returns TunesQueryResponse(
-            results = SampleData.sampleResponseWithAlbumFirst(albumId),
+            results = SampleData.sampleResponseWithAlbumFirst(
+                albumId
+            ),
             resultCount = 20
         )
 
@@ -134,7 +141,9 @@ class GetAlbumTest: KoinTest {
     fun afterGetAlbumSuccess_RepeatQuery_VerifyServiceWasCalledJustOnce() {
         val albumId = 21654L
         coEvery { albumService.getAlbumById(id = albumId) } returns TunesQueryResponse(
-            results = SampleData.sampleResponseWithAlbumFirst(albumId),
+            results = SampleData.sampleResponseWithAlbumFirst(
+                albumId
+            ),
             resultCount = 20
         )
 
@@ -150,7 +159,9 @@ class GetAlbumTest: KoinTest {
     fun afterGetAlbumError_RepeatQuery_VerifyServiceWasCalledTwice() {
         val albumId = 564683L
         coEvery { albumService.getAlbumById(id = albumId) } throws SocketTimeoutException("Timeout") andThen(TunesQueryResponse(
-            results = SampleData.sampleResponseWithAlbumFirst(albumId),
+            results = SampleData.sampleResponseWithAlbumFirst(
+                albumId
+            ),
             resultCount = 20
         ))
 
@@ -166,10 +177,15 @@ class GetAlbumTest: KoinTest {
     fun afterGetAlbumSuccessWithNoSong_AssertAlbumHasNoSongs_RepeatQuery_VerifyServiceIsCalledTwice() {
         val albumId = 1234567L
         coEvery { albumService.getAlbumById(id = albumId) } returns TunesQueryResponse(
-            results = listOf(SampleData.sampleResponseWithAlbumFirst(albumId).first()),
+            results = listOf(
+                SampleData.sampleResponseWithAlbumFirst(
+                    albumId
+                ).first()),
             resultCount = 1
         ) andThen TunesQueryResponse(
-            results = SampleData.sampleResponseWithAlbumFirst(albumId),
+            results = SampleData.sampleResponseWithAlbumFirst(
+                albumId
+            ),
             resultCount = 20
         )
 

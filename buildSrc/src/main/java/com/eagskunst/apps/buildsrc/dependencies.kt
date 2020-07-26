@@ -9,7 +9,7 @@ object Libs {
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
     object AndroidX {
-        const val appcompat = "androidx.appcompat:appcompat:1.2.0-rc01"
+        const val appcompat = "androidx.appcompat:appcompat:1.1.0"
         const val coreKtx = "androidx.core:core-ktx:1.3.0-rc01"
         const val constraintlayout = "androidx.constraintlayout:constraintlayout:1.1.3"
         const val recyclerview = "androidx.recyclerview:recyclerview:1.1.0"
@@ -43,6 +43,7 @@ object Libs {
                 const val archCore = "androidx.arch.core:core-testing:2.1.0"
                 const val espressoContrib = "androidx.test.espresso:espresso-contrib:$version"
                 const val junit = "androidx.test.ext:junit:1.1.1"
+                const val junit_ktx = "androidx.test.ext:junit-ktx:1.1.0"
             }
         }
     }
