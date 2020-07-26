@@ -1,7 +1,8 @@
-package com.eagskunst.apps.myngs
+package com.eagskunst.apps.myngs.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.eagskunst.apps.myngs.R
 import com.eagskunst.apps.myngs.base.Timber
 
 class MainActivity : AppCompatActivity() {
