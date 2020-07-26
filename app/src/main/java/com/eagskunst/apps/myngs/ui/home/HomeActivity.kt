@@ -1,5 +1,6 @@
 package com.eagskunst.apps.myngs.ui.home
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.observe
@@ -7,11 +8,15 @@ import com.eagskunst.apps.myngs.R
 import com.eagskunst.apps.myngs.base_android.MyngsActivity
 import com.eagskunst.apps.myngs.base_android.hideKeyboard
 import com.eagskunst.apps.myngs.base_android.showToast
+import com.eagskunst.apps.myngs.data.entities.Song
 import com.eagskunst.apps.myngs.data.entities.albumAndCreatorNameString
 import com.eagskunst.apps.myngs.databinding.ActivityHomeBinding
 import com.eagskunst.apps.myngs.errorWithMessage
 import com.eagskunst.apps.myngs.loader
 import com.eagskunst.apps.myngs.song
+import com.eagskunst.apps.myngs.ui.albumdetail.AlbumDetailActivity
+import com.eagskunst.apps.myngs.ui.albumdetail.ParcelizedAlbum
+import com.eagskunst.apps.myngs.utils.Constants
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHomeBinding = ActivityHomeBinding::inflate) :
@@ -60,7 +65,7 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
                             albumAndCreatorText(song.albumAndCreatorNameString())
                             showAlbumImage(true)
                             onClick { _, _, _, _ ->
-                                showSnackbar(R.color.colorAccent, "Clicked song ${song.name}")
+                                goToAlbumDetail(song)
                             }
                         }
                     }
@@ -73,6 +78,13 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
                 }
             }
         }
+    }
+
+    private fun goToAlbumDetail(song: Song) {
+        val intent = Intent(this, AlbumDetailActivity::class.java).apply {
+            putExtra(Constants.IntentKeys.PARCELIZED_ALBUM_KEY, ParcelizedAlbum.fromSong(song))
+        }
+        startActivity(intent)
     }
 
 }

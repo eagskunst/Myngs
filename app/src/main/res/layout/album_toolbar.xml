@@ -18,9 +18,5 @@
         tools:title="X100Pre"
         />
 
-    <include
-        android:id="@+id/albumHeaderView"
-        layout="@layout/view_holder_album_header"/>
-
 
 </com.google.android.material.appbar.AppBarLayout>

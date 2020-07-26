@@ -21,7 +21,7 @@ data class ParcelizedAlbum(
                 id = albumId,
                 creatorName = creatorName,
                 name = albumName ?: "",
-                artwork = artwork
+                artwork = artwork?.replace("100", "300")
             )
         }
     }

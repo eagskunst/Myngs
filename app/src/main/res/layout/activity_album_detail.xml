@@ -10,10 +10,32 @@
     <include android:id="@+id/albumToolbarView"
         layout="@layout/album_toolbar"/>
 
-    <com.airbnb.epoxy.EpoxyRecyclerView
-        android:id="@+id/albumDetailRv"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/albumHeaderView"
+                layout="@layout/view_holder_album_header"
+                />
+
+            <com.airbnb.epoxy.EpoxyRecyclerView
+                android:id="@+id/albumDetailRv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

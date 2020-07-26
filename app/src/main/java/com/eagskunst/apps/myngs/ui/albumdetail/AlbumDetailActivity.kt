@@ -27,9 +27,14 @@ class AlbumDetailActivity(
                 ?: throw KotlinNullPointerException("This activity must receive an ParcelizedAlbum")
 
         with(binding.albumToolbarView) {
+            albumToolbar.setOnClickListener { finish() }
             albumToolbar.title = parcelizedAlbum.name
-            albumHeaderView.lifecycleOwner = this@AlbumDetailActivity
-            albumHeaderView.album = parcelizedAlbum
+        }
+
+        with(binding.albumHeaderView) {
+            lifecycleOwner = this@AlbumDetailActivity
+            album = parcelizedAlbum
+            artistNameText = "Album by ${parcelizedAlbum.creatorName}"
         }
 
         viewModel.viewState.observe(this) { state ->
@@ -43,6 +48,7 @@ class AlbumDetailActivity(
     }
 
     private fun buildRecyclerView(state: AlbumDetailViewState) {
+        binding.albumDetailRv.isNestedScrollingEnabled = false
         binding.albumDetailRv.withModels {
             if (state.isLoading) {
                 loader { id("loader") }
@@ -72,6 +78,7 @@ class AlbumDetailActivity(
                         song {
                             id(it.id)
                             song(it)
+                            albumAndCreatorText(it.creatorName)
                             showAlbumImage(false)
                             onClick { _, _, _, _ ->
                                 Timber.d("Clicked song $it")
@@ -79,7 +86,10 @@ class AlbumDetailActivity(
                         }
                     }
                 }
+
             }
+
+            binding.albumDetailRv.requestLayout()
         }
     }
 
