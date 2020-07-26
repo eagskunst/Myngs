@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.eagskunst.apps.myngs.data.entities.Song"/>
+        <import type="android.view.View.OnClickListener"/>
+
+        <variable
+            name="song"
+            type="Song" />
+
+        <variable
+            name="onClick"
+            type="OnClickListener" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:contentPadding="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{onClick}"
+            android:background="?attr/selectableItemBackground"
+            app:cardElevation="@dimen/common_card_elevation">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/albumArtworkIv"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    tools:src="@drawable/song_placeholder"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/nameTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:text="@{song.name}"
+                    tools:text="Domingo"
+                    android:layout_marginStart="@dimen/margin_texts_song_view_holder"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintStart_toEndOf="@id/albumArtworkIv"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <TextView
+                    android:id="@+id/albumAndCreatorTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="#B3000000"
+                    tools:text="Domingo"
+                    android:layout_marginStart="@dimen/margin_texts_song_view_holder"
+                    app:layout_constraintStart_toEndOf="@id/albumArtworkIv"
+                    app:layout_constraintTop_toBottomOf="@id/nameTv"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </FrameLayout>
+</layout>
