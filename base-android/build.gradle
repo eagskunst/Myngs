@@ -2,6 +2,7 @@ import com.eagskunst.apps.buildsrc.Libs
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -33,11 +34,16 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
 }
 
 dependencies {
     implementation project(':base')
     implementation Libs.timber
+    implementation Libs.Coil.coil
     api Libs.Google.material
     api Libs.AndroidX.appcompat
     api Libs.AndroidX.Lifecycle.livedata
