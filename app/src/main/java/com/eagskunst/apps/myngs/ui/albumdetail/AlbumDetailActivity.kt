@@ -2,10 +2,12 @@ package com.eagskunst.apps.myngs.ui.albumdetail
 
 import android.view.LayoutInflater
 import androidx.lifecycle.observe
+import com.eagskunst.apps.myngs.base.Timber
 import com.eagskunst.apps.myngs.base_android.MyngsActivity
 import com.eagskunst.apps.myngs.databinding.ActivityAlbumDetailBinding
 import com.eagskunst.apps.myngs.errorWithMessage
 import com.eagskunst.apps.myngs.loader
+import com.eagskunst.apps.myngs.myngsButton
 import com.eagskunst.apps.myngs.song
 import com.eagskunst.apps.myngs.utils.Constants
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -16,6 +18,7 @@ class AlbumDetailActivity(
 ) : MyngsActivity<ActivityAlbumDetailBinding>() {
 
     private val viewModel: AlbumDetailViewModel by viewModel()
+    private var albumId = 0L
 
     override fun onStart() {
         super.onStart()
@@ -36,6 +39,7 @@ class AlbumDetailActivity(
         }
 
         viewModel.getAlbumById(parcelizedAlbum.id)
+        albumId = parcelizedAlbum.id
     }
 
     private fun buildRecyclerView(state: AlbumDetailViewState) {
@@ -44,11 +48,17 @@ class AlbumDetailActivity(
                 loader { id("loader") }
                 return@withModels
             }
+
             when (state.error) {
                 is AlbumDetailViewState.Error.Network -> {
                     errorWithMessage {
                         id("errorview")
                         errorMessage("Check your internet connection and try again")
+                    }
+                    myngsButton {
+                        id("myngsButton")
+                        text("Retry")
+                        onClick { _, _, _, _ -> viewModel.getAlbumById(albumId) }
                     }
                 }
                 is AlbumDetailViewState.Error.EmptyAlbum -> {
@@ -63,6 +73,9 @@ class AlbumDetailActivity(
                             id(it.id)
                             song(it)
                             showAlbumImage(false)
+                            onClick { _, _, _, _ ->
+                                Timber.d("Clicked song $it")
+                            }
                         }
                     }
                 }
