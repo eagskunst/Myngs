@@ -23,6 +23,11 @@ android {
         }
     }
 
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -33,4 +38,8 @@ android {
 dependencies {
     implementation project(':base')
     implementation Libs.timber
+    api Libs.Google.material
+    api Libs.AndroidX.appcompat
+    api Libs.AndroidX.Lifecycle.livedata
+    api Libs.AndroidX.Lifecycle.viewmodel
 }
