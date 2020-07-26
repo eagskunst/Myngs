@@ -18,6 +18,7 @@ fun loadImageUrl(imageView: ImageView, url: String?) {
     }
 }
 
+@BindingAdapter("loadSongImage")
 fun loadSongImage(imageView: ImageView, url: String?) {
     url?.let {
         imageView.load(it) {
