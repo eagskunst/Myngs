@@ -26,6 +26,7 @@
                 android:hint="@string/search_a_song_hint"
                 android:inputType="text"
                 android:importantForAutofill="no"
+                android:imeOptions="actionSearch"
                 android:textColor="@android:color/black"/>
 
         </com.google.android.material.card.MaterialCardView>

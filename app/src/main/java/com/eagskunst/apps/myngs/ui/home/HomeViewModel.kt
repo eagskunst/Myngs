@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
 
     private val _viewState = MutableLiveData<HomeViewState>(HomeViewState(initial = true))
-    private val viewState = _viewState as LiveData<HomeViewState>
+    val viewState = _viewState as LiveData<HomeViewState>
 
 
     fun searchForTerm(sentence: String) {
