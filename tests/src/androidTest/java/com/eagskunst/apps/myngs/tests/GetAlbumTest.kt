@@ -120,7 +120,9 @@ class GetAlbumTest: KoinTest {
                 creatorName = "creator0",
                 previewUrl = null,
                 searchId = search.id,
-                albumId = albumId
+                albumId = albumId,
+                albumName = null,
+                artwork = null
             )
             songDao().addSong(song)
             assert(songDao().getSongById(0.toLong()) != null)

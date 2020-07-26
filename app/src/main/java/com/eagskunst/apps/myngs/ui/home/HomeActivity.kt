@@ -1,21 +1,16 @@
 package com.eagskunst.apps.myngs.ui.home
 
 import android.view.LayoutInflater
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import com.eagskunst.apps.myngs.R
-import com.eagskunst.apps.myngs.base.ErrorMessage
 import com.eagskunst.apps.myngs.base_android.MyngsActivity
 import com.eagskunst.apps.myngs.data.entities.albumAndCreatorNameString
 import com.eagskunst.apps.myngs.databinding.ActivityHomeBinding
 import com.eagskunst.apps.myngs.emptySearch
 import com.eagskunst.apps.myngs.loader
 import com.eagskunst.apps.myngs.song
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import org.koin.android.scope.lifecycleScope
-import org.koin.android.viewmodel.ext.android.getViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHomeBinding = ActivityHomeBinding::inflate) :
@@ -29,6 +24,11 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
             if (state.initial) return@observe
             
             buildRecyclerView(state)
+        }
+
+        lifecycleScope.launchWhenStarted {
+            delay(2000)
+            viewModel.searchForTerm("in utero")
         }
     }
 

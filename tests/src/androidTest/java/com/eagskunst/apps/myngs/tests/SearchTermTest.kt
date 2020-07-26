@@ -81,7 +81,7 @@ class SearchTermTest : KoinTest {
             }
             val songsFromDb = database.songDao().getAllSongs()
             assert(res is Success)
-            assert(songs.isNotEmpty())
+            assertThat("songs not zero", songs.size != 0)
             assertThat(songs.size, `is`(songsFromDb.size))
             assertThat(songs.first().name, `is`("song0"))
             assertThat(songs.first().id, `is`(songsFromDb.first().id))
@@ -129,7 +129,7 @@ class SearchTermTest : KoinTest {
             assert(sentenceSearch != null)
             val searchWithSongsRes = searchTerms.getSavedSearch(sentence).getOrThrow()
             assertThat(sentenceSearch!!.id, `is`(searchWithSongsRes.search.id))
-            assert(searchWithSongsRes.songs.isNotEmpty())
+            assertThat(searchWithSongsRes.songs.size, `is`(20))
         }
     }
 

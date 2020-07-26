@@ -26,7 +26,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/infoTv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"

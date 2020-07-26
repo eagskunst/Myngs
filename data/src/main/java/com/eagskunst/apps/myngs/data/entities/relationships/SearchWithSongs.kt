@@ -12,7 +12,7 @@ data class SearchWithSongs(
     @Embedded val search: Search,
     @Relation(
         parentColumn = "search_id",
-        entityColumn = "id"
+        entityColumn = "search_id"
     )
     val songs: List<Song>
 )
