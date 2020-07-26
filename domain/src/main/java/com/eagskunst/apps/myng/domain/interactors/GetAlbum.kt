@@ -16,7 +16,10 @@ class GetAlbum(
 ) : BaseInteractor(dispatchers) {
 
     suspend operator fun invoke(albumId: Long): DataResult<AlbumWithSongs> {
-        val result = albumRepository.getAlbumWithSongsById(albumId)
+        val result = switchToIoWithResult {
+            albumRepository.getAlbumWithSongsById(albumId)
+        }
+
         if (result is Success) {
             //TODO: Just save if it does not exist
             runAndForget {

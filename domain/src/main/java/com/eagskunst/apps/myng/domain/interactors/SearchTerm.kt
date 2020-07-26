@@ -18,7 +18,9 @@ class SearchTerm(
 
 
     suspend fun searchSentenceForSongs(sentence: String): DataResult<List<Song>> {
-        val searchResult = searchTermRepository.searchSentence(sentence)
+        val searchResult = switchToIoWithResult {
+            searchTermRepository.searchSentence(sentence)
+        }
 
         if (searchResult is Success) {
             runAndForget {
@@ -36,8 +38,8 @@ class SearchTerm(
         return searchResult
     }
 
-    suspend fun getSavedSearches(): DataResult<List<Search>> {
-       return searchTermRepository.savedSearches()
+    suspend fun getSavedSearches(): DataResult<List<Search>> = switchToIoWithResult {
+        searchTermRepository.savedSearches()
     }
 
     suspend fun getSavedSearch(searchId: String): DataResult<SearchWithSongs> {

@@ -15,33 +15,27 @@ import java.net.SocketTimeoutException
 
 abstract class BaseInteractor(protected val dispatchers: CoroutineDispatchers) : Asyncable {
 
-    @JvmName("switchToMainOnly")
     protected suspend inline fun switchToMain(crossinline block: suspend () -> Unit) {
         withContext(`access$dispatchers`.main) { block() }
     }
 
-    @JvmName("switchToMainWithResult")
-    protected suspend inline fun <T> switchToMain(crossinline block: suspend () -> T): T {
+    protected suspend inline fun <T> switchToMainWithResult(crossinline block: suspend () -> T): T {
         return withContext(`access$dispatchers`.main) { block() }
     }
 
-    @JvmName("switchToIoOnly")
     protected suspend inline fun switchToIo(crossinline block: suspend () -> Unit) {
         withContext(`access$dispatchers`.io) { block() }
     }
 
-    @JvmName("switchToIoWithResult")
-    protected suspend inline fun <T> switchToIo(crossinline block: suspend () -> T): T {
+    protected suspend inline fun <T> switchToIoWithResult(crossinline block: suspend () -> T): T {
         return withContext(`access$dispatchers`.io) { block() }
     }
 
-    @JvmName("switchToDefaultOnly")
     protected suspend inline fun switchToDefault(crossinline block: suspend () -> Unit) {
         withContext(`access$dispatchers`.computation) { block() }
     }
 
-    @JvmName("switchToDefaultWithResult")
-    protected suspend inline fun <T> switchToDefault(crossinline block: suspend () -> T): T {
+    protected suspend inline fun <T> switchToDefaultWithResult(crossinline block: suspend () -> T): T {
         return withContext(this.`access$dispatchers`.computation) { block() }
     }
 

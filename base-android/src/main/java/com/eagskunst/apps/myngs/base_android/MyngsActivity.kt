@@ -3,6 +3,7 @@ package com.eagskunst.apps.myngs.base_android
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -27,7 +28,11 @@ abstract class MyngsActivity<B: ViewBinding>: AppCompatActivity() {
     }
 
     protected fun showSnackbar(color: Int, message: String, duration: Int = Snackbar.LENGTH_SHORT) {
-        Snackbar.make(binding.root, message, duration).show()
+        Snackbar.make(binding.root, message, duration).run {
+            setBackgroundTint(color)
+            setActionTextColor(ContextCompat.getColor(this@MyngsActivity, R.color.color_default_white))
+            show()
+        }
     }
 
 }

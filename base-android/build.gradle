@@ -48,4 +48,5 @@ dependencies {
     api Libs.AndroidX.appcompat
     api Libs.AndroidX.Lifecycle.livedata
     api Libs.AndroidX.Lifecycle.viewmodel
+    api Libs.AndroidX.Lifecycle.runtime
 }
