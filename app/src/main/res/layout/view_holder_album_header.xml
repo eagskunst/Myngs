@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.eagskunst.apps.myngs.data.entities.Album"/>
+        <import type="com.eagskunst.apps.myngs.ui.albumdetail.ParcelizedAlbum"/>
 
         <variable
             name="album"
-            type="Album" />
+            type="ParcelizedAlbum" />
 
         <variable
             name="artistNameText"
@@ -26,7 +26,7 @@
             android:layout_height="100dp"
             android:layout_marginTop="20dp"
             tools:src="@drawable/song_placeholder"
-            loadSongImage="@{album.albumArtUrl}"
+            loadSongImage="@{album.artwork}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
