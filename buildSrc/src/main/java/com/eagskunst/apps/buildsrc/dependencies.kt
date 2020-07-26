@@ -12,6 +12,7 @@ object Libs {
         const val appcompat = "androidx.appcompat:appcompat:1.2.0-rc01"
         const val coreKtx = "androidx.core:core-ktx:1.3.0-rc01"
         const val constraintlayout = "androidx.constraintlayout:constraintlayout:1.1.3"
+        const val recyclerview = "androidx.recyclerview:recyclerview:1.1.0"
 
         object Room {
             private const val version = "2.3.0-alpha02"
@@ -21,6 +22,14 @@ object Libs {
             const val ktx = "androidx.room:room-ktx:$version"
             const val testing = "androidx.room:room-testing:$version"
         }
+
+        object Lifecycle {
+            private const val version = "2.2.0"
+            const val extensions = "androidx.lifecycle:lifecycle-extensions:$version"
+            const val livedata = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
+            const val viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
+        }
+
 
         object Test {
             const val core = "androidx.arch.core:core-testing:2.1.0"
@@ -94,6 +103,22 @@ object Libs {
         const val androidScope = "org.koin:koin-android-scope:$version"
         const val androidViewModel = "org.koin:koin-android-viewmodel:$version"
         const val test = "org.koin:koin-test:$version"
+    }
+
+    object Google {
+        const val material = "com.google.android.material:material:1.1.0"
+    }
+
+    object Epoxy {
+        private const val version = "4.0.0-beta5"
+        const val epoxy = "com.airbnb.android:epoxy:$version"
+        const val dataBinding = "com.airbnb.android:epoxy-databinding:$version"
+        const val processor = "com.airbnb.android:epoxy-processor:$version"
+    }
+
+    object Coil {
+        private const val version = "0.11.0"
+        const val coil = "io.coil-kt:coil:$version"
     }
 
 }

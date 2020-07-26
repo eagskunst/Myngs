@@ -29,6 +29,17 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        enableParallelEpoxyProcessing:"true",
+                        requireHashCodeInEpoxyModels: "true",
+                        requireAbstractEpoxyModels: "true",
+                ]
+            }
+        }
+
     }
 
     buildTypes {
@@ -75,5 +86,14 @@ dependencies {
     implementation Libs.Koin.androidViewModel
     implementation Libs.AndroidX.coreKtx
     implementation Libs.AndroidX.appcompat
+    implementation Libs.AndroidX.recyclerview
     implementation Libs.AndroidX.constraintlayout
+    implementation Libs.AndroidX.Lifecycle.livedata
+    implementation Libs.AndroidX.Lifecycle.viewmodel
+    implementation Libs.Coroutines.android
+    implementation Libs.Google.material
+    implementation Libs.Coil.coil
+    implementation Libs.Epoxy.epoxy
+    implementation Libs.Epoxy.dataBinding
+    kapt Libs.Epoxy.processor
 }
