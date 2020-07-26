@@ -1,10 +1,14 @@
 package com.eagskunst.apps.myngs.ui.home
 
 import android.view.LayoutInflater
+import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import com.eagskunst.apps.myngs.R
 import com.eagskunst.apps.myngs.base_android.MyngsActivity
+import com.eagskunst.apps.myngs.base_android.UtilityTextWatcher
+import com.eagskunst.apps.myngs.base_android.hideKeyboard
+import com.eagskunst.apps.myngs.base_android.showToast
 import com.eagskunst.apps.myngs.data.entities.albumAndCreatorNameString
 import com.eagskunst.apps.myngs.databinding.ActivityHomeBinding
 import com.eagskunst.apps.myngs.emptySearch
@@ -26,9 +30,19 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
             buildRecyclerView(state)
         }
 
-        lifecycleScope.launchWhenStarted {
-            delay(2000)
-            viewModel.searchForTerm("in utero")
+        binding.homeHeader.searchInput.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val input = binding.homeHeader.searchInput.text.toString()
+                if (input.isNotEmpty()) {
+                    viewModel.searchForTerm(input)
+                    hideKeyboard()
+                }
+                else {
+                    showToast("Write something first!")
+                }
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
         }
     }
 

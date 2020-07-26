@@ -10,6 +10,7 @@ import com.eagskunst.apps.myngs.base.errors.EmptySearchException
 import com.eagskunst.apps.myngs.base_android.MyngsViewModel
 import com.eagskunst.apps.myngs.data.entities.Song
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 /**
  * Created by eagskunst in 25/7/2020.
@@ -29,7 +30,8 @@ class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
             )
 
             updateState(newState)
-            val result = searchTerm.searchSentenceForSongs(sentence)
+            //Change word to lower case, so searches with different case all return the same
+            val result = searchTerm.searchSentenceForSongs(sentence.toLowerCase(Locale.ROOT))
 
             newState = when (result) {
                 is Success -> newState.copy(songs = result.data)

@@ -25,6 +25,8 @@
 
                 <EditText
                     android:id="@+id/searchInput"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
