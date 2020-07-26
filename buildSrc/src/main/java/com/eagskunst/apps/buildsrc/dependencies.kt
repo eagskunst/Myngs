@@ -13,6 +13,8 @@ object Libs {
         const val coreKtx = "androidx.core:core-ktx:1.3.0-rc01"
         const val constraintlayout = "androidx.constraintlayout:constraintlayout:1.1.3"
         const val recyclerview = "androidx.recyclerview:recyclerview:1.1.0"
+        const val activity = "androidx.activity:activity-ktx:1.2.0-alpha06"
+        const val fragment = "androidx.fragment:fragment-ktx:1.3.0-alpha06"
 
         object Room {
             private const val version = "2.3.0-alpha02"
