@@ -6,7 +6,7 @@
     <data>
 
         <import type="com.eagskunst.apps.myngs.data.entities.Song"/>
-        <import type="android.view.View.OnClickListener"/>
+        <import type="android.view.View"/>
 
         <variable
             name="song"
@@ -14,11 +14,15 @@
 
         <variable
             name="onClick"
-            type="OnClickListener" />
+            type="View.OnClickListener" />
 
         <variable
             name="albumAndCreatorText"
             type="String" />
+
+        <variable
+            name="showAlbumImage"
+            type="Boolean" />
 
     </data>
 
@@ -49,6 +53,7 @@
                     android:layout_width="40dp"
                     loadSongImage="@{song.artwork}"
                     android:layout_height="match_parent"
+                    android:visibility="@{showAlbumImage ? View.VISIBLE : View.GONE}"
                     tools:src="@drawable/song_placeholder"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
@@ -76,7 +81,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
-                    android:textColor="#B3000000"
+                    android:textColor="@color/blackWithAlpha"
                     android:layout_marginStart="@dimen/margin_texts_song_view_holder"
                     android:text="@{albumAndCreatorText}"
                     android:scrollHorizontally="true"

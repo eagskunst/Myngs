@@ -58,6 +58,7 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
                             id(song.id)
                             song(song)
                             albumAndCreatorText(song.albumAndCreatorNameString())
+                            showAlbumImage(true)
                             onClick { _, _, _, _ ->
                                 showSnackbar(R.color.colorAccent, "Clicked song ${song.name}")
                             }

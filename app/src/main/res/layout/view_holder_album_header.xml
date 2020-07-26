@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.eagskunst.apps.myngs.data.entities.Album"/>
+
+        <variable
+            name="album"
+            type="Album" />
+
+        <variable
+            name="artistNameText"
+            type="String" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:id="@+id/albumCoverIv"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            tools:src="@drawable/song_placeholder"
+            loadSongImage="@{album.albumArtUrl}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/albumNameTv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:ellipsize="marquee"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@{album.name}"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/albumCoverIv"
+            tools:text="X100PRE" />
+
+        <TextView
+            android:id="@+id/artistNameTv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:ellipsize="marquee"
+            android:text="@{artistNameText}"
+            android:textColor="@color/blackWithAlpha"
+            android:textSize="16sp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/albumNameTv"
+            tools:text="Album by Bad Bunny" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
