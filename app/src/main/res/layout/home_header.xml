@@ -7,29 +7,38 @@
 
     <com.google.android.material.appbar.CollapsingToolbarLayout
         android:layout_width="match_parent"
-        app:layout_scrollFlags="enterAlwaysCollapsed"
-        app:titleEnabled="false"
+        app:layout_scrollFlags="scroll|enterAlways"
+        android:fitsSystemWindows="true"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.card.MaterialCardView
+        <com.google.android.material.appbar.MaterialToolbar
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            app:cardElevation="@dimen/common_card_elevation"
-            android:layout_margin="20dp">
+            android:layout_height="100dp"
+            app:layout_collapseMode="pin"
+            >
 
-            <EditText
-                android:id="@+id/searchInput"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:textColorHint="@android:color/darker_gray"
-                android:hint="@string/search_a_song_hint"
-                android:inputType="text"
-                android:importantForAutofill="no"
-                android:imeOptions="actionSearch"
-                android:textColor="@android:color/black"/>
+                android:layout_height="60dp"
+                app:cardElevation="@dimen/common_card_elevation"
+                android:layout_margin="20dp">
 
-        </com.google.android.material.card.MaterialCardView>
+                <EditText
+                    android:id="@+id/searchInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:hint="@string/search_a_song_hint"
+                    android:inputType="text"
+                    android:importantForAutofill="no"
+                    android:imeOptions="actionSearch"
+                    android:textColor="@android:color/black"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
 
     </com.google.android.material.appbar.CollapsingToolbarLayout>
 
