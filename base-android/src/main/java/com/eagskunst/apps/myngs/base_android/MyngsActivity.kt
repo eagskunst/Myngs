@@ -1,6 +1,7 @@
 package com.eagskunst.apps.myngs.base_android
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
@@ -10,15 +11,14 @@ import com.google.android.material.snackbar.Snackbar
  */
 abstract class MyngsActivity<B: ViewBinding>: AppCompatActivity() {
 
-    abstract val layoutRes: Int
-    abstract val bindingFunction:(Int) -> B
+    abstract val bindingFunction:(LayoutInflater) -> B
     private lateinit var _binding: B
     protected val binding: B
         get() = _binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = bindingFunction(layoutRes)
+        _binding = bindingFunction(layoutInflater)
         setContentView(binding.root)
     }
 
