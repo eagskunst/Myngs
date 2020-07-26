@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import androidx.lifecycle.observe
 import com.eagskunst.apps.myngs.base_android.MyngsActivity
 import com.eagskunst.apps.myngs.databinding.ActivityAlbumDetailBinding
+import com.eagskunst.apps.myngs.errorWithMessage
 import com.eagskunst.apps.myngs.loader
 import com.eagskunst.apps.myngs.song
 import com.eagskunst.apps.myngs.utils.Constants
@@ -39,9 +40,24 @@ class AlbumDetailActivity(
 
     private fun buildRecyclerView(state: AlbumDetailViewState) {
         binding.albumDetailRv.withModels {
-            when {
-                state.isLoading -> loader { id("loader") }
-                state.error == AlbumDetailViewState.Error.None -> {
+            if (state.isLoading) {
+                loader { id("loader") }
+                return@withModels
+            }
+            when (state.error) {
+                is AlbumDetailViewState.Error.Network -> {
+                    errorWithMessage {
+                        id("errorview")
+                        errorMessage("Check your internet connection and try again")
+                    }
+                }
+                is AlbumDetailViewState.Error.EmptyAlbum -> {
+                    errorWithMessage {
+                        id("errorview")
+                        errorMessage("Looks like this album don't have any songs. Go back and try with another song")
+                    }
+                }
+                is AlbumDetailViewState.Error.None -> {
                     state.albumWithSongs!!.songs.forEach {
                         song {
                             id(it.id)
@@ -50,7 +66,6 @@ class AlbumDetailActivity(
                         }
                     }
                 }
-                //TODO add error for network
             }
         }
     }

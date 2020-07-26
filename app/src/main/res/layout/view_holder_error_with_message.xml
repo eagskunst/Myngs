@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="errorMessage"
+            type="String" />
 
     </data>
 
@@ -32,7 +37,8 @@
             android:gravity="center"
             android:lines="2"
             android:padding="20dp"
-            android:text="@string/empty_search_text"
+            android:text="@{errorMessage}"
+            tools:text="@string/empty_search_text"
             android:textColor="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
