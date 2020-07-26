@@ -81,6 +81,7 @@ dependencies {
     implementation project(':base-android')
     implementation project(':data-android')
     implementation project(':domain')
+    implementation project(':data')
     implementation Libs.Koin.android
     implementation Libs.Koin.androidScope
     implementation Libs.Koin.androidViewModel
