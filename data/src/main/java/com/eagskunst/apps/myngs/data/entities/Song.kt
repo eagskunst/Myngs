@@ -16,5 +16,7 @@ data class Song(
     @ColumnInfo(name = "creator_name") val creatorName: String,
     @ColumnInfo(name = "album_id", index = true) val albumId: Long,
     @ColumnInfo(name = "preview_url") val previewUrl: String?,
-    @ColumnInfo(name = "search_id", index = true) val searchId: String?
+    @ColumnInfo(name = "search_id", index = true) val searchId: String?,
+    @ColumnInfo(name = "album_name") val albumName: String?,
+    @ColumnInfo(name = "artwork") val artwork: String?
 )

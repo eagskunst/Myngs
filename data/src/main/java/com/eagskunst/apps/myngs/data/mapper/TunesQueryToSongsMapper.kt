@@ -20,6 +20,8 @@ class TunesQueryToSongsMapper : Mapper<TunesQueryResponse, List<Song>> {
                     creatorName = it.artistName!!,
                     albumId = it.collectionId!!,
                     previewUrl = it.previewUrl,
+                    albumName = it.collectionName,
+                    artwork = it.artworkUrl100,
                     searchId = searchId
                 )
             }
