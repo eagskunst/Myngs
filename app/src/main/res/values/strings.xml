@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Myngs</string>
     <string name="search_a_song_hint">Search a song</string>
+    <string name="empty_search_text">Seems like the search did not return any results. Try with another words!</string>
 </resources>
