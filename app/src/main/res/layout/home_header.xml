@@ -2,6 +2,7 @@
 <com.google.android.material.appbar.AppBarLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:backgroundTint="@color/colorDefaultBg"
     android:layout_height="wrap_content">
 
     <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -10,9 +11,25 @@
         app:titleEnabled="false"
         android:layout_height="wrap_content">
 
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="20dp">
+
+            <EditText
+                android:id="@+id/searchInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:textColorHint="@android:color/darker_gray"
+                android:hint="@string/search_a_song_hint"
+                android:inputType="text"
+                android:importantForAutofill="no"
+                android:textColor="@android:color/black"/>
+
+        </com.google.android.material.card.MaterialCardView>
 
     </com.google.android.material.appbar.CollapsingToolbarLayout>
-
 
 
 </com.google.android.material.appbar.AppBarLayout>

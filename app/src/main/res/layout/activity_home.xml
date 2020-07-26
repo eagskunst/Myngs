@@ -3,9 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.HomeActivity">
 
-<include layout="@layout/home_header"/>
+    <include layout="@layout/home_header"/>
+
+    <com.airbnb.epoxy.EpoxyRecyclerView
+        android:id="@+id/songsRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
