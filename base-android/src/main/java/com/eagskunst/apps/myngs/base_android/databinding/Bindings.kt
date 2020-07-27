@@ -22,7 +22,6 @@ fun loadImageUrl(imageView: ImageView, url: String?) {
 fun loadSongImage(imageView: ImageView, url: String?) {
     url?.let {
         imageView.load(it) {
-            crossfade(true)
             placeholder(R.drawable.song_placeholder)
             error(R.drawable.song_placeholder)
         }

@@ -3,9 +3,13 @@ package com.eagskunst.apps.myngs.ui.home
 import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.TooltipCompat
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.observe
 import com.eagskunst.apps.myngs.R
 import com.eagskunst.apps.myngs.base_android.MyngsActivity
@@ -14,6 +18,7 @@ import com.eagskunst.apps.myngs.base_android.showToast
 import com.eagskunst.apps.myngs.data.entities.Song
 import com.eagskunst.apps.myngs.data.entities.albumAndCreatorNameString
 import com.eagskunst.apps.myngs.databinding.ActivityHomeBinding
+import com.eagskunst.apps.myngs.databinding.ViewHolderSongBinding
 import com.eagskunst.apps.myngs.errorWithMessage
 import com.eagskunst.apps.myngs.imageWithMessage
 import com.eagskunst.apps.myngs.loader
@@ -25,6 +30,8 @@ import com.eagskunst.apps.myngs.ui.savedsearches.ParcelableSearch
 import com.eagskunst.apps.myngs.ui.savedsearches.SavedSearchesActivity
 import com.eagskunst.apps.myngs.utils.Constants
 import org.koin.android.viewmodel.ext.android.viewModel
+
+typealias TransitionPair = androidx.core.util.Pair<View, String>
 
 class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHomeBinding = ActivityHomeBinding::inflate) :
     MyngsActivity<ActivityHomeBinding>() {
@@ -98,7 +105,9 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
                     }
                 }
 
-                state.isLoading -> { loader { id("loader") } }
+                state.isLoading -> {
+                    loader { id("loader") }
+                }
 
                 state.error == HomeViewState.Error.None -> {
                     state.songs!!.forEach { song ->
@@ -107,8 +116,8 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
                             song(song)
                             albumAndCreatorText(song.albumAndCreatorNameString())
                             showAlbumImage(true)
-                            onClick { _, _, _, _ ->
-                                goToAlbumDetail(song)
+                            onClick { _, parentView, _, _ ->
+                                goToAlbumDetail(song, parentView.dataBinding.root)
                             }
                         }
                     }
@@ -138,11 +147,26 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
         }
     }
 
-    private fun goToAlbumDetail(song: Song) {
+    private fun goToAlbumDetail(song: Song, view: View) {
+        val iv = view.findViewById<ImageView>(R.id.albumArtworkIv)
+        val tv = view.findViewById<TextView>(R.id.albumAndCreatorTv)
+        val pairs = listOf<TransitionPair>(
+            androidx.core.util.Pair(
+                iv,
+                Constants.Transitions.ALBUM_IMAGE_TRANSITION_NAME
+            )/*,
+            androidx.core.util.Pair(
+                tv,
+                Constants.Transitions.ALBUM_TITLE_TRANSITION_NAME
+            )*/
+        )
+
         val intent = Intent(this, AlbumDetailActivity::class.java).apply {
             putExtra(Constants.IntentKeys.PARCELIZED_ALBUM_KEY, ParcelableAlbum.fromSong(song))
         }
-        startActivity(intent)
+
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs[0])
+        startActivity(intent, options.toBundle())
     }
 
     private fun goToSavedSearches() {

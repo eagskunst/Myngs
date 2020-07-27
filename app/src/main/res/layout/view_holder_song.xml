@@ -53,9 +53,10 @@
                     android:layout_width="40dp"
                     loadSongImage="@{song.artwork}"
                     android:layout_height="0dp"
-                    app:layout_constraintVertical_weight="3"
                     android:visibility="@{showAlbumImage ? View.VISIBLE : View.GONE}"
+                    android:transitionName="@string/albumImage"
                     tools:src="@drawable/song_placeholder"
+                    app:layout_constraintVertical_weight="3"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
@@ -84,6 +85,7 @@
                     android:ellipsize="marquee"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
+                    android:transitionName="@string/albumTitle"
                     android:text="@{albumAndCreatorText}"
                     android:textColor="@color/blackWithAlpha"
                     android:textSize="12sp"

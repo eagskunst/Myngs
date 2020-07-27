@@ -2,6 +2,7 @@ package com.eagskunst.apps.myngs.ui.albumdetail
 
 import android.content.Intent
 import android.view.LayoutInflater
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.observe
 import com.eagskunst.apps.myngs.base_android.MyngsActivity
 import com.eagskunst.apps.myngs.data.entities.Song
@@ -25,12 +26,13 @@ class AlbumDetailActivity(
 
     override fun onStart() {
         super.onStart()
+        binding.albumToolbarView.albumToolbar.title
         val parcelableAlbum =
             intent?.extras?.getParcelable<ParcelableAlbum>(Constants.IntentKeys.PARCELIZED_ALBUM_KEY)
                 ?: throw KotlinNullPointerException("This activity must receive an ParcelizedAlbum")
 
         with(binding.albumToolbarView) {
-            albumToolbar.setOnClickListener { finish() }
+            albumToolbar.setOnClickListener { finishAfterTransition() }
             albumToolbar.title = parcelableAlbum.name
         }
 
