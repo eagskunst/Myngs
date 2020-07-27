@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 /**
  * Created by eagskunst in 26/7/2020.
  */
-class SavedSearchesViewModel(private val searchTerm: SearchTerm): MyngsViewModel() {
+class SavedSearchesViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
 
     private val _viewState = MutableLiveData<SavedSearchesViewState>(SavedSearchesViewState())
     val viewState = _viewState as LiveData<SavedSearchesViewState>
@@ -31,5 +31,4 @@ class SavedSearchesViewModel(private val searchTerm: SearchTerm): MyngsViewModel
     }
 
     fun hasSearches() = _viewState.value!!.searches != null && _viewState.value!!.searches!!.isNotEmpty()
-
 }

@@ -79,5 +79,4 @@ class SavedSearchesActivity(
         setResult(resultCode, intent)
         finish()
     }
-
 }

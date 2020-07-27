@@ -1,7 +1,6 @@
 package com.eagskunst.apps.myngs.data_android.modules
 
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.eagskunst.apps.myngs.data.MyngsDb
 import com.eagskunst.apps.myngs.data_android.MyngsRoomDatabase
 import org.koin.android.ext.koin.androidContext

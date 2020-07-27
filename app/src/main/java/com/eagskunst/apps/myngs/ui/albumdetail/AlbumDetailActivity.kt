@@ -92,7 +92,6 @@ class AlbumDetailActivity(
                         }
                     }
                 }
-
             }
 
             binding.albumDetailRv.requestLayout()
@@ -106,5 +105,4 @@ class AlbumDetailActivity(
 
         startActivity(intent)
     }
-
 }

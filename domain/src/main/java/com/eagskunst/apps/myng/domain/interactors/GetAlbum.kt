@@ -21,7 +21,7 @@ class GetAlbum(
         }
 
         if (result is Success) {
-            //TODO: Just save if it does not exist
+            // TODO: Just save if it does not exist
             runAndForget {
                 albumRepository.saveAlbumWithSongs(result.data)
             }

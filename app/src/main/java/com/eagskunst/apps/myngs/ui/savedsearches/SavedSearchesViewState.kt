@@ -11,7 +11,7 @@ data class SavedSearchesViewState(
     val searches: List<Search>? = null
 ) {
     sealed class Error {
-        object None: Error()
-        object NoSearchesError: Error()
+        object None : Error()
+        object NoSearchesError : Error()
     }
 }

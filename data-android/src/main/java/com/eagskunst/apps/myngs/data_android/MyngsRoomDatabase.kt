@@ -18,4 +18,4 @@ import com.eagskunst.apps.myngs.data.entities.Song
     ],
     version = 1
 )
-abstract class MyngsRoomDatabase: RoomDatabase(), MyngsDb
+abstract class MyngsRoomDatabase : RoomDatabase(), MyngsDb

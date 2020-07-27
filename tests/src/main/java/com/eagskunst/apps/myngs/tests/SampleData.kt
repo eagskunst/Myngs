@@ -1,12 +1,7 @@
 package com.eagskunst.apps.myngs.tests
 
 import androidx.annotation.VisibleForTesting
-import com.eagskunst.apps.myngs.data.entities.Song
-import com.eagskunst.apps.myngs.data.mapper.TunesQueryToAlbumWithSongsMapper
-import com.eagskunst.apps.myngs.data.mapper.TunesQueryToSongsMapper
-import com.eagskunst.apps.myngs.data.responses.TunesQueryResponse
 import com.eagskunst.apps.myngs.data.responses.TunesQueryResult
-import kotlinx.coroutines.runBlocking
 
 /**
  * Created by eagskunst in 25/7/2020.
@@ -19,7 +14,7 @@ object SampleData {
             trackId = it.toLong(),
             trackName = "song$it",
             artistName = "creator$it",
-            collectionId = (it+1).toLong(),
+            collectionId = (it + 1).toLong(),
             previewUrl = "",
             kind = kind
         )
@@ -43,8 +38,7 @@ object SampleData {
                     artistName = artistName,
                     collectionId = albumId
                 )
-            }
-            else {
+            } else {
                 TunesQueryResult(
                     trackId = it.toLong(),
                     trackName = "song$it",

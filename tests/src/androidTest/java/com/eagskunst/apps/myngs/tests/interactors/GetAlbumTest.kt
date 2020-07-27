@@ -21,6 +21,7 @@ import com.eagskunst.apps.myngs.tests.robots.ConditionRobot
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import java.net.SocketTimeoutException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
@@ -33,14 +34,13 @@ import org.koin.core.inject
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
-import java.net.SocketTimeoutException
 
 /**
  * Created by eagskunst in 25/7/2020.
  */
 @RunWith(AndroidJUnit4ClassRunner::class)
 @ExperimentalCoroutinesApi
-class GetAlbumTest: KoinTest {
+class GetAlbumTest : KoinTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()

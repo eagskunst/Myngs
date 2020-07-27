@@ -14,7 +14,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import org.hamcrest.CoreMatchers.`is`
-import org.hamcrest.CoreMatchers.isA
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
@@ -91,7 +90,7 @@ class HomeViewModelTest {
             ErrorResult(
                 throwable = EmptySearchException("query returned empty array")
             )
-        } coAndThen  {
+        } coAndThen {
             Success(
                 mapper.map(
                     TunesQueryResponse(20, SampleData.sampleResponse())
@@ -107,5 +106,4 @@ class HomeViewModelTest {
         assert(currentState.error is HomeViewState.Error.None)
         assertThat(currentState.songs!!.first().name, `is`("song0"))
     }
-
 }

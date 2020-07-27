@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 data class ParcelableSearch(
     val id: String,
     val sentence: String
-): Parcelable {
+) : Parcelable {
 
     companion object {
         fun fromSearch(search: Search) = ParcelableSearch(

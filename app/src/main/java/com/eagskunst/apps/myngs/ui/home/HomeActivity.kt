@@ -148,5 +148,4 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
     private fun goToSavedSearches() {
         savedSearches.launch(Intent(this, SavedSearchesActivity::class.java))
     }
-
 }

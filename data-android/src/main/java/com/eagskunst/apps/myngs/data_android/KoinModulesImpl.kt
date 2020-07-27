@@ -15,7 +15,7 @@ import org.koin.core.module.Module
 /**
  * Created by eagskunst in 25/7/2020.
  */
-object KoinModulesImpl: KoinModules {
+object KoinModulesImpl : KoinModules {
 
     override fun all(): List<Module> {
         return baseModule + dbModule + networkModule + servicesModule + allButServicesDbAndBase()

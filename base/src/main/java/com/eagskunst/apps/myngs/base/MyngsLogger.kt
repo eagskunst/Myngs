@@ -13,7 +13,7 @@ interface MyngsLogger {
     fun i(message: String)
 }
 
-object Timber: MyngsLogger, KoinComponent {
+object Timber : MyngsLogger, KoinComponent {
 
     private val logger: MyngsLogger by inject()
 

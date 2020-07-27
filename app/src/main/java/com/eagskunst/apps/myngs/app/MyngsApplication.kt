@@ -31,5 +31,4 @@ class MyngsApplication : Application() {
             modules(appModule + viewModelModule + exoplayerModule + KoinModulesImpl.all())
         }
     }
-
 }

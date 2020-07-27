@@ -1,13 +1,15 @@
 package com.eagskunst.apps.myng.domain
 
-import com.eagskunst.apps.myngs.base.*
+import com.eagskunst.apps.myngs.base.Asyncable
+import com.eagskunst.apps.myngs.base.CoroutineDispatchers
+import com.eagskunst.apps.myngs.base.DataResult
+import com.eagskunst.apps.myngs.base.ErrorMessage
+import com.eagskunst.apps.myngs.base.ErrorResult
 import com.eagskunst.apps.myngs.base.errors.EmptySearchException
-import jdk.nashorn.internal.parser.JSONParser
-import kotlinx.coroutines.withContext
-import okhttp3.ResponseBody
-import retrofit2.HttpException
 import java.io.IOException
 import java.net.SocketTimeoutException
+import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 
 /**
  * Created by eagskunst in 25/7/2020.
@@ -45,8 +47,8 @@ abstract class BaseInteractor(protected val dispatchers: CoroutineDispatchers) :
 
     protected fun <T> addErrorInformationToResult(errorResult: ErrorResult<T>): DataResult<T> {
         val errorInfo = errorResult.errorInfo
-        val newInfo = when(errorInfo.throwable) {
-            is HttpException -> errorInfo.copy(message = ErrorMessage.Unknown) //TODO parse json message
+        val newInfo = when (errorInfo.throwable) {
+            is HttpException -> errorInfo.copy(message = ErrorMessage.Unknown) // TODO parse json message
             is IOException -> errorInfo.copy(message = ErrorMessage.Connection)
             is SocketTimeoutException -> errorInfo.copy(message = ErrorMessage.Timeout)
             is EmptySearchException -> errorInfo.copy(message = ErrorMessage.TermNotFound)
@@ -56,10 +58,8 @@ abstract class BaseInteractor(protected val dispatchers: CoroutineDispatchers) :
         return ErrorResult(errorResult.throwable, newInfo)
     }
 
-
     companion object {
         private const val MESSAGE_KEY = "message"
         private const val ERROR_KEY = "error"
     }
-
 }

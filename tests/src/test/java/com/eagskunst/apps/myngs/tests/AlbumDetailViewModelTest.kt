@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.eagskunst.apps.myng.domain.interactors.GetAlbum
 import com.eagskunst.apps.myngs.base.ErrorResult
 import com.eagskunst.apps.myngs.base.Success
-import com.eagskunst.apps.myngs.base.errors.EmptyAlbumException
 import com.eagskunst.apps.myngs.data.entities.relationships.AlbumWithSongs
 import com.eagskunst.apps.myngs.data.mapper.TunesQueryToAlbumWithSongsMapper
 import com.eagskunst.apps.myngs.data.mapper.TunesQueryToSongsMapper
@@ -14,13 +13,13 @@ import com.eagskunst.apps.myngs.ui.albumdetail.AlbumDetailViewState
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import java.net.SocketTimeoutException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
-import java.net.SocketTimeoutException
 
 /**
  * Created by eagskunst in 26/7/2020.
@@ -142,5 +141,4 @@ class AlbumDetailViewModelTest {
         assertThat(currentState.albumWithSongs!!.album.name, `is`(albumWithSongs.album.name))
         assertThat(currentState.albumWithSongs!!.songs.size, `is`(albumWithSongs.songs.size))
     }
-
 }

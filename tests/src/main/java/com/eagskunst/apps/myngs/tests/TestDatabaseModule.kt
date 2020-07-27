@@ -1,10 +1,10 @@
 package com.eagskunst.apps.myngs.tests
 
 import android.content.Context
-import org.koin.dsl.module
 import androidx.room.Room
 import com.eagskunst.apps.myngs.data.MyngsDb
 import com.eagskunst.apps.myngs.data_android.MyngsRoomDatabase
+import org.koin.dsl.module
 
 /**
  * Created by eagskunst in 25/7/2020.

@@ -1,6 +1,5 @@
 package com.eagskunst.apps.myngs.data.responses
 
-
 import com.squareup.moshi.Json
 
 data class TunesQueryResult(

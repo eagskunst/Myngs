@@ -20,6 +20,7 @@ import com.eagskunst.apps.myngs.tests.robots.ConditionRobot
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import java.net.SocketTimeoutException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
@@ -32,7 +33,6 @@ import org.koin.core.inject
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
-import java.net.SocketTimeoutException
 
 /**
  * Created by eagskunst in 25/7/2020.
@@ -67,7 +67,6 @@ class SearchTermTest : KoinTest {
         )
     }
 
-
     @Test
     fun searchSentence_ReturnSuccess_AssertDbInsertions_AndResult() {
         val sentence = "in utero"
@@ -90,7 +89,6 @@ class SearchTermTest : KoinTest {
             assertThat(songs.first().id, `is`(songsFromDb.first().id))
             coVerify(exactly = 1) { searchService.searchSentence(sentence = sentence, page = 0) }
         }
-
     }
 
     @Test
@@ -106,7 +104,6 @@ class SearchTermTest : KoinTest {
             searchService.searchSentence(sentence = sentence, page = 0)
         } returns TunesQueryResponse(results = SampleData.sampleResponse(), resultCount = 20)
 
-
         runBlocking {
             val res = searchTerms.searchSentenceForSongs(sentence)
             val search = database.searchDao().getSearchBySentence(sentence)
@@ -115,7 +112,6 @@ class SearchTermTest : KoinTest {
             }
             assert(!search!!.isEmptySearch)
         }
-
     }
 
     private fun searchRepeatedSentence_VerifyServiceIsNotCalledAgain(sentence: String) {
@@ -142,7 +138,6 @@ class SearchTermTest : KoinTest {
         searchRepeatedSentence_ThatReturnedEmptyList_VerifyServiceIsNotCalledAgain_AndResultTheListIsEmpty()
     }
 
-
     private fun searchSentence_ReturnError_VerifySearchWasSavedWithEmpty_AndErrorMessageIsTermNotFound() {
         val sentence = "syre"
         coEvery {
@@ -159,7 +154,7 @@ class SearchTermTest : KoinTest {
             }
             assert(search!!.isEmptySearch)
             assert(res is ErrorResult)
-            assertThat( (res as ErrorResult).errorInfo.message, `is`(ErrorMessage.TermNotFound) )
+            assertThat((res as ErrorResult).errorInfo.message, `is`(ErrorMessage.TermNotFound))
         }
     }
 
@@ -206,5 +201,4 @@ class SearchTermTest : KoinTest {
             }
         }
     }
-
 }

@@ -9,8 +9,8 @@ import com.eagskunst.apps.myngs.base.Success
 import com.eagskunst.apps.myngs.base.errors.EmptySearchException
 import com.eagskunst.apps.myngs.base_android.MyngsViewModel
 import com.eagskunst.apps.myngs.data.entities.Song
-import kotlinx.coroutines.launch
 import java.util.Locale
+import kotlinx.coroutines.launch
 
 /**
  * Created by eagskunst in 25/7/2020.
@@ -19,7 +19,6 @@ class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
 
     private val _viewState = MutableLiveData<HomeViewState>(HomeViewState(initial = true))
     val viewState = _viewState as LiveData<HomeViewState>
-
 
     fun searchForTerm(sentence: String) {
         viewModelScope.launch {
@@ -30,7 +29,7 @@ class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
             )
 
             updateState(newState)
-            //Change word to lower case, so searches with different case all return the same
+            // Change word to lower case, so searches with different case all return the same
             val result = searchTerm.searchSentenceForSongs(sentence.toLowerCase(Locale.ROOT))
 
             newState = when (result) {
@@ -50,5 +49,4 @@ class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
         is EmptySearchException -> HomeViewState.Error.EmptySearch
         else -> HomeViewState.Error.SearchFailed
     }
-
 }

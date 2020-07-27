@@ -6,7 +6,7 @@ import android.text.TextWatcher
 /**
  * Created by eagskunst in 26/7/2020.
  */
-open class UtilityTextWatcher(val doAfterTextChanged:(Editable?) -> Unit): TextWatcher {
+open class UtilityTextWatcher(val doAfterTextChanged: (Editable?) -> Unit) : TextWatcher {
     override fun afterTextChanged(s: Editable?) {
         doAfterTextChanged(s)
     }

@@ -22,5 +22,4 @@ class SearchDataSource(
             searchService.searchSentence(sentence = search.sentence, page = search.startedFrom)
         }.thenMap(mapper::map)
     }
-
 }

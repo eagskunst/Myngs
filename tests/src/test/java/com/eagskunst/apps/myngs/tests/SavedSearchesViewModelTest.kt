@@ -77,12 +77,9 @@ class SavedSearchesViewModelTest {
         assert(newState.error == SavedSearchesViewState.Error.NoSearchesError)
         assert(newState.searches == null)
 
-
         assertThat(
             viewModel.hasSearches(),
             `is`(false)
         )
     }
-
-
 }

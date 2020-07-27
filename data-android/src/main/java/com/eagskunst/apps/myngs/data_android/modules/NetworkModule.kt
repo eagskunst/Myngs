@@ -1,13 +1,12 @@
 package com.eagskunst.apps.myngs.data_android.modules
 
-import android.os.Build
+import java.io.File
+import java.util.concurrent.TimeUnit
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
-import java.io.File
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by eagskunst in 25/7/2020.
@@ -32,5 +31,4 @@ val networkModule = module {
             .cache(get())
             .build()
     }
-
 }

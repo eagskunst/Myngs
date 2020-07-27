@@ -12,8 +12,8 @@ data class AlbumDetailViewState(
     val albumWithSongs: AlbumWithSongs? = null
 ) {
     sealed class Error {
-        object Network: Error()
-        object EmptyAlbum: Error()
-        object None: Error()
+        object Network : Error()
+        object EmptyAlbum : Error()
+        object None : Error()
     }
 }

@@ -14,7 +14,7 @@ data class ParcelableSong(
     val artistName: String,
     val artworkUrl: String?,
     val previewUrl: String?
-): Parcelable {
+) : Parcelable {
 
     companion object {
         fun fromSong(song: Song) = with(song) {

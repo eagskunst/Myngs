@@ -13,8 +13,8 @@ data class HomeViewState(
 ) {
 
     sealed class Error {
-        object SearchFailed: Error()
-        object EmptySearch: Error()
-        object None: Error()
+        object SearchFailed : Error()
+        object EmptySearch : Error()
+        object None : Error()
     }
 }

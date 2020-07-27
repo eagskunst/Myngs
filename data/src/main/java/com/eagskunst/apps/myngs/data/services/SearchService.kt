@@ -14,6 +14,6 @@ interface SearchService {
         @Query("term") sentence: String,
         @Query("mediaType") mediaType: String = "music",
         @Query("offset") page: Int,
-        @Query ("limit") limit: Int = 20
+        @Query("limit") limit: Int = 20
     ): TunesQueryResponse
 }

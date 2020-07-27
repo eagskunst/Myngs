@@ -1,7 +1,6 @@
 package com.eagskunst.apps.myngs.tests
 
 import com.eagskunst.apps.myngs.base.CoroutineDispatchers
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import org.koin.dsl.module

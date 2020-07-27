@@ -1,7 +1,5 @@
 package com.eagskunst.apps.myngs.base
 
-import java.lang.Exception
-
 /**
  * Created by eagskunst in 25/7/2020.
  * From Chris Banes's Tivi:
@@ -15,7 +13,6 @@ sealed class DataResult<T> {
         is Success -> get()
         is ErrorResult -> throw throwable
     }
-
 }
 
 suspend fun <T, R> DataResult<T>.thenMap(mapBlock: suspend (T) -> R): DataResult<R> {
@@ -24,7 +21,6 @@ suspend fun <T, R> DataResult<T>.thenMap(mapBlock: suspend (T) -> R): DataResult
         is ErrorResult -> ErrorResult(this.throwable)
     }
 }
-
 
 data class Success<T>(val data: T) : DataResult<T>() {
     override fun get(): T = data
@@ -37,8 +33,7 @@ fun <T> Success<T>.mapToException(exception: Throwable): ErrorResult<T> {
 data class ErrorResult<T>(
     val throwable: Throwable,
     val errorInfo: ErrorInformation = ErrorInformation(throwable)
-) : DataResult<T>() {
-}
+) : DataResult<T>()
 
 enum class ErrorMessage {
     Http, Connection, Timeout, Unknown, TermNotFound

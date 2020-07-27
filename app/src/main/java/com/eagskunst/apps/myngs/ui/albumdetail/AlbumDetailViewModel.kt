@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 /**
  * Created by eagskunst in 26/7/2020.
  */
-class AlbumDetailViewModel(private val getAlbum: GetAlbum): MyngsViewModel() {
+class AlbumDetailViewModel(private val getAlbum: GetAlbum) : MyngsViewModel() {
 
     private val _viewState = MutableLiveData<AlbumDetailViewState>(AlbumDetailViewState())
     val viewState = _viewState as LiveData<AlbumDetailViewState>
@@ -33,8 +33,7 @@ class AlbumDetailViewModel(private val getAlbum: GetAlbum): MyngsViewModel() {
                         newState.copy(
                             albumWithSongs = result.data
                         )
-                    }
-                    else {
+                    } else {
                         newState.copy(
                             error = AlbumDetailViewState.Error.EmptyAlbum
                         )

@@ -10,9 +10,9 @@ import com.google.android.material.snackbar.Snackbar
 /**
  * Created by eagskunst in 25/7/2020.
  */
-abstract class MyngsActivity<B: ViewBinding>: AppCompatActivity() {
+abstract class MyngsActivity<B : ViewBinding> : AppCompatActivity() {
 
-    abstract val bindingFunction:(LayoutInflater) -> B
+    abstract val bindingFunction: (LayoutInflater) -> B
     private lateinit var _binding: B
     protected val binding: B
         get() = _binding
@@ -34,5 +34,4 @@ abstract class MyngsActivity<B: ViewBinding>: AppCompatActivity() {
             show()
         }
     }
-
 }

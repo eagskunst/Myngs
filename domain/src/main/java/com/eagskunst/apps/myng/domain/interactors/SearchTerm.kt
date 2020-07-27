@@ -1,8 +1,12 @@
 package com.eagskunst.apps.myng.domain.interactors
 
 import com.eagskunst.apps.myng.domain.BaseInteractor
-import com.eagskunst.apps.myngs.base.*
+import com.eagskunst.apps.myngs.base.CoroutineDispatchers
+import com.eagskunst.apps.myngs.base.DataResult
+import com.eagskunst.apps.myngs.base.ErrorResult
+import com.eagskunst.apps.myngs.base.Success
 import com.eagskunst.apps.myngs.base.errors.EmptySearchException
+import com.eagskunst.apps.myngs.base.mapToException
 import com.eagskunst.apps.myngs.data.entities.Search
 import com.eagskunst.apps.myngs.data.entities.Song
 import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
@@ -15,7 +19,6 @@ class SearchTerm(
     private val searchTermRepository: SearchTermRepository,
     dispatchers: CoroutineDispatchers
 ) : BaseInteractor(dispatchers) {
-
 
     suspend fun searchSentenceForSongs(sentence: String): DataResult<List<Song>> {
         val searchResult = switchToIoWithResult {
@@ -48,5 +51,4 @@ class SearchTerm(
 
         return addErrorInformationToResult(ErrorResult(EmptySearchException("Term returned empty list")))
     }
-
 }
