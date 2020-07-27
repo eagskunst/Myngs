@@ -59,6 +59,6 @@ class SongPlaybackActivity(override val bindingFunction: (LayoutInflater) -> Act
 
     private fun createMediaSource(mediaUrl: String): MediaSource {
         return ProgressiveMediaSource.Factory(dsFactory)
-            .createMediaSource(mediaUrl?.toUri())
+            .createMediaSource(mediaUrl.toUri())
     }
 }
