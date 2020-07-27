@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.eagskunst.apps.myng.domain.interactors.SearchTerm
+import com.eagskunst.apps.myngs.base.Constants
 import com.eagskunst.apps.myngs.base.ErrorResult
 import com.eagskunst.apps.myngs.base.errors.EmptySearchException
 import com.eagskunst.apps.myngs.base_android.MyngsViewModel
@@ -59,9 +60,9 @@ class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
             PagedList.Config
                 .Builder()
                 .setEnablePlaceholders(false)
-                .setPageSize(20)
-                .setInitialLoadSizeHint(20)
-                .setMaxSize(200)
+                .setPageSize(Constants.Search.SEARCH_QUERY_LIMIT)
+                .setInitialLoadSizeHint(Constants.Search.SEARCH_QUERY_LIMIT)
+                .setMaxSize(Constants.Search.SEARCH_QUERY_MAX + 20)
                 .setPrefetchDistance(15)
                 .build()
         )

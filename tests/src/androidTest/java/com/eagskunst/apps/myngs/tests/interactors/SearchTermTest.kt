@@ -5,6 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.eagskunst.apps.myng.domain.interactors.SearchTerm
+import com.eagskunst.apps.myngs.base.Constants
 import com.eagskunst.apps.myngs.base.ErrorMessage
 import com.eagskunst.apps.myngs.base.ErrorResult
 import com.eagskunst.apps.myngs.base.Success
@@ -123,7 +124,7 @@ class SearchTermTest : KoinTest {
             */
             coEvery {
                 searchService.searchSentence(sentence = sentence, page = 20)
-            } returns TunesQueryResponse(results = SampleData.sampleResponse(size = 180), resultCount = 180)
+            } returns TunesQueryResponse(results = SampleData.sampleResponse(size = Constants.Search.SEARCH_QUERY_MAX), resultCount = Constants.Search.SEARCH_QUERY_MAX)
 
             searchTerms.searchSentenceForSongs(sentence)
             coVerify(exactly = 1) { searchService.searchSentence(sentence = sentence, page = 20) }
@@ -135,11 +136,11 @@ class SearchTermTest : KoinTest {
     private fun verifyServiceIsNotCalledWith200Page(sentence: String) {
         runBlocking {
             coEvery {
-                searchService.searchSentence(sentence = sentence, page = 200)
+                searchService.searchSentence(sentence = sentence, page = Constants.Search.SEARCH_QUERY_MAX)
             } returns TunesQueryResponse(results = listOf(), resultCount = 0)
 
             searchTerms.searchSentenceForSongs(sentence)
-            coVerify(exactly = 0) { searchService.searchSentence(sentence = sentence, page = 200) }
+            coVerify(exactly = 0) { searchService.searchSentence(sentence = sentence, page = Constants.Search.SEARCH_QUERY_MAX) }
         }
     }
 

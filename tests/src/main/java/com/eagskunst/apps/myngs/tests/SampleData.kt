@@ -1,6 +1,7 @@
 package com.eagskunst.apps.myngs.tests
 
 import androidx.annotation.VisibleForTesting
+import com.eagskunst.apps.myngs.base.Constants
 import com.eagskunst.apps.myngs.data.responses.TunesQueryResult
 
 /**
@@ -9,7 +10,7 @@ import com.eagskunst.apps.myngs.data.responses.TunesQueryResult
 @VisibleForTesting(otherwise = VisibleForTesting.NONE)
 object SampleData {
 
-    fun sampleResponse(kind: String = "song", size: Int = 20) = (0 until size).map {
+    fun sampleResponse(kind: String = "song", size: Int = Constants.Search.SEARCH_QUERY_LIMIT) = (0 until size).map {
         TunesQueryResult(
             trackId = it.toLong(),
             trackName = "song$it",

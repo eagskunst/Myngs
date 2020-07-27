@@ -1,5 +1,6 @@
 package com.eagskunst.apps.myngs.data.services
 
+import com.eagskunst.apps.myngs.base.Constants
 import com.eagskunst.apps.myngs.data.responses.TunesQueryResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -14,6 +15,6 @@ interface SearchService {
         @Query("term") sentence: String,
         @Query("mediaType") mediaType: String = "music",
         @Query("offset") page: Int,
-        @Query("limit") limit: Int = 20
+        @Query("limit") limit: Int = Constants.Search.SEARCH_QUERY_LIMIT
     ): TunesQueryResponse
 }

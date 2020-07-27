@@ -1,5 +1,6 @@
 package com.eagskunst.apps.myngs.data.repositories.searchterm
 
+import com.eagskunst.apps.myngs.base.Constants
 import com.eagskunst.apps.myngs.base.DataResult
 import com.eagskunst.apps.myngs.base.Success
 import com.eagskunst.apps.myngs.data.entities.Search
@@ -45,7 +46,7 @@ class SearchTermRepository(
 
     private suspend fun getMoreSongsFromSearch(searchWithSongs: SearchWithSongs): DataResult<List<Song>> {
         val searchStartedFrom = searchWithSongs.search.startedFrom
-        if (searchStartedFrom > 180) {
+        if (searchStartedFrom > Constants.Search.SEARCH_QUERY_MAX) {
             return Success(searchWithSongs.songs)
         }
         val search = searchWithSongs.search

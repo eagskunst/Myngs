@@ -5,6 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.eagskunst.apps.myng.domain.interactors.GetAlbum
+import com.eagskunst.apps.myngs.base.Constants
 import com.eagskunst.apps.myngs.base.ErrorResult
 import com.eagskunst.apps.myngs.base.Success
 import com.eagskunst.apps.myngs.data.MyngsDb
@@ -76,7 +77,7 @@ class GetAlbumTest : KoinTest {
             results = SampleData.sampleResponseWithAlbumFirst(
                 albumId
             ),
-            resultCount = 20
+            resultCount = Constants.Search.SEARCH_QUERY_LIMIT
         )
 
         runBlocking {
@@ -106,7 +107,7 @@ class GetAlbumTest : KoinTest {
             results = SampleData.sampleResponseWithAlbumFirst(
                 albumId
             ),
-            resultCount = 20
+            resultCount = Constants.Search.SEARCH_QUERY_LIMIT
         )
 
         runBlocking {
@@ -144,7 +145,7 @@ class GetAlbumTest : KoinTest {
             results = SampleData.sampleResponseWithAlbumFirst(
                 albumId
             ),
-            resultCount = 20
+            resultCount = Constants.Search.SEARCH_QUERY_LIMIT
         )
 
         runBlocking {
@@ -162,7 +163,7 @@ class GetAlbumTest : KoinTest {
             results = SampleData.sampleResponseWithAlbumFirst(
                 albumId
             ),
-            resultCount = 20
+            resultCount = Constants.Search.SEARCH_QUERY_LIMIT
         ))
 
         runBlocking {
@@ -186,7 +187,7 @@ class GetAlbumTest : KoinTest {
             results = SampleData.sampleResponseWithAlbumFirst(
                 albumId
             ),
-            resultCount = 20
+            resultCount = Constants.Search.SEARCH_QUERY_LIMIT
         )
 
         runBlocking {
