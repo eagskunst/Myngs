@@ -30,4 +30,6 @@ class SavedSearchesViewModel(private val searchTerm: SearchTerm): MyngsViewModel
         }
     }
 
+    fun hasSearches() = _viewState.value!!.searches != null && _viewState.value!!.searches!!.isNotEmpty()
+
 }

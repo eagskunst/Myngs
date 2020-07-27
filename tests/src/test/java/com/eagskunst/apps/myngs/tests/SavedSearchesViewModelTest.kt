@@ -61,6 +61,11 @@ class SavedSearchesViewModelTest {
             `is`(2)
         )
 
+        assertThat(
+            viewModel.hasSearches(),
+            `is`(true)
+        )
+
         assert(newState.error == SavedSearchesViewState.Error.None)
     }
 
@@ -75,6 +80,12 @@ class SavedSearchesViewModelTest {
 
         assert(newState.error == SavedSearchesViewState.Error.NoSearchesError)
         assert(newState.searches == null)
+
+
+        assertThat(
+            viewModel.hasSearches(),
+            `is`(false)
+        )
     }
 
 
