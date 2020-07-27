@@ -1,8 +1,11 @@
 package com.eagskunst.apps.myngs.ui.home
 
+import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.TooltipCompat
 import androidx.lifecycle.observe
 import com.eagskunst.apps.myngs.R
 import com.eagskunst.apps.myngs.base_android.MyngsActivity
@@ -16,6 +19,8 @@ import com.eagskunst.apps.myngs.loader
 import com.eagskunst.apps.myngs.song
 import com.eagskunst.apps.myngs.ui.albumdetail.AlbumDetailActivity
 import com.eagskunst.apps.myngs.ui.albumdetail.ParcelizedAlbum
+import com.eagskunst.apps.myngs.ui.savedsearches.ParcelizedSearch
+import com.eagskunst.apps.myngs.ui.savedsearches.SavedSearchesActivity
 import com.eagskunst.apps.myngs.utils.Constants
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -25,29 +30,48 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
     private val viewModel: HomeViewModel by viewModel()
     private lateinit var errorMessage: String
 
+    private val savedSearches =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { intent ->
+            if (intent.resultCode == Activity.RESULT_OK) {
+                val selectedSearch =
+                    intent.data?.getParcelableExtra<ParcelizedSearch>(Constants.IntentKeys.PARCELIZED_SEARCH_KEY)
+                binding.homeHeader.searchInput.setText(selectedSearch?.sentence)
+                executeSearch()
+            }
+        }
+
     override fun onStart() {
         super.onStart()
         errorMessage = getString(R.string.empty_search_text)
 
         viewModel.viewState.observe(this) { state ->
             if (state.initial) return@observe
-            
+
             buildRecyclerView(state)
         }
 
         binding.homeHeader.searchInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                val input = binding.homeHeader.searchInput.text.toString()
-                if (input.isNotEmpty()) {
-                    viewModel.searchForTerm(input)
-                    hideKeyboard()
-                }
-                else {
-                    showToast("Write something first!")
-                }
+                executeSearch()
                 return@setOnEditorActionListener true
             }
             return@setOnEditorActionListener false
+        }
+
+        binding.recentSearchesFab.setOnClickListener {
+            savedSearches.launch(Intent(this, SavedSearchesActivity::class.java))
+        }
+
+        TooltipCompat.setTooltipText(binding.recentSearchesFab, "See recent searches")
+    }
+
+    private fun executeSearch() {
+        val input = binding.homeHeader.searchInput.text.toString()
+        if (input.isNotEmpty()) {
+            viewModel.searchForTerm(input)
+            hideKeyboard()
+        } else {
+            showToast("Write something first!")
         }
     }
 
