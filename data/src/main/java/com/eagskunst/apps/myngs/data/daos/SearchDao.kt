@@ -1,7 +1,11 @@
 package com.eagskunst.apps.myngs.data.daos
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
+import androidx.room.Query
+import androidx.room.Transaction
 import com.eagskunst.apps.myngs.data.entities.Search
 import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
 
@@ -33,7 +37,6 @@ interface SearchDao {
     @Query("SELECT * FROM searches WHERE sentence = :sentence LIMIT 1")
     suspend fun getSearchWithSongs(sentence: String): SearchWithSongs?
 
-    @Query("SELECT * FROM searches WHERE isEmptySearch = 0")
+    @Query("SELECT * FROM searches WHERE isEmptySearch = 0 ORDER BY created_at DESC")
     fun getNotEmptySearches(): List<Search>
-
 }
