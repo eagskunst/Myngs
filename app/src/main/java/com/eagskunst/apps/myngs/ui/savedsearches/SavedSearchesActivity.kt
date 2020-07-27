@@ -67,6 +67,10 @@ class SavedSearchesActivity(
         }
     }
 
+    override fun onBackPressed() {
+        goBack(Activity.RESULT_CANCELED)
+    }
+
     private fun goBack(resultCode: Int, search: Search? = null) {
         val intent = Intent().apply {
             search?.let {
@@ -78,5 +82,6 @@ class SavedSearchesActivity(
         }
         setResult(resultCode, intent)
         finish()
+        finishAndSlideDown()
     }
 }

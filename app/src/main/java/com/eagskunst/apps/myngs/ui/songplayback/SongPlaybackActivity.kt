@@ -26,7 +26,7 @@ class SongPlaybackActivity(override val bindingFunction: (LayoutInflater) -> Act
         val parcelableSong = intent.getParcelableExtra<ParcelableSong>(Constants.IntentKeys.PARCELIZED_SONG_KEY) ?: return
 
         lifecycleScope.launchWhenResumed {
-            binding.playbackToolbar.setNavigationOnClickListener { finish() }
+            binding.playbackToolbar.setNavigationOnClickListener { undoFromLeftToRightAndFinish() }
             binding.song = parcelableSong
         }
 
@@ -55,6 +55,11 @@ class SongPlaybackActivity(override val bindingFunction: (LayoutInflater) -> Act
     override fun onDestroy() {
         super.onDestroy()
         player.release()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        undoFromLeftToRight()
     }
 
     private fun createMediaSource(mediaUrl: String): MediaSource {

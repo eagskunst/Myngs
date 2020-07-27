@@ -34,4 +34,31 @@ abstract class MyngsActivity<B : ViewBinding> : AppCompatActivity() {
             show()
         }
     }
+
+    protected fun doFromLeftToRight() {
+        overridePendingTransition(R.anim.slide_in_right, R.anim.stay)
+    }
+
+    protected fun undoFromLeftToRight() {
+        overridePendingTransition(R.anim.stay, R.anim.slide_out_right)
+    }
+
+    protected fun undoFromLeftToRightAndFinish() {
+        finish()
+        undoFromLeftToRight()
+    }
+
+    protected fun slideUpAndStay() {
+        overridePendingTransition(R.anim.slide_in_up, R.anim.stay)
+    }
+
+    protected fun stayAndSlideDown() {
+        overridePendingTransition(R.anim.stay, R.anim.slide_down);
+    }
+
+    protected fun finishAndSlideDown() {
+        finish()
+        stayAndSlideDown()
+    }
+
 }

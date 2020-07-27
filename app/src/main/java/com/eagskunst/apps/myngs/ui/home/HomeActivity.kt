@@ -154,11 +154,7 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
             androidx.core.util.Pair(
                 iv,
                 Constants.Transitions.ALBUM_IMAGE_TRANSITION_NAME
-            )/*,
-            androidx.core.util.Pair(
-                tv,
-                Constants.Transitions.ALBUM_TITLE_TRANSITION_NAME
-            )*/
+            )
         )
 
         val intent = Intent(this, AlbumDetailActivity::class.java).apply {
@@ -171,5 +167,6 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
 
     private fun goToSavedSearches() {
         savedSearches.launch(Intent(this, SavedSearchesActivity::class.java))
+        slideUpAndStay()
     }
 }

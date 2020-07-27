@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.observe
+import com.eagskunst.apps.myngs.R
 import com.eagskunst.apps.myngs.base_android.MyngsActivity
 import com.eagskunst.apps.myngs.data.entities.Song
 import com.eagskunst.apps.myngs.databinding.ActivityAlbumDetailBinding
@@ -32,7 +33,9 @@ class AlbumDetailActivity(
                 ?: throw KotlinNullPointerException("This activity must receive an ParcelizedAlbum")
 
         with(binding.albumToolbarView) {
-            albumToolbar.setOnClickListener { finishAfterTransition() }
+            albumToolbar.setOnClickListener {
+                undoFromLeftToRightAndFinish()
+            }
             albumToolbar.title = parcelableAlbum.name
         }
 
@@ -106,5 +109,6 @@ class AlbumDetailActivity(
         }
 
         startActivity(intent)
+        doFromLeftToRight()
     }
 }
