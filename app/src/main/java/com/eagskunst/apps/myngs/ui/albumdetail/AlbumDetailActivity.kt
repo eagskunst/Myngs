@@ -1,5 +1,6 @@
 package com.eagskunst.apps.myngs.ui.albumdetail
 
+import android.content.Intent
 import android.view.LayoutInflater
 import androidx.lifecycle.observe
 import com.eagskunst.apps.myngs.base.Timber
@@ -9,6 +10,7 @@ import com.eagskunst.apps.myngs.errorWithMessage
 import com.eagskunst.apps.myngs.loader
 import com.eagskunst.apps.myngs.myngsButton
 import com.eagskunst.apps.myngs.song
+import com.eagskunst.apps.myngs.ui.songplayback.SongPlaybackActivity
 import com.eagskunst.apps.myngs.utils.Constants
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -81,7 +83,7 @@ class AlbumDetailActivity(
                             albumAndCreatorText(it.creatorName)
                             showAlbumImage(false)
                             onClick { _, _, _, _ ->
-                                Timber.d("Clicked song $it")
+                                startActivity(Intent(this@AlbumDetailActivity, SongPlaybackActivity::class.java))
                             }
                         }
                     }
