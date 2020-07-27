@@ -48,6 +48,12 @@ object Libs {
                 const val junit_ktx = "androidx.test.ext:junit-ktx:1.1.0"
             }
         }
+
+        object Paging {
+            private const val version = "2.1.2"
+            const val runtime ="androidx.paging:paging-runtime:$version"
+            const val common ="androidx.paging:paging-common:$version"
+        }
     }
 
     object Test {
@@ -124,6 +130,8 @@ object Libs {
         const val epoxy = "com.airbnb.android:epoxy:$version"
         const val dataBinding = "com.airbnb.android:epoxy-databinding:$version"
         const val processor = "com.airbnb.android:epoxy-processor:$version"
+        const val paging = "com.airbnb.android:epoxy-paging:$version"
+
     }
 
     object Coil {

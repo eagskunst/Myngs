@@ -5,6 +5,7 @@ apply plugin: 'kotlin'
 dependencies {
     api project(':base')
     implementation Libs.AndroidX.Room.common
+    implementation Libs.AndroidX.Paging.common
     api Libs.Network.Retrofit.retrofit
     implementation Libs.Network.Moshi.moshi
 }
