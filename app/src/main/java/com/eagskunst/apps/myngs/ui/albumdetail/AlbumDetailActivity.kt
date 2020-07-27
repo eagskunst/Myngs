@@ -46,7 +46,10 @@ class AlbumDetailActivity(
             buildRecyclerView(state)
         }
 
-        viewModel.getAlbumById(parcelableAlbum.id)
+        if (viewModel.viewState.value!!.initial) {
+            viewModel.getAlbumById(parcelableAlbum.id)
+        }
+
         albumId = parcelableAlbum.id
         binding.albumDetailRv.isNestedScrollingEnabled = false
     }

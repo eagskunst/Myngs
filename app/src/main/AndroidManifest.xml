@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.songplayback.SongPlaybackActivity"></activity>
+        <activity android:name=".ui.songplayback.SongPlaybackActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            />
         <activity android:name=".ui.albumdetail.AlbumDetailActivity" />
         <activity android:name=".ui.savedsearches.SavedSearchesActivity" />
         <activity android:name=".ui.home.HomeActivity">
