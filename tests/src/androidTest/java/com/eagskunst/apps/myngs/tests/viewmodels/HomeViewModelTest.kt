@@ -1,26 +1,39 @@
-package com.eagskunst.apps.myngs.tests
+package com.eagskunst.apps.myngs.tests.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.paging.DataSource
+import androidx.paging.PositionalDataSource
+import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.eagskunst.apps.myng.domain.interactors.SearchTerm
 import com.eagskunst.apps.myngs.base.ErrorResult
 import com.eagskunst.apps.myngs.base.Success
 import com.eagskunst.apps.myngs.base.errors.EmptySearchException
+import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
 import com.eagskunst.apps.myngs.data.mapper.TunesQueryToSongsMapper
 import com.eagskunst.apps.myngs.data.responses.TunesQueryResponse
+import com.eagskunst.apps.myngs.tests.SampleData
+import com.eagskunst.apps.myngs.tests.TestCoroutineRule
+import com.eagskunst.apps.myngs.tests.createMockDataSourceFactory
+import com.eagskunst.apps.myngs.tests.getOrAwaitValue
 import com.eagskunst.apps.myngs.ui.home.HomeViewModel
 import com.eagskunst.apps.myngs.ui.home.HomeViewState
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
 /**
  * Created by eagskunst in 26/7/2020.
  */
+@RunWith(AndroidJUnit4ClassRunner::class)
 @ExperimentalCoroutinesApi
 class HomeViewModelTest {
 
@@ -31,8 +44,25 @@ class HomeViewModelTest {
     val coroutineRule = TestCoroutineRule()
 
     private val searchTerm: SearchTerm = mockk()
-    val viewModel = HomeViewModel(searchTerm)
+    lateinit var viewModel: HomeViewModel
     val mapper = TunesQueryToSongsMapper()
+
+    @Before
+    fun setup() {
+        val songs = runBlocking {
+            mapper.map(
+                TunesQueryResponse(20,
+                    SampleData.sampleResponse()
+                )
+            )
+        }
+        val searchWithSongs = mockk<SearchWithSongs>()
+        every { searchWithSongs.songs } returns songs
+        val dsFactory = createMockDataSourceFactory<SearchWithSongs>(listOf(searchWithSongs))
+
+        every { searchTerm.getSearchesWithSongsDataSource(any()) } returns dsFactory
+        viewModel = HomeViewModel(searchTerm)
+    }
 
     @Test
     fun assertInitialState() {
@@ -42,10 +72,12 @@ class HomeViewModelTest {
     @Test
     fun assertLoadingIsEmitted_AndInitialIsFalse() {
         coEvery { searchTerm.searchSentenceForSongs("something") } coAnswers {
-            delay(2000)
+            delay(5000)
             Success(
                 mapper.map(
-                    TunesQueryResponse(20, SampleData.sampleResponse())
+                    TunesQueryResponse(20,
+                        SampleData.sampleResponse()
+                    )
                 )
             )
         }
@@ -62,14 +94,16 @@ class HomeViewModelTest {
         coEvery { searchTerm.searchSentenceForSongs("something") } coAnswers {
             Success(
                 mapper.map(
-                    TunesQueryResponse(20, SampleData.sampleResponse())
+                    TunesQueryResponse(20,
+                        SampleData.sampleResponse()
+                    )
                 )
             )
         }
         viewModel.searchForTerm("something")
         val newState = viewModel.viewState.getOrAwaitValue()
-        assertThat(newState.songs!!.size, `is`(20))
-        assertThat(newState.songs!!.first().name, `is`("song0"))
+        assertThat(newState.songs!![0]!!.songs.size, `is`(20))
+        assertThat(newState.songs!![0]!!.songs.first().name, `is`("song0"))
     }
 
     @Test
@@ -93,7 +127,9 @@ class HomeViewModelTest {
         } coAndThen {
             Success(
                 mapper.map(
-                    TunesQueryResponse(20, SampleData.sampleResponse())
+                    TunesQueryResponse(20,
+                        SampleData.sampleResponse()
+                    )
                 )
             )
         }
@@ -104,6 +140,6 @@ class HomeViewModelTest {
         viewModel.searchForTerm("something")
         currentState = viewModel.viewState.getOrAwaitValue()
         assert(currentState.error is HomeViewState.Error.None)
-        assertThat(currentState.songs!!.first().name, `is`("song0"))
+        assertThat(currentState.songs!![0]!!.songs.first().name, `is`("song0"))
     }
 }

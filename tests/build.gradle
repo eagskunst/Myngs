@@ -79,8 +79,10 @@ dependencies {
     androidTestImplementation Libs.AndroidX.Test.Instrumentation.espressoContrib
     androidTestImplementation Libs.AndroidX.Test.Instrumentation.junit
     androidTestImplementation Libs.AndroidX.Test.Instrumentation.junit_ktx
+    androidTestImplementation Libs.AndroidX.Test.rules
     androidTestImplementation Libs.Test.Mockk.androidTest
     androidTestImplementation Libs.Test.Kakao.core
 
     testRuntimeOnly(files("$projectDir/../app/build/intermediates/app_classes/debug/classes.jar"))
+    androidTestRuntimeOnly(files("$projectDir/../app/build/intermediates/app_classes/debug/classes.jar"))
 }

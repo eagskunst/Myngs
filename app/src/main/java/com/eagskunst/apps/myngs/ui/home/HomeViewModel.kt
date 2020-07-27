@@ -18,7 +18,7 @@ import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
 class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
 
 
-    private val _viewState = MediatorLiveData<HomeViewState>().apply { value = HomeViewState() }
+    private val _viewState = MediatorLiveData<HomeViewState>().apply { value = HomeViewState(initial = true) }
     val viewState = _viewState as LiveData<HomeViewState>
     private var boundaryCallback: SearchBoundaryCallback? = null
     private var pagedListLiveData: LiveData<PagedList<SearchWithSongs>>? = null
