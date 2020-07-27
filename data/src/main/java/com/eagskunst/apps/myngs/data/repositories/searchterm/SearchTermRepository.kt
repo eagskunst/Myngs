@@ -4,6 +4,7 @@ import com.eagskunst.apps.myngs.base.DataResult
 import com.eagskunst.apps.myngs.base.Success
 import com.eagskunst.apps.myngs.data.entities.Search
 import com.eagskunst.apps.myngs.data.entities.Song
+import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
 import com.eagskunst.apps.myngs.data.repositories.album.AlbumDataStore
 import com.eagskunst.apps.myngs.data.repositories.songs.SongsDataStore
 
@@ -27,7 +28,7 @@ class SearchTermRepository(
         val searchWithSongs = searchDataStore.getSearchWithSongs(sentence)
 
         if (searchWithSongs != null) {
-            return Success(searchWithSongs.songs)
+            return getMoreSongsFromSearch(searchWithSongs)
         }
 
         // If there is no search, create a new one
@@ -36,7 +37,22 @@ class SearchTermRepository(
 
         if (result is Success) {
             val emptySearch = result.data.isEmpty()
-            searchDataStore.addSearch(newSearch.copy(isEmptySearch = emptySearch))
+            searchDataStore.addSearch(newSearch.copy(isEmptySearch = emptySearch, startedFrom = result.data.size))
+        }
+
+        return result
+    }
+
+    private suspend fun getMoreSongsFromSearch(searchWithSongs: SearchWithSongs): DataResult<List<Song>> {
+        val searchStartedFrom = searchWithSongs.search.startedFrom
+        if (searchStartedFrom > 180) {
+            return Success(searchWithSongs.songs)
+        }
+        val search = searchWithSongs.search
+        val result = searchDataSource.querySentenceForSongs(search)
+
+        if (result is Success) {
+            searchDataStore.updateStoppedAt(searchWithSongs.search.id, searchStartedFrom + result.data.size)
         }
 
         return result

@@ -88,7 +88,7 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
     }
 
     private fun buildRecyclerView(state: HomeViewState) {
-        binding.songsRv.withModels {
+       /* binding.songsRv.withModels {
             when {
 
                 state.initial -> {
@@ -144,7 +144,7 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
                     }
                 }
             }
-        }
+        }*/
     }
 
     private fun goToAlbumDetail(song: Song, view: View) {

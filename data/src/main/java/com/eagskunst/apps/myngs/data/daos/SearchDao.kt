@@ -38,6 +38,7 @@ interface SearchDao {
     @Query("SELECT * FROM searches WHERE sentence = :sentence LIMIT 1")
     suspend fun getSearchWithSongs(sentence: String): SearchWithSongs?
 
+    @Transaction
     @Query("SELECT * FROM searches WHERE sentence = :sentence")
     fun getSearchWithSongsBySentence(sentence: String) : DataSource.Factory<Int, SearchWithSongs>
 

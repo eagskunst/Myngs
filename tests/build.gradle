@@ -63,6 +63,8 @@ dependencies {
 
     implementation Libs.AndroidX.Room.runtime
     implementation Libs.Koin.android
+    implementation Libs.Koin.test
+    implementation Libs.Coroutines.test
 
     testImplementation Libs.AndroidX.Room.testing
     testImplementation Libs.Test.jUnit
@@ -79,9 +81,6 @@ dependencies {
     androidTestImplementation Libs.AndroidX.Test.Instrumentation.junit_ktx
     androidTestImplementation Libs.Test.Mockk.androidTest
     androidTestImplementation Libs.Test.Kakao.core
-
-    implementation Libs.Koin.test
-    implementation Libs.Coroutines.test
 
     testRuntimeOnly(files("$projectDir/../app/build/intermediates/app_classes/debug/classes.jar"))
 }

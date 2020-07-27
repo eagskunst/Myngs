@@ -95,7 +95,8 @@ class SearchTermTest : KoinTest {
     fun persistenceAndServiceVerificationForNotEmptyResult() {
         val sentence = "dumb"
         searchSentence_ReturnSuccess_VerifySearchWasSavedWithNotEmpty(sentence)
-        searchRepeatedSentence_VerifyServiceIsNotCalledAgain(sentence)
+        searchRepeatedSentence_Add200Songs_AndVerifyServiceIsCalledWithDifferentPage(sentence)
+        verifyServiceIsNotCalledWith200Page(sentence)
         getSavedSearches_AssertSearchWithSentenceExist_AndSongsToo(sentence)
     }
 
@@ -114,10 +115,31 @@ class SearchTermTest : KoinTest {
         }
     }
 
-    private fun searchRepeatedSentence_VerifyServiceIsNotCalledAgain(sentence: String) {
+    private fun searchRepeatedSentence_Add200Songs_AndVerifyServiceIsCalledWithDifferentPage(sentence: String) {
         runBlocking {
+            /*
+            Add 180 more songs to the DB, for a total of 200. The search's startedFrom column
+            will be updated to 200
+            */
+            coEvery {
+                searchService.searchSentence(sentence = sentence, page = 20)
+            } returns TunesQueryResponse(results = SampleData.sampleResponse(size = 180), resultCount = 180)
+
             searchTerms.searchSentenceForSongs(sentence)
-            coVerify(exactly = 1) { searchService.searchSentence(sentence = sentence, page = 0) }
+            coVerify(exactly = 1) { searchService.searchSentence(sentence = sentence, page = 20) }
+        }
+    }
+
+
+
+    private fun verifyServiceIsNotCalledWith200Page(sentence: String) {
+        runBlocking {
+            coEvery {
+                searchService.searchSentence(sentence = sentence, page = 200)
+            } returns TunesQueryResponse(results = listOf(), resultCount = 0)
+
+            searchTerms.searchSentenceForSongs(sentence)
+            coVerify(exactly = 0) { searchService.searchSentence(sentence = sentence, page = 200) }
         }
     }
 
@@ -128,7 +150,7 @@ class SearchTermTest : KoinTest {
             assert(sentenceSearch != null)
             val searchWithSongsRes = searchTerms.getSavedSearch(sentence).getOrThrow()
             assertThat(sentenceSearch!!.id, `is`(searchWithSongsRes.search.id))
-            assertThat(searchWithSongsRes.songs.size, `is`(20))
+            assertThat(searchWithSongsRes.songs.size, `is`(180))
         }
     }
 

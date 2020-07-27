@@ -7,13 +7,9 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.eagskunst.apps.myng.domain.interactors.SearchTerm
 import com.eagskunst.apps.myngs.base.ErrorResult
-import com.eagskunst.apps.myngs.base.Success
 import com.eagskunst.apps.myngs.base.errors.EmptySearchException
 import com.eagskunst.apps.myngs.base_android.MyngsViewModel
-import com.eagskunst.apps.myngs.data.entities.Song
 import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
-import java.util.Locale
-import kotlinx.coroutines.launch
 
 /**
  * Created by eagskunst in 25/7/2020.
@@ -59,7 +55,7 @@ class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
         boundaryCallback: SearchBoundaryCallback
     ): LiveData<PagedList<SearchWithSongs>> {
         return LivePagedListBuilder(
-            searchTerm.getSearchesWithSongs(sentence),
+            searchTerm.getSearchesWithSongsDataSource(sentence),
             PagedList.Config
                 .Builder()
                 .setEnablePlaceholders(false)

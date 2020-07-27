@@ -9,7 +9,7 @@ import com.eagskunst.apps.myngs.data.responses.TunesQueryResult
 @VisibleForTesting(otherwise = VisibleForTesting.NONE)
 object SampleData {
 
-    fun sampleResponse(kind: String = "song") = (0 until 20).map {
+    fun sampleResponse(kind: String = "song", size: Int = 20) = (0 until size).map {
         TunesQueryResult(
             trackId = it.toLong(),
             trackName = "song$it",

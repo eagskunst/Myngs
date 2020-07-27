@@ -52,6 +52,6 @@ class SearchTerm(
         return addErrorInformationToResult(ErrorResult(EmptySearchException("Term returned empty list")))
     }
 
-    fun getSearchesWithSongs(sentence: String) =
+    fun getSearchesWithSongsDataSource(sentence: String) =
         searchTermRepository.getSearchesWithSongs(sentence)
 }
