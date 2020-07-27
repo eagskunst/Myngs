@@ -93,4 +93,6 @@ dependencies {
     implementation Libs.Epoxy.epoxy
     implementation Libs.Epoxy.dataBinding
     kapt Libs.Epoxy.processor
+    implementation Libs.Google.ExoPlayer.core
+    implementation Libs.Google.ExoPlayer.ui
 }

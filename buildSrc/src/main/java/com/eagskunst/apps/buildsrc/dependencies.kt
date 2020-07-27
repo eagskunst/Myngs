@@ -111,6 +111,12 @@ object Libs {
 
     object Google {
         const val material = "com.google.android.material:material:1.1.0"
+
+        object ExoPlayer {
+            private const val version = "2.11.7"
+            const val core = "com.google.android.exoplayer:exoplayer-core:$version"
+            const val ui = "com.google.android.exoplayer:exoplayer-ui:$version"
+        }
     }
 
     object Epoxy {
