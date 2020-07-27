@@ -4,11 +4,13 @@ import android.content.Intent
 import android.view.LayoutInflater
 import androidx.lifecycle.observe
 import com.eagskunst.apps.myngs.base_android.MyngsActivity
+import com.eagskunst.apps.myngs.data.entities.Song
 import com.eagskunst.apps.myngs.databinding.ActivityAlbumDetailBinding
 import com.eagskunst.apps.myngs.errorWithMessage
 import com.eagskunst.apps.myngs.loader
 import com.eagskunst.apps.myngs.myngsButton
 import com.eagskunst.apps.myngs.song
+import com.eagskunst.apps.myngs.ui.songplayback.ParcelableSong
 import com.eagskunst.apps.myngs.ui.songplayback.SongPlaybackActivity
 import com.eagskunst.apps.myngs.utils.Constants
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -23,19 +25,19 @@ class AlbumDetailActivity(
 
     override fun onStart() {
         super.onStart()
-        val parcelizedAlbum =
+        val parcelableAlbum =
             intent?.extras?.getParcelable<ParcelableAlbum>(Constants.IntentKeys.PARCELIZED_ALBUM_KEY)
                 ?: throw KotlinNullPointerException("This activity must receive an ParcelizedAlbum")
 
         with(binding.albumToolbarView) {
             albumToolbar.setOnClickListener { finish() }
-            albumToolbar.title = parcelizedAlbum.name
+            albumToolbar.title = parcelableAlbum.name
         }
 
         with(binding.albumHeaderView) {
             lifecycleOwner = this@AlbumDetailActivity
-            album = parcelizedAlbum
-            artistNameText = "Album by ${parcelizedAlbum.creatorName}"
+            album = parcelableAlbum
+            artistNameText = "Album by ${parcelableAlbum.creatorName}"
         }
 
         viewModel.viewState.observe(this) { state ->
@@ -44,12 +46,12 @@ class AlbumDetailActivity(
             buildRecyclerView(state)
         }
 
-        viewModel.getAlbumById(parcelizedAlbum.id)
-        albumId = parcelizedAlbum.id
+        viewModel.getAlbumById(parcelableAlbum.id)
+        albumId = parcelableAlbum.id
+        binding.albumDetailRv.isNestedScrollingEnabled = false
     }
 
     private fun buildRecyclerView(state: AlbumDetailViewState) {
-        binding.albumDetailRv.isNestedScrollingEnabled = false
         binding.albumDetailRv.withModels {
             if (state.isLoading) {
                 loader { id("loader") }
@@ -82,7 +84,7 @@ class AlbumDetailActivity(
                             albumAndCreatorText(it.creatorName)
                             showAlbumImage(false)
                             onClick { _, _, _, _ ->
-                                startActivity(Intent(this@AlbumDetailActivity, SongPlaybackActivity::class.java))
+                                goToSongPlaybackActivity(it)
                             }
                         }
                     }
@@ -92,6 +94,14 @@ class AlbumDetailActivity(
 
             binding.albumDetailRv.requestLayout()
         }
+    }
+
+    private fun goToSongPlaybackActivity(song: Song) {
+        val intent = Intent(this, SongPlaybackActivity::class.java).apply {
+            putExtra(Constants.IntentKeys.PARCELIZED_SONG_KEY, ParcelableSong.fromSong(song))
+        }
+
+        startActivity(intent)
     }
 
 }

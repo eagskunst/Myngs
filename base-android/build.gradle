@@ -44,6 +44,7 @@ dependencies {
     implementation project(':base')
     implementation Libs.timber
     implementation Libs.Coil.coil
+    api Libs.AndroidX.activity
     api Libs.Google.material
     api Libs.AndroidX.appcompat
     api Libs.AndroidX.Lifecycle.livedata

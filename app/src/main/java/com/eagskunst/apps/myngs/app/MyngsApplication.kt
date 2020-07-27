@@ -2,6 +2,7 @@ package com.eagskunst.apps.myngs.app
 
 import android.app.Application
 import com.eagskunst.apps.myngs.app.di.appModule
+import com.eagskunst.apps.myngs.app.di.exoplayerModule
 import com.eagskunst.apps.myngs.app.di.viewModelModule
 import com.eagskunst.apps.myngs.base_android.TimberLogger
 import com.eagskunst.apps.myngs.data_android.KoinModulesImpl
@@ -27,7 +28,7 @@ class MyngsApplication : Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@MyngsApplication)
-            modules(appModule + viewModelModule + KoinModulesImpl.all())
+            modules(appModule + viewModelModule + exoplayerModule + KoinModulesImpl.all())
         }
     }
 

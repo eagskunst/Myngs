@@ -83,7 +83,6 @@ dependencies {
     implementation project(':domain')
     implementation project(':data')
     implementation Libs.Koin.android
-    implementation Libs.AndroidX.activity
     implementation Libs.Koin.androidViewModel
     implementation Libs.AndroidX.coreKtx
     implementation Libs.AndroidX.recyclerview
