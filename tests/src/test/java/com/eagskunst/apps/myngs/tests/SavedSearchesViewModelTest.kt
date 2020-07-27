@@ -4,17 +4,13 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.eagskunst.apps.myng.domain.interactors.SearchTerm
 import com.eagskunst.apps.myngs.base.Success
 import com.eagskunst.apps.myngs.data.entities.Search
-import com.eagskunst.apps.myngs.data.responses.TunesQueryResponse
 import com.eagskunst.apps.myngs.ui.savedsearches.SavedSearchesViewModel
 import com.eagskunst.apps.myngs.ui.savedsearches.SavedSearchesViewState
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
-import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.`is`
-import org.hamcrest.MatcherAssert
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test

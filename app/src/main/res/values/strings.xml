@@ -2,4 +2,6 @@
     <string name="app_name">Myngs</string>
     <string name="search_a_song_hint">Search a song</string>
     <string name="empty_search_text">Seems like the search did not return any results. Try with another words!</string>
+    <string name="search_your_words_hint">Search your words...</string>
+    <string name="saved_searches_title">Saved searches</string>
 </resources>
