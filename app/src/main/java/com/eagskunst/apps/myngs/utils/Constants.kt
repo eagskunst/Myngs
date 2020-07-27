@@ -7,6 +7,6 @@ object Constants {
     object IntentKeys {
         const val PARCELIZED_ALBUM_KEY = "parcelized_album"
         const val PARCELIZED_SEARCH_KEY = "parcelized_search_key"
-        const val PARCELIZED_SONG_ID = "parcelized_song_id"
+        const val PARCELIZED_SONG_KEY = "parcelized_song_id"
     }
 }
