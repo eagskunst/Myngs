@@ -54,5 +54,9 @@ class SearchTermRepository(
         return Success(searchDataStore.getSearches())
     }
 
-    suspend fun retrieveSavedSearchWithSongs(searchId: String) = searchDataStore.getSearchWithSongs(searchId)
+    suspend fun retrieveSavedSearchWithSongs(searchId: String) =
+        searchDataStore.getSearchWithSongs(searchId)
+
+    fun getSearchesWithSongs(sentence: String) =
+        searchDataStore.getSearchesWithSongsDataSource(sentence)
 }

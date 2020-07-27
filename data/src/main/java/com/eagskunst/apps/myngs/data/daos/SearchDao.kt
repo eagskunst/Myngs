@@ -1,5 +1,6 @@
 package com.eagskunst.apps.myngs.data.daos
 
+import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -37,6 +38,9 @@ interface SearchDao {
     @Query("SELECT * FROM searches WHERE sentence = :sentence LIMIT 1")
     suspend fun getSearchWithSongs(sentence: String): SearchWithSongs?
 
+    @Query("SELECT * FROM searches WHERE sentence = :sentence")
+    fun getSearchWithSongsBySentence(sentence: String) : DataSource.Factory<Int, SearchWithSongs>
+
     @Query("SELECT * FROM searches WHERE isEmptySearch = 0 ORDER BY created_at DESC")
-    fun getNotEmptySearches(): List<Search>
+    suspend fun getNotEmptySearches(): List<Search>
 }

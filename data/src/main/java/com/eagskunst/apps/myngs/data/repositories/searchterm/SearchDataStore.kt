@@ -18,4 +18,7 @@ class SearchDataStore(private val searchDao: SearchDao) {
         searchDao.updateStartedFrom(lastPage, searchId)
 
     suspend fun getSearches() = searchDao.getNotEmptySearches()
+
+    fun getSearchesWithSongsDataSource(sentence: String) =
+        searchDao.getSearchWithSongsBySentence(sentence)
 }

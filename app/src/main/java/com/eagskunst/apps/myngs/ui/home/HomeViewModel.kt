@@ -1,14 +1,17 @@
 package com.eagskunst.apps.myngs.ui.home
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.eagskunst.apps.myng.domain.interactors.SearchTerm
 import com.eagskunst.apps.myngs.base.ErrorResult
 import com.eagskunst.apps.myngs.base.Success
 import com.eagskunst.apps.myngs.base.errors.EmptySearchException
 import com.eagskunst.apps.myngs.base_android.MyngsViewModel
 import com.eagskunst.apps.myngs.data.entities.Song
+import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
 import java.util.Locale
 import kotlinx.coroutines.launch
 
@@ -17,28 +20,63 @@ import kotlinx.coroutines.launch
  */
 class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
 
-    private val _viewState = MutableLiveData<HomeViewState>(HomeViewState(initial = true))
+
+    private val _viewState = MediatorLiveData<HomeViewState>().apply { value = HomeViewState() }
     val viewState = _viewState as LiveData<HomeViewState>
+    private var boundaryCallback: SearchBoundaryCallback? = null
+    private var pagedListLiveData: LiveData<PagedList<SearchWithSongs>>? = null
+
 
     fun searchForTerm(sentence: String) {
-        viewModelScope.launch {
-            var newState = viewState.value!!.copy(
-                isLoading = true,
-                initial = false,
-                error = HomeViewState.Error.None
-            )
+        removeStateSources()
+        boundaryCallback =
+            SearchBoundaryCallback(sentence, viewModelScope, searchTerm, viewState.value!!.initial)
+        pagedListLiveData = createPagedListLiveData(sentence, boundaryCallback!!)
+        addSources(boundaryCallback!!, pagedListLiveData!!)
+    }
 
-            updateState(newState)
-            // Change word to lower case, so searches with different case all return the same
-            val result = searchTerm.searchSentenceForSongs(sentence.toLowerCase(Locale.ROOT))
-
-            newState = when (result) {
-                is Success -> newState.copy(songs = result.data)
-                else -> newState.copy(error = mapError(result as ErrorResult<List<Song>>))
+    private fun addSources(
+        boundaryCallback: SearchBoundaryCallback,
+        pagedListLiveData: LiveData<PagedList<SearchWithSongs>>
+    ) {
+        with(_viewState) {
+            var currentState = this.value!!
+            addSource(boundaryCallback.viewState) { state ->
+                currentState = state
+                _viewState.value = state
             }
-
-            updateState(newState.copy(isLoading = false))
+            addSource(pagedListLiveData) { pagedList ->
+                currentState = currentState.copy(
+                    songs = pagedList
+                )
+                _viewState.value = currentState
+            }
         }
+    }
+
+    private fun createPagedListLiveData(
+        sentence: String,
+        boundaryCallback: SearchBoundaryCallback
+    ): LiveData<PagedList<SearchWithSongs>> {
+        return LivePagedListBuilder(
+            searchTerm.getSearchesWithSongs(sentence),
+            PagedList.Config
+                .Builder()
+                .setEnablePlaceholders(false)
+                .setPageSize(20)
+                .setInitialLoadSizeHint(20)
+                .setMaxSize(200)
+                .setPrefetchDistance(15)
+                .build()
+        )
+            .setBoundaryCallback(boundaryCallback)
+            .build()
+    }
+
+
+    private fun removeStateSources() {
+        boundaryCallback?.let { _viewState.removeSource(it.viewState) }
+        pagedListLiveData?.let { _viewState.removeSource(it) }
     }
 
     private fun updateState(state: HomeViewState) {
