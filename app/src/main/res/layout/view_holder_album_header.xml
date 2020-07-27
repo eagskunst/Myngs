@@ -18,7 +18,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/albumCoverIv"
@@ -36,6 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:ellipsize="marquee"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:text="@{album.name}"
@@ -60,11 +62,13 @@
             android:textSize="16sp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/albumNameTv"
-            tools:text="Album by Bad Bunny" />
+            tools:text="Album by Bad Bunnyy" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

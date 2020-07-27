@@ -32,7 +32,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="65dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_marginStart="30dp"
@@ -52,7 +52,8 @@
                     android:id="@+id/albumArtworkIv"
                     android:layout_width="40dp"
                     loadSongImage="@{song.artwork}"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintVertical_weight="3"
                     android:visibility="@{showAlbumImage ? View.VISIBLE : View.GONE}"
                     tools:src="@drawable/song_placeholder"
                     app:layout_constraintStart_toStartOf="parent"
@@ -61,37 +62,38 @@
                 <TextView
                     android:id="@+id/nameTv"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="@android:color/black"
-                    android:text="@{song.name}"
-                    android:singleLine="true"
-                    android:ellipsize="marquee"
-                    tools:text="Domingo"
-                    android:scrollHorizontally="true"
+                    android:layout_height="0dp"
                     android:layout_marginStart="@dimen/margin_texts_song_view_holder"
-                    android:layout_marginTop="5dp"
+                    android:ellipsize="marquee"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:text="@{song.name}"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_weight="2"
+                    app:layout_constraintBottom_toTopOf="@id/albumAndCreatorTv"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/albumArtworkIv"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
+                    tools:text="Domingo" />
 
                 <TextView
                     android:id="@+id/albumAndCreatorTv"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="@color/blackWithAlpha"
-                    android:layout_marginStart="@dimen/margin_texts_song_view_holder"
-                    android:text="@{albumAndCreatorText}"
+                    android:layout_height="0dp"
+                    android:ellipsize="marquee"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:ellipsize="marquee"
+                    android:text="@{albumAndCreatorText}"
+                    android:textColor="@color/blackWithAlpha"
+                    android:textSize="12sp"
+                    android:layout_marginStart="@dimen/margin_texts_song_view_holder"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/albumArtworkIv"
                     app:layout_constraintTop_toBottomOf="@id/nameTv"
-                    tools:text="Domingo"
-                    />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_weight="1.6"
+                    tools:text="Domingo" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
