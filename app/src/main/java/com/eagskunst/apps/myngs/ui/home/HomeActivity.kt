@@ -15,6 +15,7 @@ import com.eagskunst.apps.myngs.data.entities.Song
 import com.eagskunst.apps.myngs.data.entities.albumAndCreatorNameString
 import com.eagskunst.apps.myngs.databinding.ActivityHomeBinding
 import com.eagskunst.apps.myngs.errorWithMessage
+import com.eagskunst.apps.myngs.imageWithMessage
 import com.eagskunst.apps.myngs.loader
 import com.eagskunst.apps.myngs.myngsButton
 import com.eagskunst.apps.myngs.song
@@ -46,9 +47,10 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
         errorMessage = getString(R.string.empty_search_text)
 
         viewModel.viewState.observe(this) { state ->
-            if (state.initial) return@observe
-
             buildRecyclerView(state)
+            if (!state.initial) {
+                binding.recentSearchesFab.show()
+            }
         }
 
         binding.homeHeader.searchInput.setOnEditorActionListener { _, actionId, _ ->
@@ -62,6 +64,8 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
         binding.recentSearchesFab.setOnClickListener {
             goToSavedSearches()
         }
+
+        binding.recentSearchesFab.hide()
 
         TooltipCompat.setTooltipText(binding.recentSearchesFab, "See recent searches")
     }
@@ -79,9 +83,22 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
     private fun buildRecyclerView(state: HomeViewState) {
         binding.songsRv.withModels {
             when {
-                state.isLoading -> {
-                    loader { id("loader") }
+
+                state.initial -> {
+                    imageWithMessage {
+                        id("initalstate")
+                        infoMessage("Don't know where to start? Go to your saved searches")
+                    }
+                    myngsButton {
+                        id("myngsButton")
+                        text("Select a saved search")
+                        onClick { _, _, _, _ ->
+                            goToSavedSearches()
+                        }
+                    }
                 }
+
+                state.isLoading -> { loader { id("loader") } }
 
                 state.error == HomeViewState.Error.None -> {
                     state.songs!!.forEach { song ->
