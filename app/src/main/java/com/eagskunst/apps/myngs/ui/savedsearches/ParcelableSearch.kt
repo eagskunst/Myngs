@@ -8,13 +8,13 @@ import kotlinx.android.parcel.Parcelize
  * Created by eagskunst in 26/7/2020.
  */
 @Parcelize
-data class ParcelizedSearch(
+data class ParcelableSearch(
     val id: String,
     val sentence: String
 ): Parcelable {
 
     companion object {
-        fun fromSearch(search: Search) = ParcelizedSearch(
+        fun fromSearch(search: Search) = ParcelableSearch(
             id = search.id,
             sentence = search.sentence
         )

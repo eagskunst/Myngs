@@ -3,7 +3,6 @@ package com.eagskunst.apps.myngs.ui.albumdetail
 import android.content.Intent
 import android.view.LayoutInflater
 import androidx.lifecycle.observe
-import com.eagskunst.apps.myngs.base.Timber
 import com.eagskunst.apps.myngs.base_android.MyngsActivity
 import com.eagskunst.apps.myngs.databinding.ActivityAlbumDetailBinding
 import com.eagskunst.apps.myngs.errorWithMessage
@@ -25,7 +24,7 @@ class AlbumDetailActivity(
     override fun onStart() {
         super.onStart()
         val parcelizedAlbum =
-            intent?.extras?.getParcelable<ParcelizedAlbum>(Constants.IntentKeys.PARCELIZED_ALBUM_KEY)
+            intent?.extras?.getParcelable<ParcelableAlbum>(Constants.IntentKeys.PARCELIZED_ALBUM_KEY)
                 ?: throw KotlinNullPointerException("This activity must receive an ParcelizedAlbum")
 
         with(binding.albumToolbarView) {

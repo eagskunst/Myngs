@@ -72,7 +72,7 @@ class SavedSearchesActivity(
             search?.let {
                 putExtra(
                     Constants.IntentKeys.PARCELIZED_SEARCH_KEY,
-                    ParcelizedSearch.fromSearch(search)
+                    ParcelableSearch.fromSearch(search)
                 )
             }
         }

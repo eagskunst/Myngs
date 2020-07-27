@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.eagskunst.apps.myngs.ui.albumdetail.ParcelizedAlbum"/>
+        <import type="com.eagskunst.apps.myngs.ui.albumdetail.ParcelableAlbum"/>
 
         <variable
             name="album"
-            type="ParcelizedAlbum" />
+            type="ParcelableAlbum" />
 
         <variable
             name="artistNameText"

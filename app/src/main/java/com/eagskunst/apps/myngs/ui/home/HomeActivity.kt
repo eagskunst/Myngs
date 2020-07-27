@@ -20,8 +20,8 @@ import com.eagskunst.apps.myngs.loader
 import com.eagskunst.apps.myngs.myngsButton
 import com.eagskunst.apps.myngs.song
 import com.eagskunst.apps.myngs.ui.albumdetail.AlbumDetailActivity
-import com.eagskunst.apps.myngs.ui.albumdetail.ParcelizedAlbum
-import com.eagskunst.apps.myngs.ui.savedsearches.ParcelizedSearch
+import com.eagskunst.apps.myngs.ui.albumdetail.ParcelableAlbum
+import com.eagskunst.apps.myngs.ui.savedsearches.ParcelableSearch
 import com.eagskunst.apps.myngs.ui.savedsearches.SavedSearchesActivity
 import com.eagskunst.apps.myngs.utils.Constants
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -36,7 +36,7 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { intent ->
             if (intent.resultCode == Activity.RESULT_OK) {
                 val selectedSearch =
-                    intent.data?.getParcelableExtra<ParcelizedSearch>(Constants.IntentKeys.PARCELIZED_SEARCH_KEY)
+                    intent.data?.getParcelableExtra<ParcelableSearch>(Constants.IntentKeys.PARCELIZED_SEARCH_KEY)
                 binding.homeHeader.searchInput.setText(selectedSearch?.sentence)
                 executeSearch()
             }
@@ -140,7 +140,7 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
 
     private fun goToAlbumDetail(song: Song) {
         val intent = Intent(this, AlbumDetailActivity::class.java).apply {
-            putExtra(Constants.IntentKeys.PARCELIZED_ALBUM_KEY, ParcelizedAlbum.fromSong(song))
+            putExtra(Constants.IntentKeys.PARCELIZED_ALBUM_KEY, ParcelableAlbum.fromSong(song))
         }
         startActivity(intent)
     }
