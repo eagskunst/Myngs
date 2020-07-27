@@ -5,12 +5,14 @@ import com.eagskunst.apps.myng.domain.interactors.GetAlbum
 import com.eagskunst.apps.myngs.base.ErrorResult
 import com.eagskunst.apps.myngs.base.Success
 import com.eagskunst.apps.myngs.base.errors.EmptyAlbumException
+import com.eagskunst.apps.myngs.data.entities.relationships.AlbumWithSongs
 import com.eagskunst.apps.myngs.data.mapper.TunesQueryToAlbumWithSongsMapper
 import com.eagskunst.apps.myngs.data.mapper.TunesQueryToSongsMapper
 import com.eagskunst.apps.myngs.data.responses.TunesQueryResponse
 import com.eagskunst.apps.myngs.ui.albumdetail.AlbumDetailViewModel
 import com.eagskunst.apps.myngs.ui.albumdetail.AlbumDetailViewState
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
@@ -113,6 +115,32 @@ class AlbumDetailViewModelTest {
         viewModel.getAlbumById(albumId)
         val newState = viewModel.viewState.getOrAwaitValue()
         assert(newState.error is AlbumDetailViewState.Error.EmptyAlbum)
+    }
+
+    @Test
+    fun whenNetworkErrorIsEmitted_AndQueryIsRepeatedWithSuccess_AssertErrorIsNone() {
+        val albumWithSongs = mockk<AlbumWithSongs>()
+        every { albumWithSongs.songs.size } returns 5
+        every { albumWithSongs.album.name } returns "album0"
+        every { albumWithSongs.album.hasSongs } returns true
+        coEvery { getAlbum(albumId) } coAnswers {
+            ErrorResult(
+                throwable = SocketTimeoutException("timeout exception")
+            )
+        } coAndThen {
+            Success(albumWithSongs)
+        }
+
+        viewModel.getAlbumById(albumId)
+        var currentState = viewModel.viewState.getOrAwaitValue()
+        assert(currentState.error == AlbumDetailViewState.Error.Network)
+        assert(currentState.albumWithSongs == null)
+
+        viewModel.getAlbumById(albumId)
+        currentState = viewModel.viewState.getOrAwaitValue()
+        assert(currentState.error == AlbumDetailViewState.Error.None)
+        assertThat(currentState.albumWithSongs!!.album.name, `is`(albumWithSongs.album.name))
+        assertThat(currentState.albumWithSongs!!.songs.size, `is`(albumWithSongs.songs.size))
     }
 
 }

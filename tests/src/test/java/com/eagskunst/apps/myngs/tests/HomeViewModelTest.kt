@@ -85,4 +85,27 @@ class HomeViewModelTest {
         assert(newState.error is HomeViewState.Error.EmptySearch)
     }
 
+    @Test
+    fun whenErrorIsEmitted_AndThenNewQueryIsDone_AssertSuccessStateWithoutErrors() {
+        coEvery { searchTerm.searchSentenceForSongs("something") } coAnswers {
+            ErrorResult(
+                throwable = EmptySearchException("query returned empty array")
+            )
+        } coAndThen  {
+            Success(
+                mapper.map(
+                    TunesQueryResponse(20, SampleData.sampleResponse())
+                )
+            )
+        }
+
+        viewModel.searchForTerm("something")
+        var currentState = viewModel.viewState.getOrAwaitValue()
+        assert(currentState.error is HomeViewState.Error.EmptySearch)
+        viewModel.searchForTerm("something")
+        currentState = viewModel.viewState.getOrAwaitValue()
+        assert(currentState.error is HomeViewState.Error.None)
+        assertThat(currentState.songs!!.first().name, `is`("song0"))
+    }
+
 }
