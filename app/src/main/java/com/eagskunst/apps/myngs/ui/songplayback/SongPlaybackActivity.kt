@@ -12,7 +12,6 @@ import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
@@ -41,7 +40,6 @@ class SongPlaybackActivity(override val bindingFunction: (LayoutInflater) -> Act
         }
 
         binding.playerView.player = player
-
     }
 
     override fun onResume() {
