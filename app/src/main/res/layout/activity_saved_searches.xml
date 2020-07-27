@@ -4,7 +4,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include layout="@layout/saved_searches_header"/>
+    <include
+        android:id="@+id/headerView"
+        layout="@layout/saved_searches_header"/>
 
     <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/searchesRv"

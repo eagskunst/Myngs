@@ -6,7 +6,7 @@ package com.eagskunst.apps.myngs.utils
 object Constants {
     object IntentKeys {
         const val PARCELIZED_ALBUM_KEY = "parcelized_album"
-        const val SEARCH_ID = "search_id"
+        const val PARCELIZED_SEARCH_KEY = "parcelized_search_key"
         const val PARCELIZED_SONG_ID = "parcelized_song_id"
     }
 }
