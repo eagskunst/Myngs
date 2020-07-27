@@ -4,16 +4,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_rowWeight="7"
     tools:context=".ui.songplayback.SongPlaybackActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/playbackToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@id/albumCoverIv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1"
+        app:navigationIcon="@drawable/ic_back"
+        app:titleTextColor="@android:color/white"
+        tools:title="X100PRE" />
 
-   <com.google.android.exoplayer2.ui.PlayerControlView
-       android:id="@+id/playerView"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintTop_toTopOf="parent"
-       />
+    <ImageView
+        android:id="@+id/albumCoverIv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/sides_margin_playback_view"
+        android:layout_marginTop="@dimen/sides_margin_playback_view"
+        android:layout_marginEnd="@dimen/sides_margin_playback_view"
+        android:layout_marginBottom="@dimen/sides_margin_playback_view"
+        app:layout_constraintBottom_toTopOf="@id/fillerSpace"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/playbackToolbar"
+        app:layout_constraintVertical_weight="3"
+        tools:src="@drawable/song_placeholder" />
+
+    <Space
+        android:id="@+id/fillerSpace"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/albumCoverIv"
+        app:layout_constraintBottom_toBottomOf="@id/textContainer"
+        app:layout_constraintVertical_weight="0.5"
+        />
+
+    <LinearLayout
+        android:id="@+id/textContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/sides_margin_playback_view"
+        android:layout_marginEnd="@dimen/sides_margin_playback_view"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/playerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fillerSpace"
+        app:layout_constraintVertical_weight="1">
+
+        <TextView
+            android:id="@+id/songNameTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/sides_margin_playback_view"
+            android:layout_marginEnd="@dimen/sides_margin_playback_view"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:text="Barely Legal" />
+
+        <TextView
+            android:id="@+id/artistNameTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/sides_margin_playback_view"
+            android:layout_marginEnd="@dimen/sides_margin_playback_view"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textColor="@color/blackWithAlpha"
+            android:textSize="16sp"
+            tools:text="The Strokes" />
+
+    </LinearLayout>
+
+
+    <com.google.android.exoplayer2.ui.PlayerControlView
+        android:id="@+id/playerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textContainer"
+        app:layout_constraintVertical_weight="1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

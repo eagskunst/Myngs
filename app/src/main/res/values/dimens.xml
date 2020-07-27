@@ -2,4 +2,5 @@
 <resources>
     <dimen name="common_card_elevation">5dp</dimen>
     <dimen name="margin_texts_song_view_holder">10dp</dimen>
+    <dimen name="sides_margin_playback_view">20dp</dimen>
 </resources>
