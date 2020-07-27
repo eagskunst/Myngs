@@ -22,8 +22,9 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="15dp"
         android:layout_marginEnd="15dp"
-        android:tint="@android:color/white"
+        app:tint="@android:color/white"
         app:tooltipText="@string/see_recent_searches_text"
-        android:src="@drawable/ic_history"/>
+        app:srcCompat="@drawable/ic_history"
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

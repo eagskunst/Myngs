@@ -16,6 +16,7 @@ import com.eagskunst.apps.myngs.data.entities.albumAndCreatorNameString
 import com.eagskunst.apps.myngs.databinding.ActivityHomeBinding
 import com.eagskunst.apps.myngs.errorWithMessage
 import com.eagskunst.apps.myngs.loader
+import com.eagskunst.apps.myngs.myngsButton
 import com.eagskunst.apps.myngs.song
 import com.eagskunst.apps.myngs.ui.albumdetail.AlbumDetailActivity
 import com.eagskunst.apps.myngs.ui.albumdetail.ParcelizedAlbum
@@ -59,7 +60,7 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
         }
 
         binding.recentSearchesFab.setOnClickListener {
-            savedSearches.launch(Intent(this, SavedSearchesActivity::class.java))
+            goToSavedSearches()
         }
 
         TooltipCompat.setTooltipText(binding.recentSearchesFab, "See recent searches")
@@ -81,6 +82,7 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
                 state.isLoading -> {
                     loader { id("loader") }
                 }
+
                 state.error == HomeViewState.Error.None -> {
                     state.songs!!.forEach { song ->
                         song {
@@ -94,10 +96,25 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
                         }
                     }
                 }
-                else -> {
+
+                state.error == HomeViewState.Error.EmptySearch -> {
                     errorWithMessage {
                         id("emptysearch")
                         errorMessage(errorMessage)
+                    }
+                }
+
+                state.error == HomeViewState.Error.SearchFailed -> {
+                    errorWithMessage {
+                        id("emptysearch")
+                        errorMessage("Oh no. Looks like you have connection issues :(")
+                    }
+                    myngsButton {
+                        id("myngsButton")
+                        text("Select a saved search")
+                        onClick { _, _, _, _ ->
+                            goToSavedSearches()
+                        }
                     }
                 }
             }
@@ -109,6 +126,10 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
             putExtra(Constants.IntentKeys.PARCELIZED_ALBUM_KEY, ParcelizedAlbum.fromSong(song))
         }
         startActivity(intent)
+    }
+
+    private fun goToSavedSearches() {
+        savedSearches.launch(Intent(this, SavedSearchesActivity::class.java))
     }
 
 }
