@@ -1,8 +1,6 @@
-package com.eagskunst.apps.myngs.tests.viewmodels
+package com.eagskunst.apps.myngs.tests
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.paging.DataSource
-import androidx.paging.PositionalDataSource
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.eagskunst.apps.myng.domain.interactors.SearchTerm
 import com.eagskunst.apps.myngs.base.ErrorResult
@@ -11,10 +9,6 @@ import com.eagskunst.apps.myngs.base.errors.EmptySearchException
 import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
 import com.eagskunst.apps.myngs.data.mapper.TunesQueryToSongsMapper
 import com.eagskunst.apps.myngs.data.responses.TunesQueryResponse
-import com.eagskunst.apps.myngs.tests.SampleData
-import com.eagskunst.apps.myngs.tests.TestCoroutineRule
-import com.eagskunst.apps.myngs.tests.createMockDataSourceFactory
-import com.eagskunst.apps.myngs.tests.getOrAwaitValue
 import com.eagskunst.apps.myngs.ui.home.HomeViewModel
 import com.eagskunst.apps.myngs.ui.home.HomeViewState
 import io.mockk.coEvery
@@ -33,7 +27,7 @@ import org.junit.runner.RunWith
 /**
  * Created by eagskunst in 26/7/2020.
  */
-@RunWith(AndroidJUnit4ClassRunner::class)
+//@RunWith(AndroidJUnit4ClassRunner::class)
 @ExperimentalCoroutinesApi
 class HomeViewModelTest {
 
@@ -56,9 +50,8 @@ class HomeViewModelTest {
                 )
             )
         }
-        val searchWithSongs = mockk<SearchWithSongs>()
-        every { searchWithSongs.songs } returns songs
-        val dsFactory = createMockDataSourceFactory<SearchWithSongs>(listOf(searchWithSongs))
+
+        val dsFactory = createMockDataSourceFactory(songs)
 
         every { searchTerm.getSearchesWithSongsDataSource(any()) } returns dsFactory
         viewModel = HomeViewModel(searchTerm)
@@ -72,13 +65,8 @@ class HomeViewModelTest {
     @Test
     fun assertLoadingIsEmitted_AndInitialIsFalse() {
         coEvery { searchTerm.searchSentenceForSongs("something") } coAnswers {
-            delay(5000)
             Success(
-                mapper.map(
-                    TunesQueryResponse(20,
-                        SampleData.sampleResponse()
-                    )
-                )
+                listOf()
             )
         }
         viewModel.searchForTerm("something")
@@ -92,18 +80,12 @@ class HomeViewModelTest {
     @Test
     fun whenSuccessResult_AssertListIsEmitted() {
         coEvery { searchTerm.searchSentenceForSongs("something") } coAnswers {
-            Success(
-                mapper.map(
-                    TunesQueryResponse(20,
-                        SampleData.sampleResponse()
-                    )
-                )
-            )
+            Success(listOf())
         }
         viewModel.searchForTerm("something")
         val newState = viewModel.viewState.getOrAwaitValue()
-        assertThat(newState.songs!![0]!!.songs.size, `is`(20))
-        assertThat(newState.songs!![0]!!.songs.first().name, `is`("song0"))
+        assertThat(newState.songs!!.size, `is`(20))
+        assertThat(newState.songs!!.first().name, `is`("song0"))
     }
 
     @Test
@@ -140,6 +122,6 @@ class HomeViewModelTest {
         viewModel.searchForTerm("something")
         currentState = viewModel.viewState.getOrAwaitValue()
         assert(currentState.error is HomeViewState.Error.None)
-        assertThat(currentState.songs!![0]!!.songs.first().name, `is`("song0"))
+        assertThat(currentState.songs!!.first().name, `is`("song0"))
     }
 }
