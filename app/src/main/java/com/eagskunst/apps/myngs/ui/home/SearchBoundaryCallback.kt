@@ -22,7 +22,7 @@ class SearchBoundaryCallback(
     private val scope: CoroutineScope,
     private val searchTerm: SearchTerm,
     initialState: Boolean
-): PagedList.BoundaryCallback<SearchWithSongs>() {
+): PagedList.BoundaryCallback<Song>() {
 
     private val _viewState = MutableLiveData<HomeViewState>(HomeViewState(initial = initialState))
     val viewState = _viewState as LiveData<HomeViewState>
@@ -31,7 +31,7 @@ class SearchBoundaryCallback(
         requestSongsForSentence()
     }
 
-    override fun onItemAtEndLoaded(itemAtEnd: SearchWithSongs) {
+    override fun onItemAtEndLoaded(itemAtEnd: Song) {
         requestSongsForSentence()
     }
 

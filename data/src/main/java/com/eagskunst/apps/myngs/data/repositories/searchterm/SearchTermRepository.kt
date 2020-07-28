@@ -38,7 +38,7 @@ class SearchTermRepository(
 
         if (result is Success) {
             val emptySearch = result.data.isEmpty()
-            searchDataStore.addSearch(newSearch.copy(isEmptySearch = emptySearch, startedFrom = result.data.size))
+            searchDataStore.addSearch(newSearch.copy(isEmptySearch = emptySearch, startedFrom = Constants.Search.SEARCH_QUERY_LIMIT))
         }
 
         return result

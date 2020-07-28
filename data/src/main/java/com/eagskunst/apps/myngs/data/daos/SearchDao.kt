@@ -6,8 +6,10 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
+import androidx.room.RewriteQueriesToDropUnusedColumns
 import androidx.room.Transaction
 import com.eagskunst.apps.myngs.data.entities.Search
+import com.eagskunst.apps.myngs.data.entities.Song
 import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
 
 /**
@@ -39,8 +41,9 @@ interface SearchDao {
     suspend fun getSearchWithSongs(sentence: String): SearchWithSongs?
 
     @Transaction
-    @Query("SELECT * FROM searches WHERE sentence = :sentence")
-    fun getSearchWithSongsBySentence(sentence: String) : DataSource.Factory<Int, SearchWithSongs>
+    @RewriteQueriesToDropUnusedColumns
+    @Query("SELECT * FROM searches AS srch INNER JOIN songs WHERE srch.sentence = :sentence AND songs.search_id = srch.search_id")
+    fun getSearchWithSongsBySentence(sentence: String): DataSource.Factory<Int, Song>
 
     @Query("SELECT * FROM searches WHERE isEmptySearch = 0 ORDER BY created_at DESC")
     suspend fun getNotEmptySearches(): List<Search>

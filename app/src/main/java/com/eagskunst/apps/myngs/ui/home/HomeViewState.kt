@@ -10,7 +10,7 @@ import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
 data class HomeViewState(
     val isLoading: Boolean = false,
     val error: Error = Error.None,
-    val songs: PagedList<SearchWithSongs>? = null,
+    val songs: PagedList<Song>? = null,
     val initial: Boolean = false
 ) {
 

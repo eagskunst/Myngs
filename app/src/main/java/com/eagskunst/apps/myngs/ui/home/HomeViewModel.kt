@@ -10,6 +10,7 @@ import com.eagskunst.apps.myngs.base.Constants
 import com.eagskunst.apps.myngs.base.ErrorResult
 import com.eagskunst.apps.myngs.base.errors.EmptySearchException
 import com.eagskunst.apps.myngs.base_android.MyngsViewModel
+import com.eagskunst.apps.myngs.data.entities.Song
 import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
 
 /**
@@ -21,7 +22,7 @@ class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
     private val _viewState = MediatorLiveData<HomeViewState>().apply { value = HomeViewState(initial = true) }
     val viewState = _viewState as LiveData<HomeViewState>
     private var boundaryCallback: SearchBoundaryCallback? = null
-    private var pagedListLiveData: LiveData<PagedList<SearchWithSongs>>? = null
+    private var pagedListLiveData: LiveData<PagedList<Song>>? = null
 
 
     fun searchForTerm(sentence: String) {
@@ -34,7 +35,7 @@ class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
 
     private fun addSources(
         boundaryCallback: SearchBoundaryCallback,
-        pagedListLiveData: LiveData<PagedList<SearchWithSongs>>
+        pagedListLiveData: LiveData<PagedList<Song>>
     ) {
         with(_viewState) {
             var currentState = this.value!!
@@ -54,16 +55,15 @@ class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
     private fun createPagedListLiveData(
         sentence: String,
         boundaryCallback: SearchBoundaryCallback
-    ): LiveData<PagedList<SearchWithSongs>> {
+    ): LiveData<PagedList<Song>> {
         return LivePagedListBuilder(
             searchTerm.getSearchesWithSongsDataSource(sentence),
             PagedList.Config
                 .Builder()
                 .setEnablePlaceholders(false)
                 .setPageSize(Constants.Search.SEARCH_QUERY_LIMIT)
-                .setInitialLoadSizeHint(Constants.Search.SEARCH_QUERY_LIMIT)
                 .setMaxSize(Constants.Search.SEARCH_QUERY_MAX + 20)
-                .setPrefetchDistance(15)
+                .setPrefetchDistance(40)
                 .build()
         )
             .setBoundaryCallback(boundaryCallback)
@@ -76,12 +76,4 @@ class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
         pagedListLiveData?.let { _viewState.removeSource(it) }
     }
 
-    private fun updateState(state: HomeViewState) {
-        _viewState.value = state
-    }
-
-    private fun <T> mapError(errorResult: ErrorResult<T>) = when (errorResult.errorInfo.throwable) {
-        is EmptySearchException -> HomeViewState.Error.EmptySearch
-        else -> HomeViewState.Error.SearchFailed
-    }
 }

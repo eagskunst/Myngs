@@ -34,7 +34,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 typealias TransitionPair = androidx.core.util.Pair<View, String>
 
 class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHomeBinding = ActivityHomeBinding::inflate) :
-    MyngsActivity<ActivityHomeBinding>() {
+    MyngsActivity<ActivityHomeBinding>(), HomePagedController.Callbacks {
 
     private val viewModel: HomeViewModel by viewModel()
     private lateinit var errorMessage: String
@@ -52,13 +52,15 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
     override fun onStart() {
         super.onStart()
         errorMessage = getString(R.string.empty_search_text)
-
+        val controller = HomePagedController(this)
         viewModel.viewState.observe(this) { state ->
-            buildRecyclerView(state)
+            controller.viewState = state
+            controller.submitList(state.songs)
             if (!state.initial) {
                 binding.recentSearchesFab.show()
             }
         }
+        binding.songsRv.setController(controller)
 
         binding.homeHeader.searchInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -87,64 +89,20 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
         }
     }
 
-    private fun buildRecyclerView(state: HomeViewState) {
-       /* binding.songsRv.withModels {
-            when {
+    override fun errorMessage(): String {
+        return errorMessage
+    }
 
-                state.initial -> {
-                    imageWithMessage {
-                        id("initalstate")
-                        infoMessage("Don't know where to start? Go to your saved searches")
-                    }
-                    myngsButton {
-                        id("myngsButton")
-                        text("Select a saved search")
-                        onClick { _, _, _, _ ->
-                            goToSavedSearches()
-                        }
-                    }
-                }
+    override fun onInitialButtonClick() {
+        goToSavedSearches()
+    }
 
-                state.isLoading -> {
-                    loader { id("loader") }
-                }
+    override fun onRetryButtonClick() {
+        goToSavedSearches()
+    }
 
-                state.error == HomeViewState.Error.None -> {
-                    state.songs!!.forEach { song ->
-                        song {
-                            id(song.id)
-                            song(song)
-                            albumAndCreatorText(song.albumAndCreatorNameString())
-                            showAlbumImage(true)
-                            onClick { _, parentView, _, _ ->
-                                goToAlbumDetail(song, parentView.dataBinding.root)
-                            }
-                        }
-                    }
-                }
-
-                state.error == HomeViewState.Error.EmptySearch -> {
-                    errorWithMessage {
-                        id("emptysearch")
-                        errorMessage(errorMessage)
-                    }
-                }
-
-                state.error == HomeViewState.Error.SearchFailed -> {
-                    errorWithMessage {
-                        id("emptysearch")
-                        errorMessage("Oh no. Looks like you have connection issues :(")
-                    }
-                    myngsButton {
-                        id("myngsButton")
-                        text("Select a saved search")
-                        onClick { _, _, _, _ ->
-                            goToSavedSearches()
-                        }
-                    }
-                }
-            }
-        }*/
+    override fun onSongClicked(song: Song, view: View) {
+        goToAlbumDetail(song, view)
     }
 
     private fun goToAlbumDetail(song: Song, view: View) {
