@@ -5,13 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.eagskunst.apps.myng.domain.interactors.SearchTerm
 import com.eagskunst.apps.myngs.base.ErrorResult
-import com.eagskunst.apps.myngs.base.Success
 import com.eagskunst.apps.myngs.base.errors.EmptySearchException
 import com.eagskunst.apps.myngs.data.entities.Song
-import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.util.Locale
+import java.util.*
 
 /**
  * Created by eagskunst in 27/7/2020.
@@ -44,12 +42,12 @@ class SearchBoundaryCallback(
         updateState(currentState)
         scope.launch {
             val result = searchTerm.searchSentenceForSongs(sentence.toLowerCase(Locale.ROOT))
+            updateState(currentState.copy(isLoading = false))
 
             if (result is ErrorResult) {
                 currentState = currentState.copy(error = mapError(result))
             }
 
-            updateState(currentState.copy(isLoading = false))
         }
     }
 

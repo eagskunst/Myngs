@@ -88,6 +88,7 @@ dependencies {
     implementation Libs.AndroidX.recyclerview
     implementation Libs.AndroidX.constraintlayout
     api Libs.AndroidX.Paging.runtime
+    api Libs.AndroidX.Paging.ktx
     implementation Libs.Coroutines.android
     implementation Libs.Coil.coil
     implementation Libs.Epoxy.epoxy

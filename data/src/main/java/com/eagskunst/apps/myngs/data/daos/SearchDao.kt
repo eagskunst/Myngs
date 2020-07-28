@@ -42,7 +42,10 @@ interface SearchDao {
 
     @Transaction
     @RewriteQueriesToDropUnusedColumns
-    @Query("SELECT * FROM searches AS srch INNER JOIN songs WHERE srch.sentence = :sentence AND songs.search_id = srch.search_id")
+    @Query("""
+        SELECT id, name, creator_name, album_id, preview_url, songs.search_id, artwork
+        FROM searches AS srch INNER JOIN songs WHERE srch.sentence = :sentence AND songs.search_id = srch.search_id"""
+    )
     fun getSearchWithSongsBySentence(sentence: String): DataSource.Factory<Int, Song>
 
     @Query("SELECT * FROM searches WHERE isEmptySearch = 0 ORDER BY created_at DESC")

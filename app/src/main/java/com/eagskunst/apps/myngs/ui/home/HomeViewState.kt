@@ -2,7 +2,6 @@ package com.eagskunst.apps.myngs.ui.home
 
 import androidx.paging.PagedList
 import com.eagskunst.apps.myngs.data.entities.Song
-import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
 
 /**
  * Created by eagskunst in 25/7/2020.

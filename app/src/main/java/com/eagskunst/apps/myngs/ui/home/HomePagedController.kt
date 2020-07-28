@@ -31,8 +31,12 @@ class HomePagedController(val callbacks: Callbacks) : PagedListEpoxyController<S
                 .song(item)
                 .showAlbumImage(true)
                 .albumAndCreatorText(item.albumAndCreatorNameString())
-        } else LoaderBindingModel_()
-            .id("dummyloader")
+                .onClick { _, parentView, _, _ ->
+                    callbacks.onSongClicked(item, parentView.dataBinding.root)
+                }
+        } else SongBindingModel_()
+            .id(currentPosition)
+            .showAlbumImage(true)
     }
     override fun addModels(models: List<EpoxyModel<*>>) {
         super.addModels(models)

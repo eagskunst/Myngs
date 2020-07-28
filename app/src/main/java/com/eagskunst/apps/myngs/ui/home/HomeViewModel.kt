@@ -3,15 +3,13 @@ package com.eagskunst.apps.myngs.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import com.eagskunst.apps.myng.domain.interactors.SearchTerm
 import com.eagskunst.apps.myngs.base.Constants
-import com.eagskunst.apps.myngs.base.ErrorResult
-import com.eagskunst.apps.myngs.base.errors.EmptySearchException
+import com.eagskunst.apps.myngs.base.Timber
 import com.eagskunst.apps.myngs.base_android.MyngsViewModel
 import com.eagskunst.apps.myngs.data.entities.Song
-import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
 
 /**
  * Created by eagskunst in 25/7/2020.
@@ -27,6 +25,7 @@ class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
 
     fun searchForTerm(sentence: String) {
         removeStateSources()
+        Timber.d("Searching for term [$sentence]")
         boundaryCallback =
             SearchBoundaryCallback(sentence, viewModelScope, searchTerm, viewState.value!!.initial)
         pagedListLiveData = createPagedListLiveData(sentence, boundaryCallback!!)
@@ -56,17 +55,14 @@ class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
         sentence: String,
         boundaryCallback: SearchBoundaryCallback
     ): LiveData<PagedList<Song>> {
-        return LivePagedListBuilder(
-            searchTerm.getSearchesWithSongsDataSource(sentence),
-            PagedList.Config
-                .Builder()
-                .setMaxSize(Constants.Search.SEARCH_QUERY_MAX + 2)
-                .setEnablePlaceholders(true)
-                .setPageSize(50)
-                .build()
+        return searchTerm.getSearchesWithSongsDataSource(sentence).toLiveData(
+            config = PagedList.Config.Builder()
+                .setPageSize(Constants.Search.SEARCH_QUERY_LIMIT + 2)
+                .setInitialLoadSizeHint(Constants.Search.SEARCH_QUERY_LIMIT + 2)
+                .setEnablePlaceholders(false)
+                .build(),
+            boundaryCallback = boundaryCallback
         )
-            .setBoundaryCallback(boundaryCallback)
-            .build()
     }
 
 
