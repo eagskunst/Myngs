@@ -34,6 +34,7 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
 
     private val viewModel: HomeViewModel by viewModel()
     private lateinit var errorMessage: String
+    lateinit var controller: HomePagedController
 
 
     private val savedSearches =
@@ -50,7 +51,7 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         errorMessage = getString(R.string.empty_search_text)
-        val controller = HomePagedController(this)
+        controller = HomePagedController(this)
         viewModel.viewState.observe(this) { state ->
             controller.viewState = state
             if (state.songs != null && state.songs.isNotEmpty()) {
@@ -82,8 +83,8 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
     private fun executeSearch() {
         val input = binding.homeHeader.searchInput.text.toString()
         if (input.isNotEmpty()) {
-
             viewModel.searchForTerm(input)
+            controller.submitList(null)
             hideKeyboard()
         } else {
             showToast("Write something first!")

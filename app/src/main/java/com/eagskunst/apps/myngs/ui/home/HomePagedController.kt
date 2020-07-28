@@ -109,7 +109,7 @@ class HomePagedController(private val callbacks: Callbacks) : PagedListEpoxyCont
             viewState.error == HomeViewState.Error.NoMoreItems -> {
                 errorWithMessage {
                     id(ERROR_WITH_MESSAGE_VIEW)
-                    errorMessage("You reached the end of the list :)`")
+                    errorMessage("You reached the end of the list :)")
                 }
             }
         }

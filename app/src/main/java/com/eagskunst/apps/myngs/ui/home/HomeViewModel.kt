@@ -37,7 +37,7 @@ class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
         pagedListLiveData: LiveData<PagedList<Song>>
     ) {
         with(_viewState) {
-            var currentState = this.value!!
+            var currentState = this.value!!.copy(songs = null)
             addSource(boundaryCallback.viewState) { state ->
                 currentState = state
                 _viewState.value = state
