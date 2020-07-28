@@ -109,7 +109,7 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
 
     private fun goToAlbumDetail(song: Song, view: View) {
         val iv = view.findViewById<ImageView>(R.id.albumArtworkIv)
-        val tv = view.findViewById<TextView>(R.id.albumAndCreatorTv)
+
         val pairs = listOf<TransitionPair>(
             androidx.core.util.Pair(
                 iv,

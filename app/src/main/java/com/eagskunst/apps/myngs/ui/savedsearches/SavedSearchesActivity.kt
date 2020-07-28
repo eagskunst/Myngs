@@ -4,15 +4,18 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.appcompat.widget.TooltipCompat
 import androidx.lifecycle.observe
+import com.eagskunst.apps.myngs.R
 import com.eagskunst.apps.myngs.base_android.MyngsActivity
 import com.eagskunst.apps.myngs.data.entities.Search
 import com.eagskunst.apps.myngs.databinding.ActivitySavedSearchesBinding
 import com.eagskunst.apps.myngs.errorWithMessage
 import com.eagskunst.apps.myngs.loader
 import com.eagskunst.apps.myngs.myngsButton
-import com.eagskunst.apps.myngs.searchText
+import com.eagskunst.apps.myngs.searchItem
 import com.eagskunst.apps.myngs.utils.Constants
+import kotlinx.android.synthetic.main.activity_saved_searches.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -36,12 +39,22 @@ class SavedSearchesActivity(
         }
 
         viewModel.getSavedSearches()
+        TooltipCompat.setTooltipText(
+            binding.clearSearchesFab,
+            getString(R.string.clear_searches_tooltip)
+        )
+        binding.clearSearchesFab.setOnClickListener {
+            viewModel.deleteAllSearches()
+        }
     }
 
     private fun buildRecyclerView(state: SavedSearchesViewState) {
         binding.searchesRv.withModels {
             when {
-                state.isLoading -> loader { id("loader") }
+                state.isLoading -> loader {
+                    id("loader")
+                    clearSearchesFab.hide()
+                }
                 state.error == SavedSearchesViewState.Error.NoSearchesError -> {
                     errorWithMessage {
                         id("errormessage")
@@ -52,17 +65,22 @@ class SavedSearchesActivity(
                         text("Make a search")
                         onClick { _, _, _, _ -> goBack(Activity.RESULT_CANCELED) }
                     }
+                    clearSearchesFab.hide()
                 }
                 else -> {
                     state.searches!!.forEach { search ->
-                        searchText {
+                        searchItem {
                             id(search.id)
                             text(search.sentence)
                             onClick { _, _, _, _ ->
                                 goBack(Activity.RESULT_OK, search)
                             }
+                            onDeleteClick { _, _, _, _ ->
+                                viewModel.deleteSearch(search)
+                            }
                         }
                     }
+                    binding.clearSearchesFab.show()
                 }
             }
         }
@@ -82,7 +100,6 @@ class SavedSearchesActivity(
             }
         }
         setResult(resultCode, intent)
-        finish()
         finishAndSlideDown()
     }
 }
