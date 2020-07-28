@@ -60,10 +60,9 @@ class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
             searchTerm.getSearchesWithSongsDataSource(sentence),
             PagedList.Config
                 .Builder()
-                .setEnablePlaceholders(false)
-                .setPageSize(Constants.Search.SEARCH_QUERY_LIMIT)
-                .setMaxSize(Constants.Search.SEARCH_QUERY_MAX + 20)
-                .setPrefetchDistance(40)
+                .setMaxSize(Constants.Search.SEARCH_QUERY_MAX + 2)
+                .setEnablePlaceholders(true)
+                .setPageSize(50)
                 .build()
         )
             .setBoundaryCallback(boundaryCallback)

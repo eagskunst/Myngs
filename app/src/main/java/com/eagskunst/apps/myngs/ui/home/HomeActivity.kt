@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityOptionsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import com.eagskunst.apps.myngs.R
 import com.eagskunst.apps.myngs.base_android.MyngsActivity
@@ -29,6 +30,8 @@ import com.eagskunst.apps.myngs.ui.albumdetail.ParcelableAlbum
 import com.eagskunst.apps.myngs.ui.savedsearches.ParcelableSearch
 import com.eagskunst.apps.myngs.ui.savedsearches.SavedSearchesActivity
 import com.eagskunst.apps.myngs.utils.Constants
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 
 typealias TransitionPair = androidx.core.util.Pair<View, String>
@@ -55,7 +58,9 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
         val controller = HomePagedController(this)
         viewModel.viewState.observe(this) { state ->
             controller.viewState = state
-            controller.submitList(state.songs)
+            if (state.songs != null) {
+                controller.submitList(state.songs)
+            }
             if (!state.initial) {
                 binding.recentSearchesFab.show()
             }

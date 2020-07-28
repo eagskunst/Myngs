@@ -2,21 +2,16 @@ package com.eagskunst.apps.myngs.ui.home
 
 import android.view.View
 import com.airbnb.epoxy.EpoxyModel
-import com.airbnb.epoxy.EpoxyModelGroup
 import com.airbnb.epoxy.paging.PagedListEpoxyController
-import com.eagskunst.apps.myngs.ErrorWithMessageBindingModel_
-import com.eagskunst.apps.myngs.ImageWithMessageBindingModel_
 import com.eagskunst.apps.myngs.LoaderBindingModel_
-import com.eagskunst.apps.myngs.MyngsButtonBindingModel_
-import com.eagskunst.apps.myngs.R
 import com.eagskunst.apps.myngs.SongBindingModel_
+import com.eagskunst.apps.myngs.base.Timber
 import com.eagskunst.apps.myngs.data.entities.Song
 import com.eagskunst.apps.myngs.data.entities.albumAndCreatorNameString
 import com.eagskunst.apps.myngs.errorWithMessage
 import com.eagskunst.apps.myngs.imageWithMessage
 import com.eagskunst.apps.myngs.loader
 import com.eagskunst.apps.myngs.myngsButton
-import com.eagskunst.apps.myngs.song
 
 /**
  * Created by eagskunst in 27/7/2020.
@@ -30,13 +25,15 @@ class HomePagedController(val callbacks: Callbacks) : PagedListEpoxyController<S
         }
 
     override fun buildItemModel(currentPosition: Int, item: Song?): EpoxyModel<*> {
-        return SongBindingModel_()
-            .id(item?.id)
-            .song(item)
-            .showAlbumImage(true)
-            .albumAndCreatorText(item?.albumAndCreatorNameString())
+        return if (item != null) {
+            SongBindingModel_()
+                .id(item.id)
+                .song(item)
+                .showAlbumImage(true)
+                .albumAndCreatorText(item.albumAndCreatorNameString())
+        } else LoaderBindingModel_()
+            .id("dummyloader")
     }
-
     override fun addModels(models: List<EpoxyModel<*>>) {
         super.addModels(models)
         when {
@@ -80,6 +77,11 @@ class HomePagedController(val callbacks: Callbacks) : PagedListEpoxyController<S
                 }
             }
         }
+    }
+
+    override fun onExceptionSwallowed(exception: RuntimeException) {
+        super.onExceptionSwallowed(exception)
+        Timber.d("Exception: $exception")
     }
 
     interface Callbacks {
