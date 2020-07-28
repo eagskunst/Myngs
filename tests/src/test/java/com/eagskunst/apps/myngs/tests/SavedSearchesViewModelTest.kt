@@ -6,8 +6,10 @@ import com.eagskunst.apps.myngs.base.Success
 import com.eagskunst.apps.myngs.data.entities.Search
 import com.eagskunst.apps.myngs.ui.savedsearches.SavedSearchesViewModel
 import com.eagskunst.apps.myngs.ui.savedsearches.SavedSearchesViewState
+import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.CoreMatchers.`is`
@@ -72,6 +74,45 @@ class SavedSearchesViewModelTest {
         }
 
         viewModel.getSavedSearches()
+        val newState = viewModel.viewState.getOrAwaitValue()
+
+        assert(newState.error == SavedSearchesViewState.Error.NoSearchesError)
+        assert(newState.searches == null)
+
+        assertThat(
+            viewModel.hasSearches(),
+            `is`(false)
+        )
+    }
+
+    @Test
+    fun whenUserHaveTwoSearches_AndDeletesOne_AssertThereIsOnlyOneLeft() {
+        val dummySearch = mockk<Search>(relaxed = true)
+        val deletableSearch = mockk<Search>(relaxed = true)
+        val searches = mutableListOf(dummySearch, deletableSearch)
+        coEvery { searchTerm.getSavedSearches() } coAnswers {
+            Success(searches)
+        }
+        coEvery { searchTerm.deleteSearch(deletableSearch) } just Runs
+
+        viewModel.getSavedSearches()
+        viewModel.deleteSearch(deletableSearch)
+
+        val currentState = viewModel.viewState.getOrAwaitValue()
+        assertThat(currentState.searches!!.size, `is`(1))
+    }
+
+    @Test
+    fun whenUserHaveTwoSearches_AndDeletesAll_AssertListIsNull_AndErrorIsEmptySearchError() {
+        val searches = mutableListOf<Search>(mockk(relaxed = true), mockk(relaxed = true))
+        coEvery { searchTerm.getSavedSearches() } coAnswers {
+            Success(searches)
+        }
+        coEvery { searchTerm.deleteAllSearches() } just Runs
+
+        viewModel.getSavedSearches()
+        viewModel.deleteAllSearches()
+
         val newState = viewModel.viewState.getOrAwaitValue()
 
         assert(newState.error == SavedSearchesViewState.Error.NoSearchesError)
