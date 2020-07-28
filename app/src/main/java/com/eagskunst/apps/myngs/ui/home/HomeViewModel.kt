@@ -43,10 +43,12 @@ class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
                 _viewState.value = state
             }
             addSource(pagedListLiveData) { pagedList ->
-                currentState = currentState.copy(
-                    songs = pagedList
-                )
-                _viewState.value = currentState
+                if (pagedList != null && pagedList.isNotEmpty()) {
+                    currentState = currentState.copy(
+                        songs = pagedList
+                    )
+                    _viewState.value = currentState
+                }
             }
         }
     }
@@ -57,9 +59,11 @@ class HomeViewModel(private val searchTerm: SearchTerm) : MyngsViewModel() {
     ): LiveData<PagedList<Song>> {
         return searchTerm.getSearchesWithSongsDataSource(sentence).toLiveData(
             config = PagedList.Config.Builder()
-                .setPageSize(Constants.Search.SEARCH_QUERY_LIMIT + 2)
-                .setInitialLoadSizeHint(Constants.Search.SEARCH_QUERY_LIMIT + 2)
+                .setPageSize(Constants.Search.SEARCH_QUERY_LIMIT - 1)
+                .setPrefetchDistance(Constants.Search.SEARCH_QUERY_LIMIT - 1)
                 .setEnablePlaceholders(false)
+                .setMaxSize(Constants.Search.SEARCH_QUERY_MAX - 1)
+                .setInitialLoadSizeHint(Constants.Search.SEARCH_QUERY_LIMIT - 1)
                 .build(),
             boundaryCallback = boundaryCallback
         )

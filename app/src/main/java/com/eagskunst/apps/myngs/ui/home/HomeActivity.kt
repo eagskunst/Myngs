@@ -2,6 +2,7 @@ package com.eagskunst.apps.myngs.ui.home
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -11,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.eagskunst.apps.myngs.R
 import com.eagskunst.apps.myngs.base.Timber
 import com.eagskunst.apps.myngs.base_android.MyngsActivity
@@ -33,9 +35,11 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
     private val viewModel: HomeViewModel by viewModel()
     private lateinit var errorMessage: String
 
+
     private val savedSearches =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { intent ->
             if (intent.resultCode == Activity.RESULT_OK) {
+                binding.recentSearchesFab.show()
                 val selectedSearch =
                     intent.data?.getParcelableExtra<ParcelableSearch>(Constants.IntentKeys.PARCELIZED_SEARCH_KEY)
                 binding.homeHeader.searchInput.setText(selectedSearch?.sentence)
@@ -43,13 +47,13 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
             }
         }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         errorMessage = getString(R.string.empty_search_text)
         val controller = HomePagedController(this)
         viewModel.viewState.observe(this) { state ->
             controller.viewState = state
-            if (state.songs != null) {
+            if (state.songs != null && state.songs.isNotEmpty()) {
                 controller.submitList(state.songs)
             }
             if (!state.initial) {
@@ -78,6 +82,7 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
     private fun executeSearch() {
         val input = binding.homeHeader.searchInput.text.toString()
         if (input.isNotEmpty()) {
+
             viewModel.searchForTerm(input)
             hideKeyboard()
         } else {

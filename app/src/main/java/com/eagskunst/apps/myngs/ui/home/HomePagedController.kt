@@ -1,8 +1,13 @@
 package com.eagskunst.apps.myngs.ui.home
 
 import android.view.View
+import androidx.recyclerview.widget.DiffUtil
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
+import com.eagskunst.apps.myngs.ErrorWithMessageBindingModel_
+import com.eagskunst.apps.myngs.ImageWithMessageBindingModel_
+import com.eagskunst.apps.myngs.LoaderBindingModel_
+import com.eagskunst.apps.myngs.MyngsButtonBindingModel_
 import com.eagskunst.apps.myngs.SongBindingModel_
 import com.eagskunst.apps.myngs.base.Timber
 import com.eagskunst.apps.myngs.data.entities.Song
@@ -15,7 +20,20 @@ import com.eagskunst.apps.myngs.myngsButton
 /**
  * Created by eagskunst in 27/7/2020.
  */
-class HomePagedController(private val callbacks: Callbacks) : PagedListEpoxyController<Song>() {
+class HomePagedController(private val callbacks: Callbacks) : PagedListEpoxyController<Song>(
+
+    itemDiffCallback = object: DiffUtil.ItemCallback<Song>() {
+        override fun areItemsTheSame(oldItem: Song, newItem: Song): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Song, newItem: Song): Boolean {
+            return oldItem.name == newItem.name && oldItem.creatorName == newItem.creatorName &&
+                    oldItem.albumId == newItem.albumId
+        }
+
+    }
+) {
 
     private val ERROR_WITH_MESSAGE_VIEW = "errorview"
 
@@ -39,10 +57,16 @@ class HomePagedController(private val callbacks: Callbacks) : PagedListEpoxyCont
             .id(currentPosition)
             .showAlbumImage(true)
     }
-    override fun addModels(models: List<EpoxyModel<*>>) {
-        super.addModels(models)
-        when {
 
+
+    override fun addModels(models: List<EpoxyModel<*>>) {
+        super.addModels(models.distinct().filter {
+            it !is ImageWithMessageBindingModel_
+                    || it !is MyngsButtonBindingModel_
+                    || it !is LoaderBindingModel_
+                    || it !is ErrorWithMessageBindingModel_
+        })
+        when {
             viewState.initial -> {
                 imageWithMessage {
                     id("initalstate")
@@ -89,11 +113,6 @@ class HomePagedController(private val callbacks: Callbacks) : PagedListEpoxyCont
                 }
             }
         }
-    }
-
-    override fun onExceptionSwallowed(exception: RuntimeException) {
-        super.onExceptionSwallowed(exception)
-        Timber.d("Exception: $exception")
     }
 
     interface Callbacks {

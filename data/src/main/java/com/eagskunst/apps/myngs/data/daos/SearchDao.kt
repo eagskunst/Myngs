@@ -42,8 +42,10 @@ interface SearchDao {
 
     @Transaction
     @Query("""
-        SELECT id, name, creator_name, album_id, preview_url, songs.search_id, album_name, artwork
-        FROM searches AS srch INNER JOIN songs WHERE srch.sentence = :sentence AND songs.search_id = srch.search_id"""
+        SELECT id, name, creator_name, album_id, preview_url, songs.search_id, album_name, artwork, songs.created_at
+        FROM searches AS srch INNER JOIN songs WHERE srch.sentence = :sentence AND songs.search_id = srch.search_id
+        ORDER BY songs.created_at ASC
+        """
     )
     fun getSearchWithSongsBySentence(sentence: String): DataSource.Factory<Int, Song>
 

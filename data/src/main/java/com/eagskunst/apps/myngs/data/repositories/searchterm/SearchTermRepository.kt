@@ -49,7 +49,9 @@ class SearchTermRepository(
     private suspend fun getMoreSongsFromSearch(searchWithSongs: SearchWithSongs): DataResult<List<Song>> {
         val searchStartedFrom = searchWithSongs.search.startedFrom
         if (searchStartedFrom > Constants.Search.SEARCH_QUERY_MAX) {
-            return Success(searchWithSongs.songs)
+            return ErrorResult(
+                NoMoreItemsException()
+            )
         }
         val search = searchWithSongs.search
         val result = searchDataSource.querySentenceForSongs(search)

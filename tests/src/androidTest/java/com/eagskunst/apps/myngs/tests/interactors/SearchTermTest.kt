@@ -139,7 +139,8 @@ class SearchTermTest : KoinTest {
                 searchService.searchSentence(sentence = sentence, page = Constants.Search.SEARCH_QUERY_MAX)
             } returns TunesQueryResponse(results = listOf(), resultCount = 0)
 
-            searchTerms.searchSentenceForSongs(sentence)
+            val result = searchTerms.searchSentenceForSongs(sentence)
+            assert(result is ErrorResult)
             coVerify(exactly = 0) { searchService.searchSentence(sentence = sentence, page = Constants.Search.SEARCH_QUERY_MAX) }
         }
     }
