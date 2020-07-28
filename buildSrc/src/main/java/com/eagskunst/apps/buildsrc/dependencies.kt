@@ -14,7 +14,6 @@ object Libs {
         const val constraintlayout = "androidx.constraintlayout:constraintlayout:1.1.3"
         const val recyclerview = "androidx.recyclerview:recyclerview:1.1.0"
         const val activity = "androidx.activity:activity-ktx:1.2.0-alpha06"
-        const val fragment = "androidx.fragment:fragment-ktx:1.3.0-alpha06"
 
         object Room {
             private const val version = "2.3.0-alpha02"
@@ -67,9 +66,6 @@ object Libs {
             const val androidTest = "io.mockk:mockk-android:$version"
         }
 
-        object Kakao {
-            const val core = "com.agoda.kakao:kakao:2.3.3"
-        }
     }
 
 
@@ -111,7 +107,6 @@ object Libs {
         private const val version = "2.1.5"
         const val core = "org.koin:koin-core:$version"
         const val android = "org.koin:koin-android:$version"
-        const val androidScope = "org.koin:koin-android-scope:$version"
         const val androidViewModel = "org.koin:koin-android-viewmodel:$version"
         const val test = "org.koin:koin-test:$version"
     }
