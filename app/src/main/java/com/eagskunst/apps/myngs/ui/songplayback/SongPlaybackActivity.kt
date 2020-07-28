@@ -1,5 +1,6 @@
 package com.eagskunst.apps.myngs.ui.songplayback
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
@@ -21,8 +22,8 @@ class SongPlaybackActivity(override val bindingFunction: (LayoutInflater) -> Act
     private val dsFactory by inject<DataSource.Factory>()
     private val player: SimpleExoPlayer by inject { parametersOf(this) }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         val parcelableSong = intent.getParcelableExtra<ParcelableSong>(Constants.IntentKeys.PARCELIZED_SONG_KEY) ?: return
 
         lifecycleScope.launchWhenResumed {

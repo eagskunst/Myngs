@@ -1,6 +1,7 @@
 package com.eagskunst.apps.myngs.ui.albumdetail
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.observe
@@ -25,8 +26,9 @@ class AlbumDetailActivity(
     private val viewModel: AlbumDetailViewModel by viewModel()
     private var albumId = 0L
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
         binding.albumToolbarView.albumToolbar.title
         val parcelableAlbum =
             intent?.extras?.getParcelable<ParcelableAlbum>(Constants.IntentKeys.PARCELIZED_ALBUM_KEY)

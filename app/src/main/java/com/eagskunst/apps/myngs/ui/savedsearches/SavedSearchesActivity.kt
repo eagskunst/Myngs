@@ -2,6 +2,7 @@ package com.eagskunst.apps.myngs.ui.savedsearches
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.lifecycle.observe
 import com.eagskunst.apps.myngs.base_android.MyngsActivity
@@ -23,8 +24,8 @@ class SavedSearchesActivity(
 
     private val viewModel: SavedSearchesViewModel by viewModel()
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         binding.headerView.savedSearchesToolbar.setNavigationOnClickListener {
             goBack(Activity.RESULT_CANCELED)
