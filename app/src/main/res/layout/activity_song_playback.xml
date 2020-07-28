@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/blackWithAlpha"
                 android:textSize="24sp"
-                android:text="@{song.albumName}"
+                android:text="@{song.artistName}"
                 tools:text="The Strokes" />
 
         </LinearLayout>
