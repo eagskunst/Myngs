@@ -60,7 +60,7 @@ From [Epoxy](https://github.com/airbnb/epoxy)'s repository:
 The EpoxyRecyclerView's `withModels` extension function also removed the need of controller's creation*,
 So almost all the activities's used views can be seem directly on its Kotlin file.
 
-*Paging library needs special adapter, which Epoxy supports on a different type of controller. This is the only controller that lives on a different file
+*Paging library needs a special adapter, which Epoxy supports on a different type of controller. This is the only controller that lives on a different file.
 
 #### Coil
 Image loading with coroutines. Has better support for Kotlin as it is Kotlin first.
