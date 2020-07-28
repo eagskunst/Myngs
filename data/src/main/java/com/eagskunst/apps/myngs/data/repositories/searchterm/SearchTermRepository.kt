@@ -89,4 +89,12 @@ class SearchTermRepository(
 
     fun getSearchesWithSongs(sentence: String) =
         searchDataStore.getSearchesWithSongsDataSource(sentence)
+
+    suspend fun deleteSearch(search: Search) {
+        searchDataStore.deleteSearch(search)
+    }
+
+    suspend fun deleteAllSearches() {
+        searchDataStore.deleteAllSearches()
+    }
 }

@@ -21,4 +21,8 @@ class SearchDataStore(private val searchDao: SearchDao) {
 
     fun getSearchesWithSongsDataSource(sentence: String) =
         searchDao.getSearchWithSongsBySentence(sentence)
+
+    suspend fun deleteSearch(search: Search) = searchDao.deleteSearch(search)
+
+    suspend fun deleteAllSearches() = searchDao.deleteAll()
 }

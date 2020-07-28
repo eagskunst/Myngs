@@ -44,6 +44,7 @@ class SearchTermTest : KoinTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
+
     @get:Rule
     val expectedException = ExpectedException.none()
 
@@ -99,6 +100,7 @@ class SearchTermTest : KoinTest {
         searchRepeatedSentence_Add200Songs_AndVerifyServiceIsCalledWithDifferentPage(sentence)
         verifyServiceIsNotCalledWith200Page(sentence)
         getSavedSearches_AssertSearchWithSentenceExist_AndSongsToo(sentence)
+        deleteSavedSearches_AssertSearchDontExist(sentence)
     }
 
     private fun searchSentence_ReturnSuccess_VerifySearchWasSavedWithNotEmpty(sentence: String) {
@@ -116,7 +118,9 @@ class SearchTermTest : KoinTest {
         }
     }
 
-    private fun searchRepeatedSentence_Add200Songs_AndVerifyServiceIsCalledWithDifferentPage(sentence: String) {
+    private fun searchRepeatedSentence_Add200Songs_AndVerifyServiceIsCalledWithDifferentPage(
+        sentence: String
+    ) {
         runBlocking {
             /*
             Add 180 more songs to the DB, for a total of 200. The search's startedFrom column
@@ -124,7 +128,10 @@ class SearchTermTest : KoinTest {
             */
             coEvery {
                 searchService.searchSentence(sentence = sentence, page = 20)
-            } returns TunesQueryResponse(results = SampleData.sampleResponse(size = Constants.Search.SEARCH_QUERY_MAX), resultCount = Constants.Search.SEARCH_QUERY_MAX)
+            } returns TunesQueryResponse(
+                results = SampleData.sampleResponse(size = Constants.Search.SEARCH_QUERY_MAX),
+                resultCount = Constants.Search.SEARCH_QUERY_MAX
+            )
 
             searchTerms.searchSentenceForSongs(sentence)
             coVerify(exactly = 1) { searchService.searchSentence(sentence = sentence, page = 20) }
@@ -132,16 +139,23 @@ class SearchTermTest : KoinTest {
     }
 
 
-
     private fun verifyServiceIsNotCalledWith200Page(sentence: String) {
         runBlocking {
             coEvery {
-                searchService.searchSentence(sentence = sentence, page = Constants.Search.SEARCH_QUERY_MAX)
+                searchService.searchSentence(
+                    sentence = sentence,
+                    page = Constants.Search.SEARCH_QUERY_MAX
+                )
             } returns TunesQueryResponse(results = listOf(), resultCount = 0)
 
             val result = searchTerms.searchSentenceForSongs(sentence)
             assert(result is ErrorResult)
-            coVerify(exactly = 0) { searchService.searchSentence(sentence = sentence, page = Constants.Search.SEARCH_QUERY_MAX) }
+            coVerify(exactly = 0) {
+                searchService.searchSentence(
+                    sentence = sentence,
+                    page = Constants.Search.SEARCH_QUERY_MAX
+                )
+            }
         }
     }
 
@@ -153,6 +167,16 @@ class SearchTermTest : KoinTest {
             val searchWithSongsRes = searchTerms.getSavedSearch(sentence).getOrThrow()
             assertThat(sentenceSearch!!.id, `is`(searchWithSongsRes.search.id))
             assertThat(searchWithSongsRes.songs.size, `is`(180))
+        }
+    }
+
+    private fun deleteSavedSearches_AssertSearchDontExist(sentence: String) {
+        runBlocking {
+            val search =
+                searchTerms.getSavedSearches().getOrThrow().first { it.sentence == sentence }
+            searchTerms.deleteSearch(search)
+            val searchesInDb = searchTerms.getSavedSearches().getOrThrow()
+            assertThat(searchesInDb.none { it.sentence == sentence }, `is`(true))
         }
     }
 
@@ -212,7 +236,12 @@ class SearchTermTest : KoinTest {
     @Test
     fun searchSentence_ThrowException_AssertSearchWasNotSaved() {
         val sentence = "a long sentence that will need time"
-        coEvery { searchService.searchSentence(sentence, page = 0) } throws SocketTimeoutException("Timeout")
+        coEvery {
+            searchService.searchSentence(
+                sentence,
+                page = 0
+            )
+        } throws SocketTimeoutException("Timeout")
 
         runBlocking {
             val res = searchTerms.searchSentenceForSongs(sentence)

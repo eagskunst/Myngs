@@ -54,4 +54,8 @@ class SearchTerm(
 
     fun getSearchesWithSongsDataSource(sentence: String) =
         searchTermRepository.getSearchesWithSongs(sentence)
+
+    suspend fun deleteSearch(search: Search) = searchTermRepository.deleteSearch(search)
+
+    suspend fun deleteAllSearches() = searchTermRepository.deleteAllSearches()
 }

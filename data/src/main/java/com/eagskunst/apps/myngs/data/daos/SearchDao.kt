@@ -24,6 +24,9 @@ interface SearchDao {
     @Delete
     suspend fun deleteSearch(search: Search)
 
+    @Query("DELETE FROM searches")
+    suspend fun deleteAll()
+
     @Query("SELECT * FROM searches WHERE sentence = :sentence LIMIT 1")
     suspend fun getSearchBySentence(sentence: String): Search?
 
