@@ -7,12 +7,12 @@ _*Playbacks are saved on the cache_
 
 ### Architecture
 This applications follows the MVVM + Clean Architecture with TDD.
-See the detailed [file](ARCHITECTURE.md) explaining the architecture in deep and the test coverage.
+See the detailed [file](ARCHITECTURE.md) explaining the architecture in deep and the tests coverage.
 
 ### Compiling
 Just clone the project and run on your desired device. The iTunes API can be used without a key.
 
-#### Contributing
+### Contributing
 I made this app for practice/professional purposes, but PR's are welcome!
 
 ### Libraries and other stuff applied
