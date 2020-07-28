@@ -3,7 +3,6 @@ package com.eagskunst.apps.myngs.ui.home
 import android.view.View
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
-import com.eagskunst.apps.myngs.LoaderBindingModel_
 import com.eagskunst.apps.myngs.SongBindingModel_
 import com.eagskunst.apps.myngs.base.Timber
 import com.eagskunst.apps.myngs.data.entities.Song
@@ -16,7 +15,9 @@ import com.eagskunst.apps.myngs.myngsButton
 /**
  * Created by eagskunst in 27/7/2020.
  */
-class HomePagedController(val callbacks: Callbacks) : PagedListEpoxyController<Song>() {
+class HomePagedController(private val callbacks: Callbacks) : PagedListEpoxyController<Song>() {
+
+    private val ERROR_WITH_MESSAGE_VIEW = "errorview"
 
     var viewState = HomeViewState(initial = true)
         set(value) {
@@ -51,7 +52,7 @@ class HomePagedController(val callbacks: Callbacks) : PagedListEpoxyController<S
                     id("myngsButton")
                     text("Select a saved search")
                     onClick { _, _, _, _ ->
-                        callbacks.onRetryButtonClick()
+                        callbacks.onSavedSearchesClick()
                     }
                 }
             }
@@ -69,15 +70,22 @@ class HomePagedController(val callbacks: Callbacks) : PagedListEpoxyController<S
 
             viewState.error == HomeViewState.Error.SearchFailed -> {
                 errorWithMessage {
-                    id("emptysearch")
+                    id(ERROR_WITH_MESSAGE_VIEW)
                     errorMessage("Oh no. Looks like you have connection issues :(")
                 }
                 myngsButton {
                     id("myngsButton")
                     text("Select a saved search")
                     onClick { _, _, _, _ ->
-                        callbacks.onRetryButtonClick()
+                        callbacks.onSavedSearchesClick()
                     }
+                }
+            }
+
+            viewState.error == HomeViewState.Error.NoMoreItems -> {
+                errorWithMessage {
+                    id(ERROR_WITH_MESSAGE_VIEW)
+                    errorMessage("You reached the end of the list :)`")
                 }
             }
         }
@@ -90,7 +98,7 @@ class HomePagedController(val callbacks: Callbacks) : PagedListEpoxyController<S
 
     interface Callbacks {
         fun onInitialButtonClick()
-        fun onRetryButtonClick()
+        fun onSavedSearchesClick()
         fun onSongClicked(song: Song, view: View)
         fun errorMessage(): String
     }

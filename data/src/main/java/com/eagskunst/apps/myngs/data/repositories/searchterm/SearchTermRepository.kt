@@ -2,7 +2,9 @@ package com.eagskunst.apps.myngs.data.repositories.searchterm
 
 import com.eagskunst.apps.myngs.base.Constants
 import com.eagskunst.apps.myngs.base.DataResult
+import com.eagskunst.apps.myngs.base.ErrorResult
 import com.eagskunst.apps.myngs.base.Success
+import com.eagskunst.apps.myngs.base.errors.NoMoreItemsException
 import com.eagskunst.apps.myngs.data.entities.Search
 import com.eagskunst.apps.myngs.data.entities.Song
 import com.eagskunst.apps.myngs.data.entities.relationships.SearchWithSongs
@@ -54,6 +56,15 @@ class SearchTermRepository(
 
         if (result is Success) {
             searchDataStore.updateStoppedAt(searchWithSongs.search.id, searchStartedFrom + result.data.size)
+
+            //The service did not return more items, so sequential calls with different offset
+            //Will not return items too
+            if (result.data.isEmpty()) {
+                searchDataStore.updateStoppedAt(searchWithSongs.search.id, Constants.Search.SEARCH_QUERY_MAX + 1)
+                return ErrorResult(
+                    NoMoreItemsException()
+                )
+            }
         }
 
         return result

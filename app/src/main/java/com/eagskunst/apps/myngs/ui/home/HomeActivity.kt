@@ -12,6 +12,7 @@ import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.observe
 import com.eagskunst.apps.myngs.R
+import com.eagskunst.apps.myngs.base.Timber
 import com.eagskunst.apps.myngs.base_android.MyngsActivity
 import com.eagskunst.apps.myngs.base_android.hideKeyboard
 import com.eagskunst.apps.myngs.base_android.showToast
@@ -92,7 +93,7 @@ class HomeActivity(override val bindingFunction: (LayoutInflater) -> ActivityHom
         goToSavedSearches()
     }
 
-    override fun onRetryButtonClick() {
+    override fun onSavedSearchesClick() {
         goToSavedSearches()
     }
 

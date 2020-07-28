@@ -6,6 +6,7 @@ import androidx.paging.PagedList
 import com.eagskunst.apps.myng.domain.interactors.SearchTerm
 import com.eagskunst.apps.myngs.base.ErrorResult
 import com.eagskunst.apps.myngs.base.errors.EmptySearchException
+import com.eagskunst.apps.myngs.base.errors.NoMoreItemsException
 import com.eagskunst.apps.myngs.data.entities.Song
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -24,6 +25,7 @@ class SearchBoundaryCallback(
 
     private val _viewState = MutableLiveData<HomeViewState>(HomeViewState(initial = initialState))
     val viewState = _viewState as LiveData<HomeViewState>
+    var noMoreItemsExceptionReceived = false
 
     override fun onZeroItemsLoaded() {
         requestSongsForSentence()
@@ -34,6 +36,10 @@ class SearchBoundaryCallback(
     }
 
     private fun requestSongsForSentence() {
+        if (noMoreItemsExceptionReceived) {
+            return
+        }
+
         var currentState = _viewState.value!!.copy(
             isLoading = true,
             initial = false,
@@ -42,10 +48,12 @@ class SearchBoundaryCallback(
         updateState(currentState)
         scope.launch {
             val result = searchTerm.searchSentenceForSongs(sentence.toLowerCase(Locale.ROOT))
-            updateState(currentState.copy(isLoading = false))
+            currentState = currentState.copy(isLoading = false)
+            updateState(currentState)
 
             if (result is ErrorResult) {
                 currentState = currentState.copy(error = mapError(result))
+                updateState(currentState)
             }
 
         }
@@ -57,6 +65,10 @@ class SearchBoundaryCallback(
 
     private fun <T> mapError(errorResult: ErrorResult<T>) = when (errorResult.errorInfo.throwable) {
         is EmptySearchException -> HomeViewState.Error.EmptySearch
+        is NoMoreItemsException -> {
+            noMoreItemsExceptionReceived = true
+            HomeViewState.Error.NoMoreItems
+        }
         else -> HomeViewState.Error.SearchFailed
     }
 

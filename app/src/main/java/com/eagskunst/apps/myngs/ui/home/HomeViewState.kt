@@ -16,6 +16,7 @@ data class HomeViewState(
     sealed class Error {
         object SearchFailed : Error()
         object EmptySearch : Error()
+        object NoMoreItems: Error()
         object None : Error()
     }
 }

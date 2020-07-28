@@ -41,9 +41,8 @@ interface SearchDao {
     suspend fun getSearchWithSongs(sentence: String): SearchWithSongs?
 
     @Transaction
-    @RewriteQueriesToDropUnusedColumns
     @Query("""
-        SELECT id, name, creator_name, album_id, preview_url, songs.search_id, artwork
+        SELECT id, name, creator_name, album_id, preview_url, songs.search_id, album_name, artwork
         FROM searches AS srch INNER JOIN songs WHERE srch.sentence = :sentence AND songs.search_id = srch.search_id"""
     )
     fun getSearchWithSongsBySentence(sentence: String): DataSource.Factory<Int, Song>
